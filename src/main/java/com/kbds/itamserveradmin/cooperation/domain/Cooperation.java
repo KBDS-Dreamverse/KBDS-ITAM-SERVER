@@ -1,4 +1,4 @@
-package com.kbds.itamserveradmin.domain;
+package com.kbds.itamserveradmin.cooperation.domain;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;

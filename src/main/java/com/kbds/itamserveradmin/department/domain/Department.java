@@ -1,6 +1,6 @@
 package com.kbds.itamserveradmin.department.domain;
 
-import com.kbds.itamserveradmin.domain.Cooperation;
+import com.kbds.itamserveradmin.cooperation.domain.Cooperation;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
