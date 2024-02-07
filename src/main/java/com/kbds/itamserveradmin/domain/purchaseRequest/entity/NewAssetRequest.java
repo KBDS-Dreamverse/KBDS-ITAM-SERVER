@@ -39,6 +39,7 @@ public class NewAssetRequest {
     @JoinColumn(name = "dept_id")
     private Department department;
 
-    @OneToMany(mappedBy = "newAssetRequest")
+    @OneToMany(mappedBy = "newAssetRequest",fetch = FetchType.LAZY)
+    @Builder.Default
     private List<NewAssetRequestAdmin> newAssetRequestAdmins = new ArrayList<>();
 }

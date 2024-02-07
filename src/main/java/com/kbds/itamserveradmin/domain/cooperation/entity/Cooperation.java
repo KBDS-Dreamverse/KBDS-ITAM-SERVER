@@ -1,5 +1,6 @@
 package com.kbds.itamserveradmin.domain.cooperation.entity;
 
+import com.kbds.itamserveradmin.domain.contract.entity.Contract;
 import com.kbds.itamserveradmin.domain.department.entity.Department;
 import com.kbds.itamserveradmin.domain.user.entity.User;
 import lombok.AllArgsConstructor;
@@ -25,7 +26,7 @@ public class Cooperation {
     private String corpName;
 
     @Column(name = "crn")
-    private String crn;  // 사업자 번호가 list인가요 ?!
+    private String corpNum;
 
     @Column(name = "corp_contact")
     private String corpContact;
@@ -46,17 +47,20 @@ public class Cooperation {
     private boolean isSubCorp;
 
     //==연관관계==//
-    @OneToMany(mappedBy = "cooperation")
+    @OneToMany(mappedBy = "cooperation",fetch = FetchType.LAZY)
+    @Builder.Default
     private List<Department> departments = new ArrayList<>();
 
-    @OneToMany(mappedBy = "cooperation")
+    @OneToMany(mappedBy = "cooperation",fetch = FetchType.LAZY)
+    @Builder.Default
     private List<User> users = new ArrayList<>();
 
 //    @OneToMany(mappedBy ="cooperation")
 //    private List<Asset> assets = new ArrayList<>();
 
-//    @OneToMany(mappedBy = "cooperation")
-//    private List<Contract> contracts = new ArrayList<>();
+    @OneToMany(mappedBy = "corp",fetch = FetchType.LAZY)
+    @Builder.Default
+    private List<Contract> contracts = new ArrayList<>();
 
     //==연관관계==//
 

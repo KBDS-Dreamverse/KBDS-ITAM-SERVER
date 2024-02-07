@@ -3,9 +3,10 @@ package com.kbds.itamserveradmin.domain.user.entity;
 
 import com.kbds.itamserveradmin.domain.asset.entity.AssetNotice;
 import com.kbds.itamserveradmin.domain.assetRequest.entity.AssetRequest;
-import com.kbds.itamserveradmin.domain.contract.entity.ContractLog;
+import com.kbds.itamserveradmin.domain.contract.entity.ContractRecord;
 import com.kbds.itamserveradmin.domain.cooperation.entity.Cooperation;
 import com.kbds.itamserveradmin.domain.department.entity.Department;
+import com.kbds.itamserveradmin.global.entity.BaseEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -20,7 +21,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class User {
+public class User extends BaseEntity {
     @Id
     @Column(name = "user_id")
     private String userId;
@@ -51,22 +52,27 @@ public class User {
     @JoinColumn(name = "corp_id")
     private Cooperation cooperation;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user",fetch = FetchType.LAZY)
+    @Builder.Default
     private List<UserLog> userLogs = new ArrayList<>();
 
-    @OneToMany(mappedBy = "writer")
+    @OneToMany(mappedBy = "writer",fetch = FetchType.LAZY)
+    @Builder.Default
     private List<AssetNotice> assetNotices = new ArrayList<>();
     //==연관관계==//
 
-    @OneToMany(mappedBy = "manager")
+    @OneToMany(mappedBy = "manager",fetch = FetchType.LAZY)
+    @Builder.Default
     private List<AssetAdmin> assetAdmins = new ArrayList<>();
 
-    @OneToMany(mappedBy = "astRequestUser")
+    @OneToMany(mappedBy = "astRequestUser",fetch = FetchType.LAZY)
+    @Builder.Default
     private List<AssetRequest> assetRequests = new ArrayList<>();
 
-    @OneToMany(mappedBy = "editor")
-    private List<ContractLog> contractLogs = new ArrayList<>();
-
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user",fetch = FetchType.LAZY)
+    @Builder.Default
     private List<NewAssetRequestAdmin> newAssetRequestAdmins = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    private List<ContractRecord> records = new ArrayList<>();
 }

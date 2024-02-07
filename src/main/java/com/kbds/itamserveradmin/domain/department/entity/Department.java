@@ -31,13 +31,16 @@ public class Department {
     @JoinColumn(name = "corp_id")
     private Cooperation cooperation;
 
-    @OneToMany(mappedBy = "department")
+    @OneToMany(mappedBy = "department",fetch = FetchType.LAZY)
+    @Builder.Default
     private List<User> users = new ArrayList<>();
 
-    @OneToMany(mappedBy = "department")
+    @OneToMany(mappedBy = "department",fetch = FetchType.LAZY)
+    @Builder.Default
     private List<DepartmentAsset> departmentAssets = new ArrayList<>();
 
-    @OneToMany(mappedBy = "department")
+    @OneToMany(mappedBy = "department",fetch = FetchType.LAZY)
+    @Builder.Default
     private List<NewAssetRequest> newAssetRequests = new ArrayList<>();
     //==연관관계==//
 }
