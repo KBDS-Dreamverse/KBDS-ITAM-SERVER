@@ -20,10 +20,9 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Contract extends BaseEntity {
+public class Contract {
     @Id
     private String contId;
-
 
     @ManyToOne
     @JoinColumn(name = "ast_id")
@@ -43,7 +42,7 @@ public class Contract extends BaseEntity {
     @OneToMany(mappedBy = "contract", fetch = FetchType.LAZY)
     private List<ContractRecord> records = new ArrayList<>();
 
-
+    private LocalDateTime contRegDate;
     private String contLicTag;
     private int contPrice;
     private String contAdminName;
@@ -51,7 +50,10 @@ public class Contract extends BaseEntity {
     private OpStatus contOpStatus;
     private String contName;
 
-
-
+    @PrePersist
+    public void prePersist() {
+        LocalDateTime now = LocalDateTime.now();
+        contRegDate = now;
+    }
 
 }
