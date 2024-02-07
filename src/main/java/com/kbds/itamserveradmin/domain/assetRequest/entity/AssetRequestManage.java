@@ -18,12 +18,15 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class AssetRequestManage extends BaseEntity {
+public class AssetRequestManage {
     @Id
     private String astReqMgId;
 
     @Enumerated(EnumType.STRING)
     private RequestMangeStatus astReqMgStatus;
+
+    private LocalDateTime astReqMgDate;
+    private LocalDateTime astReqMgSud;
 
     private String astReqDept;
     private String astReqName;
@@ -42,4 +45,17 @@ public class AssetRequestManage extends BaseEntity {
     @OneToMany(mappedBy = "assetRequestManage",fetch = FetchType.LAZY)
     @Builder.Default
     private List<AssetRequestManageLog> assetRequestManageLogs = new ArrayList<>();
+
+    @PrePersist
+    public void prePersist() {
+        LocalDateTime now = LocalDateTime.now();
+        astReqMgDate = now;
+        astReqMgSud = now;
+    }
+
+    @PreUpdate
+    public void preUpdate() {
+        astReqMgSud = LocalDateTime.now();
+    }
+
 }

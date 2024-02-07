@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class AssetRequestLog extends BaseEntity {
+public class AssetRequestLog {
     @Id
     @Column(name = "ast_req_log_id")
     private String astReqLogId;
@@ -29,7 +29,7 @@ public class AssetRequestLog extends BaseEntity {
 
     private Long astReqCnt;
 
-
+    private LocalDateTime astReqSud;
     //==연관관계==//
     @ManyToOne
     @JoinColumn(name = "ast_req_id")
@@ -40,4 +40,14 @@ public class AssetRequestLog extends BaseEntity {
     private User assetRequestUser;
     //==연관관계==//
 
+    @PrePersist
+    public void prePersist() {
+        LocalDateTime now = LocalDateTime.now();
+        astReqSud = now;
+    }
+
+    @PreUpdate
+    public void preUpdate() {
+        astReqSud = LocalDateTime.now();
+    }
 }
