@@ -3,8 +3,8 @@ package com.kbds.itamserveradmin.domain.user.entity;
 
 import com.kbds.itamserveradmin.domain.asset.entity.AssetNotice;
 import com.kbds.itamserveradmin.domain.assetRequest.entity.AssetRequest;
-import com.kbds.itamserveradmin.domain.contract.entity.ContractRecord;
-import com.kbds.itamserveradmin.domain.cooperation.entity.Cooperation;
+import com.kbds.itamserveradmin.domain.contract.repository.entity.ContractRecord;
+import com.kbds.itamserveradmin.domain.corporation.entity.Corporation;
 import com.kbds.itamserveradmin.domain.department.entity.Department;
 import com.kbds.itamserveradmin.global.entity.BaseEntity;
 import lombok.AllArgsConstructor;
@@ -50,7 +50,7 @@ public class User extends BaseEntity {
 
     @ManyToOne
     @JoinColumn(name = "corp_id")
-    private Cooperation cooperation;
+    private Corporation corporation;
 
     @OneToMany(mappedBy = "user",fetch = FetchType.LAZY)
     @Builder.Default

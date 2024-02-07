@@ -1,4 +1,4 @@
-package com.kbds.itamserveradmin.domain.contract.entity;
+package com.kbds.itamserveradmin.domain.contract.repository.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

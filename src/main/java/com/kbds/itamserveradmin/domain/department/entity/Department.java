@@ -1,6 +1,6 @@
 package com.kbds.itamserveradmin.domain.department.entity;
 
-import com.kbds.itamserveradmin.domain.cooperation.entity.Cooperation;
+import com.kbds.itamserveradmin.domain.corporation.entity.Corporation;
 import com.kbds.itamserveradmin.domain.purchaseRequest.entity.NewAssetRequest;
 import com.kbds.itamserveradmin.domain.user.entity.User;
 import lombok.AllArgsConstructor;
@@ -29,7 +29,7 @@ public class Department {
 
     @ManyToOne
     @JoinColumn(name = "corp_id")
-    private Cooperation cooperation;
+    private Corporation corporation;
 
     @OneToMany(mappedBy = "department",fetch = FetchType.LAZY)
     @Builder.Default
