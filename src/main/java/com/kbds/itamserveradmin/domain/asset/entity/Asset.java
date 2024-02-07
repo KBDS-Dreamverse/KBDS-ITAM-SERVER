@@ -1,6 +1,6 @@
 package com.kbds.itamserveradmin.domain.asset.entity;
 
-import com.kbds.itamserveradmin.domain.cooperation.entity.Cooperation;
+import com.kbds.itamserveradmin.domain.corporation.entity.Corporation;
 import com.kbds.itamserveradmin.domain.user.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,8 +9,6 @@ import lombok.NoArgsConstructor;
 
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Data
@@ -20,14 +18,14 @@ import java.util.List;
 public class Asset {
 
     @Id
-    private Long astId;
+    private String astId;
     private String astName;
     private Boolean isAstInternal;
     private AstTag astTag;
 
     @ManyToOne
     @JoinColumn(name = "corp_id" )
-    private Cooperation corp;
+    private Corporation corp;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
