@@ -51,22 +51,28 @@ public class User {
     @JoinColumn(name = "corp_id")
     private Cooperation cooperation;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user",fetch = FetchType.LAZY)
+    @Builder.Default
     private List<UserLog> userLogs = new ArrayList<>();
 
-    @OneToMany(mappedBy = "writer")
+    @OneToMany(mappedBy = "writer",fetch = FetchType.LAZY)
+    @Builder.Default
     private List<AssetNotice> assetNotices = new ArrayList<>();
     //==연관관계==//
 
-    @OneToMany(mappedBy = "manager")
+    @OneToMany(mappedBy = "manager",fetch = FetchType.LAZY)
+    @Builder.Default
     private List<AssetAdmin> assetAdmins = new ArrayList<>();
 
-    @OneToMany(mappedBy = "astRequestUser")
+    @OneToMany(mappedBy = "astRequestUser",fetch = FetchType.LAZY)
+    @Builder.Default
     private List<AssetRequest> assetRequests = new ArrayList<>();
 
-    @OneToMany(mappedBy = "editor")
+    @OneToMany(mappedBy = "editor",fetch = FetchType.LAZY)
+    @Builder.Default
     private List<ContractLog> contractLogs = new ArrayList<>();
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user",fetch = FetchType.LAZY)
+    @Builder.Default
     private List<NewAssetRequestAdmin> newAssetRequestAdmins = new ArrayList<>();
 }

@@ -17,6 +17,7 @@ import javax.persistence.OneToOne;
 @Builder
 public class NumOfUsersType {
 
+    @Id
     @OneToOne
     @Column(name = "cont_id")
     private Contract cont;

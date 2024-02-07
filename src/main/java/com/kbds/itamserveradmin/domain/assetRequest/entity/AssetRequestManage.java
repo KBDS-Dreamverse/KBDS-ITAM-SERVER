@@ -40,6 +40,7 @@ public class AssetRequestManage {
     @JoinColumn(name = "ast_req_id")
     private AssetRequest assetRequest;
 
-    @OneToMany(mappedBy = "assetRequestMange")
+    @OneToMany(mappedBy = "assetRequestMange",fetch = FetchType.LAZY)
+    @Builder.Default
     private List<AssetRequestManageLog> assetRequestManageLogs = new ArrayList<>();
 }
