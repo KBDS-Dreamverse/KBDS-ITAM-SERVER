@@ -29,11 +29,11 @@ public class Asset {
     private List<String> astTag = new ArrayList<>();
 
     @ManyToOne
-    @Column(name = 'corp_id' )
+    @JoinColumn(name = 'corp_id' )
     private Cooperation corp;
 
     @ManyToOne
-    @Column(name = 'user_id')
+    @JoinColumn(name = 'user_id')
     private User user;
 
     private String astSwCtgy;
