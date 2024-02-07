@@ -21,19 +21,16 @@ public class Asset {
 
     @Id
     private Long astId;
-
     private String astName;
     private Boolean isAstInternal;
-
-    @ElementCollection
-    private List<String> astTag = new ArrayList<>();
+    private AstTag astTag;
 
     @ManyToOne
-    @JoinColumn(name = 'corp_id' )
+    @JoinColumn(name = "corp_id" )
     private Cooperation corp;
 
     @ManyToOne
-    @JoinColumn(name = 'user_id')
+    @JoinColumn(name = "user_id")
     private User user;
 
     private String astSwCtgy;
