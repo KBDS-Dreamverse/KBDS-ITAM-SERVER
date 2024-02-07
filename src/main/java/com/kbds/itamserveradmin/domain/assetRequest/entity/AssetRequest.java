@@ -2,6 +2,7 @@ package com.kbds.itamserveradmin.domain.assetRequest.entity;
 
 import com.kbds.itamserveradmin.domain.assetRequest.entity.RequestStatus;
 import com.kbds.itamserveradmin.domain.user.entity.User;
+import com.kbds.itamserveradmin.global.entity.BaseEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
