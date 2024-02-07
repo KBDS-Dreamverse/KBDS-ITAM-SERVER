@@ -20,6 +20,7 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 public class Contract {
+
     @Id
     private String contId;
 
@@ -41,13 +42,13 @@ public class Contract {
     @OneToMany(mappedBy = "contract", fetch = FetchType.LAZY)
     private List<ContractRecord> records = new ArrayList<>();
 
-    private LocalDateTime contRegDate;
+    private String contName;
     private String contLicTag;
-    private int contPrice;
+    private Integer contPrice;
     private String contAdminName;
     private String contVer;
     private OpStatus contOpStatus;
-    private String contName;
+    private LocalDateTime contRegDate;
 
     @PrePersist
     public void prePersist() {
