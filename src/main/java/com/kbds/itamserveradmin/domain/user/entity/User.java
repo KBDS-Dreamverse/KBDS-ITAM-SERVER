@@ -68,10 +68,6 @@ public class User {
     @Builder.Default
     private List<AssetRequest> assetRequests = new ArrayList<>();
 
-    @OneToMany(mappedBy = "editor",fetch = FetchType.LAZY)
-    @Builder.Default
-    private List<ContractLog> contractLogs = new ArrayList<>();
-
     @OneToMany(mappedBy = "user",fetch = FetchType.LAZY)
     @Builder.Default
     private List<NewAssetRequestAdmin> newAssetRequestAdmins = new ArrayList<>();
