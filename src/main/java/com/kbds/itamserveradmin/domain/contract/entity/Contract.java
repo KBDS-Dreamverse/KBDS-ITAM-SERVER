@@ -11,6 +11,8 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Data
@@ -36,6 +38,9 @@ public class Contract {
     @ManyToOne
     @JoinColumn(name = "usr_id")
     private User user;
+
+    @OneToMany(mappedBy = "contract", fetch = FetchType.LAZY)
+    private List<ContractRecord> records = new ArrayList<>();
 
 
     private String contLicTag;

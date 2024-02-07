@@ -3,7 +3,7 @@ package com.kbds.itamserveradmin.domain.user.entity;
 
 import com.kbds.itamserveradmin.domain.asset.entity.AssetNotice;
 import com.kbds.itamserveradmin.domain.assetRequest.entity.AssetRequest;
-import com.kbds.itamserveradmin.domain.contract.entity.ContractLog;
+import com.kbds.itamserveradmin.domain.contract.entity.ContractRecord;
 import com.kbds.itamserveradmin.domain.cooperation.entity.Cooperation;
 import com.kbds.itamserveradmin.domain.department.entity.Department;
 import lombok.AllArgsConstructor;
@@ -68,11 +68,10 @@ public class User {
     @Builder.Default
     private List<AssetRequest> assetRequests = new ArrayList<>();
 
-    @OneToMany(mappedBy = "editor",fetch = FetchType.LAZY)
-    @Builder.Default
-    private List<ContractLog> contractLogs = new ArrayList<>();
-
     @OneToMany(mappedBy = "user",fetch = FetchType.LAZY)
     @Builder.Default
     private List<NewAssetRequestAdmin> newAssetRequestAdmins = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    private List<ContractRecord> records = new ArrayList<>();
 }

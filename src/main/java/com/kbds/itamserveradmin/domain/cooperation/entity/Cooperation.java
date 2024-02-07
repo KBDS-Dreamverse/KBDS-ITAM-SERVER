@@ -26,7 +26,7 @@ public class Cooperation {
     private String corpName;
 
     @Column(name = "crn")
-    private String crn;  // 사업자 번호가 list인가요 ?!
+    private String corpNum;
 
     @Column(name = "corp_contact")
     private String corpContact;
