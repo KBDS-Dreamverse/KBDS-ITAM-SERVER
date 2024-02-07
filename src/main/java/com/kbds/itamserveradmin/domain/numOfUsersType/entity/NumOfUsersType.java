@@ -15,6 +15,8 @@ import javax.persistence.*;
 public class NumOfUsersType {
 
     @Id
+    private String NumOfUsersId;
+
     @OneToOne
     @JoinColumn(name = "cont_id")
     private Contract cont;
