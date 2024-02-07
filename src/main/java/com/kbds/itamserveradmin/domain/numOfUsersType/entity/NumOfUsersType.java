@@ -29,4 +29,8 @@ public class NumOfUsersType {
     private Integer totalNumPur;
     private Integer totalServer;
     private Integer totalCal;
+
+
+
+
 }

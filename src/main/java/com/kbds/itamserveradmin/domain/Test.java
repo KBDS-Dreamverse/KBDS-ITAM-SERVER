@@ -13,6 +13,7 @@ class Test {
     @PostMapping("/test")
     public ResponseEntity<String> test(){
         boolean test = true;
+        System.out.println("시작");
 
         if(test) {
             throw new BaseException(ErrorCode.INTERNAL_SERVER_ERROR);
