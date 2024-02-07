@@ -1,4 +1,4 @@
-package com.kbds.itamserveradmin.domain.contract.repository.entity;
+package com.kbds.itamserveradmin.domain.contract.entity;
 
 import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.AllArgsConstructor;

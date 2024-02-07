@@ -1,4 +1,4 @@
-package com.kbds.itamserveradmin.domain.contract.repository.entity;
+package com.kbds.itamserveradmin.domain.contract.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,11 +13,11 @@ import javax.persistence.Id;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class CALKey {
+public class LicenseKey {
     @Id
-    private String calId;
+    private String licKeyId;
 
-    private KeyStatus calKeyStatus;
+    private KeyStatus licKeyStatus;
 
     //==연관관계==//
 //    @ManyToOne
