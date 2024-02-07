@@ -1,5 +1,6 @@
 package com.kbds.itamserveradmin.domain.cooperation.entity;
 
+import com.kbds.itamserveradmin.domain.contract.entity.Contract;
 import com.kbds.itamserveradmin.domain.department.entity.Department;
 import com.kbds.itamserveradmin.domain.user.entity.User;
 import lombok.AllArgsConstructor;
@@ -55,8 +56,8 @@ public class Cooperation {
 //    @OneToMany(mappedBy ="cooperation")
 //    private List<Asset> assets = new ArrayList<>();
 
-//    @OneToMany(mappedBy = "cooperation")
-//    private List<Contract> contracts = new ArrayList<>();
+    @OneToMany(mappedBy = "cooperation")
+    private List<Contract> contracts = new ArrayList<>();
 
     //==연관관계==//
 
