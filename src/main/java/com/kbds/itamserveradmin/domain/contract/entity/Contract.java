@@ -1,4 +1,4 @@
-package com.kbds.itamserveradmin.domain.contract.repository.entity;
+package com.kbds.itamserveradmin.domain.contract.entity;
 
 import com.kbds.itamserveradmin.domain.asset.entity.Asset;
 import com.kbds.itamserveradmin.domain.corporation.entity.Corporation;
