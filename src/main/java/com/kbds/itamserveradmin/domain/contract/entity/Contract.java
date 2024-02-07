@@ -22,7 +22,7 @@ public class Contract {
     private String contId;
 
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "ast_id")
     private Asset ast;
 
@@ -33,6 +33,8 @@ public class Contract {
     @OneToOne
     private NewAssetRequest newAstReq;
 
+    @ManyToOne
+    @JoinColumn(name = "usr_id")
     private User user;
 
 
