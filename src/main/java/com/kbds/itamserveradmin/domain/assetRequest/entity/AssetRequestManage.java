@@ -1,6 +1,7 @@
 package com.kbds.itamserveradmin.domain.assetRequest.entity;
 
 import com.kbds.itamserveradmin.domain.user.entity.AssetAdmin;
+import com.kbds.itamserveradmin.global.entity.BaseEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,12 +18,9 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class AssetRequestManage {
+public class AssetRequestManage extends BaseEntity {
     @Id
     private String astReqMgId;
-
-    private LocalDateTime astReqMgDate;
-    private LocalDateTime astReqMgSud;
 
     @Enumerated(EnumType.STRING)
     private RequestMangeStatus astReqMgStatus;
