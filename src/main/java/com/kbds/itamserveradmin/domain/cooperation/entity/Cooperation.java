@@ -58,7 +58,7 @@ public class Cooperation {
 //    @OneToMany(mappedBy ="cooperation")
 //    private List<Asset> assets = new ArrayList<>();
 
-    @OneToMany(mappedBy = "cooperation",fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "corp",fetch = FetchType.LAZY)
     @Builder.Default
     private List<Contract> contracts = new ArrayList<>();
 

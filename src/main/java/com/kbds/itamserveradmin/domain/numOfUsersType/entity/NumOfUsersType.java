@@ -5,10 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 
 @Entity
 @Data
@@ -19,7 +16,7 @@ public class NumOfUsersType {
 
     @Id
     @OneToOne
-    @Column(name = "cont_id")
+    @JoinColumn(name = "cont_id")
     private Contract cont;
 
     private Integer maxUsersLimit;
