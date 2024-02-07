@@ -1,4 +1,4 @@
-package com.kbds.itamserveradmin.domain.cooperation.entity;
+package com.kbds.itamserveradmin.domain.corporation.entity;
 
 import com.kbds.itamserveradmin.domain.contract.repository.entity.Contract;
 import com.kbds.itamserveradmin.domain.department.entity.Department;
@@ -17,7 +17,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Cooperation {
+public class Corporation {
     @Id
     @Column(name = "corp_id")
     private String corpId;
