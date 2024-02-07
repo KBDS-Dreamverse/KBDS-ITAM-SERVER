@@ -1,12 +1,15 @@
 package com.kbds.itamserveradmin.domain.contract.entity;
 
+import com.kbds.itamserveradmin.domain.asset.entity.Asset;
+import com.kbds.itamserveradmin.domain.cooperation.entity.Cooperation;
+import com.kbds.itamserveradmin.domain.purchaseRequest.entity.NewAssetRequest;
+import com.kbds.itamserveradmin.domain.user.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
@@ -19,10 +22,21 @@ public class Contract {
     private String contId;
 
 
+    @ManyToOne
+    @JoinColumn(name = "ast_id")
     private Asset ast;
+
+    @ManyToOne
+    @JoinColumn(name = "corp_id")
     private Cooperation corp;
-    private NewAstReq newAstReq;
+
+    @OneToOne
+    private NewAssetRequest newAstReq;
+
+    @ManyToOne
+    @JoinColumn(name = "usr_id")
     private User user;
+
 
     private String contLicTag;
     private int contPrice;
