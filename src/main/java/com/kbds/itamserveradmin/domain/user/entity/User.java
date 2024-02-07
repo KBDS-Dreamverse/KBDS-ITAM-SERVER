@@ -6,6 +6,7 @@ import com.kbds.itamserveradmin.domain.assetRequest.entity.AssetRequest;
 import com.kbds.itamserveradmin.domain.contract.entity.ContractRecord;
 import com.kbds.itamserveradmin.domain.cooperation.entity.Cooperation;
 import com.kbds.itamserveradmin.domain.department.entity.Department;
+import com.kbds.itamserveradmin.global.entity.BaseEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -20,7 +21,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class User {
+public class User extends BaseEntity {
     @Id
     @Column(name = "user_id")
     private String userId;
