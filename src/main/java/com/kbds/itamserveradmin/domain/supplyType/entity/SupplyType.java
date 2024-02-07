@@ -1,5 +1,5 @@
 package com.kbds.itamserveradmin.domain.supplyType.entity;
-import com.kbds.itamserveradmin.domain.contract.entity.Contract;
+import com.kbds.itamserveradmin.domain.contract.repository.entity.Contract;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

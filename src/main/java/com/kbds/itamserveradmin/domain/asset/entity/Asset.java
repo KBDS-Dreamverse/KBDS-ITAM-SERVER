@@ -20,7 +20,7 @@ import java.util.List;
 public class Asset {
 
     @Id
-    private Long astId;
+    private String astId;
     private String astName;
     private Boolean isAstInternal;
     private AstTag astTag;

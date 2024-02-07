@@ -1,10 +1,9 @@
-package com.kbds.itamserveradmin.domain.contract.entity;
+package com.kbds.itamserveradmin.domain.contract.repository.entity;
 
 import com.kbds.itamserveradmin.domain.asset.entity.Asset;
 import com.kbds.itamserveradmin.domain.cooperation.entity.Cooperation;
 import com.kbds.itamserveradmin.domain.purchaseRequest.entity.NewAssetRequest;
 import com.kbds.itamserveradmin.domain.user.entity.User;
-import com.kbds.itamserveradmin.global.entity.BaseEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
