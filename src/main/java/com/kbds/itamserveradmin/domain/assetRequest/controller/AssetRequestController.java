@@ -22,19 +22,6 @@ public class AssetRequestController {
     }
 
 
-    @PostMapping("/test")
-    @ResponseBody
-    public ResponseEntity<String> test(){
-        boolean test = true;
-        System.out.println("시작");
-
-        if(test) {
-            throw new BaseException(ErrorCode.INTERNAL_SERVER_ERROR);
-        }
-
-        return ResponseEntity.ok("성공");
-
-    }
 
 
     @PostMapping("/kbitam/{dept}/{contId}/request")
