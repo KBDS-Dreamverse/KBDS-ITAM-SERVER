@@ -22,10 +22,10 @@ public class NumOfUsersType {
     private Contract cont;
 
     private Integer maxUsersLimit;
-    private Integer maxCpuLimit;
+    private Integer maxCoreLimit;
     private String ipRange;
     private Integer currUsers;
-    private Integer currCpu;
+    private Integer currCore;
     private Integer totalNumPur;
     private Integer totalServer;
     private Integer totalCal;

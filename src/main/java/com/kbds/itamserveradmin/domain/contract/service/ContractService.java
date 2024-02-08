@@ -1,5 +1,7 @@
 package com.kbds.itamserveradmin.domain.contract.service;
 
+import com.kbds.itamserveradmin.domain.contract.dto.DashBoardRes;
+import com.kbds.itamserveradmin.domain.contract.entity.Contract;
 import com.kbds.itamserveradmin.domain.contract.repository.ContractRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -9,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -55,6 +58,29 @@ public class ContractService {
 
         return licenseTypes;
     }
+
+    public DashBoardRes createDashBoard(String contId) {
+        // 1. 계약 id로 Contract 불러오기
+        Contract findContract =  contractRepository.findById(contId)
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 계약ID 입니다."));
+
+        // 2. Contract.contLicTag 값 파싱
+        List<String> licNames = parseContLicTag(findContract.getContLicTag());
+
+        // 3. 라이선스 분류별 데이터 찾기(NumOfUsers, Period, Supply에서 각각 값 찾기)
+        // contId로 요청Id 조회 -> userAssetReqInfo 테이블 가서 데이터 꺼내오기
+        // 분류별로 따로 조회하기
+
+        // 4. 찾은 값들을 DashBoardRes에 담아 전달하기
+        DashBoardRes dashBoardRes = DashBoardRes.builder()
+                .contName(findContract.getContName())
+                .licNames(licNames)
+                .build();
+
+        return dashBoardRes;
+
+    }
+
 
 
 }

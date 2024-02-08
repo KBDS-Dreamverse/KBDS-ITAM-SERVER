@@ -1,5 +1,6 @@
 package com.kbds.itamserveradmin.domain.contract.controller;
 
+import com.kbds.itamserveradmin.domain.contract.dto.DashBoardRes;
 import com.kbds.itamserveradmin.domain.contract.service.ContractService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,6 +17,6 @@ public class ContractController {
 
 //    @GetMapping("/kbitam/{dept}/{contId}/dashboard")
 //    public ResponseEntity<>getDashboard(@PathVariable String dept, @PathVariable String contId) {
-//
+//        DashBoardRes dashBoardRes =  contractService.createDashBoard(contId);
 //    }
 }
