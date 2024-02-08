@@ -18,6 +18,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
+import static com.kbds.itamserveradmin.global.exception.ErrorCode.CONTRACT_NOT_FOUND;
+
 @Slf4j
 @Service
 @Transactional
@@ -71,7 +73,7 @@ public class ContractService {
     public DashBoardRes createDashBoard(String contId) {
         // 1. 계약 id로 Contract 불러오기
         Contract findContract =  contractRepository.findById(contId)
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 계약ID 입니다."));
+                .orElseThrow(() -> new IllegalArgumentException(String.valueOf(CONTRACT_NOT_FOUND)));
 
         // 2. Contract.contLicTag 값 파싱
         List<String> licNames = parseContLicTag(findContract.getContLicTag());
@@ -84,7 +86,6 @@ public class ContractService {
         HashMap<String, Object> licValues = new HashMap<>();
 
         // 3.1 공급형태
-
         SupplyType supplyType = supplyTypeRepository.findByCont_ContId(contId);
         if (licTag.charAt(0) == '1' || licTag.charAt(0) == '2') {   // 패키지, low volume
             licValues.put("splyVer", supplyType.getSplyVer());
@@ -117,6 +118,7 @@ public class ContractService {
             licValues.put("maxCoreLimit", numOfUsersType.getMaxCoreLimit());
             licValues.put("currCore", numOfUsersType.getCurrCore());
         }
+
 
 
         // 4. 찾은 값들을 DashBoardRes에 담아 전달하기
