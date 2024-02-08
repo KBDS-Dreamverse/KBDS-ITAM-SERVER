@@ -23,11 +23,11 @@ public class Asset {
     private Boolean isAstInternal;
     private AstTag astTag;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "corp_id" )
     private Corporation corp;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
 

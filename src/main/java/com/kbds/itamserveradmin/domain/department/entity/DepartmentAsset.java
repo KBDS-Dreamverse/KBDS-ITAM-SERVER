@@ -1,5 +1,6 @@
 package com.kbds.itamserveradmin.domain.department.entity;
 
+import com.kbds.itamserveradmin.domain.contract.entity.Contract;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -18,13 +19,13 @@ public class DepartmentAsset {
     private String DeptAstId;
 
     //==연관관계==//
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "dept_id")
     private Department department;
 
-//    @ManyToOne
-//    @JoinColumn(name = "contract_id")
-//    private Contract contract;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "contract_id")
+    private Contract contract;
 
     //==연관관계==//
 

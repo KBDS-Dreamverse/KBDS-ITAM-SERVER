@@ -55,8 +55,6 @@ public class Corporation {
     @Builder.Default
     private List<User> users = new ArrayList<>();
 
-//    @OneToMany(mappedBy ="cooperation")
-//    private List<Asset> assets = new ArrayList<>();
 
     @OneToMany(mappedBy = "corp",fetch = FetchType.LAZY)
     @Builder.Default

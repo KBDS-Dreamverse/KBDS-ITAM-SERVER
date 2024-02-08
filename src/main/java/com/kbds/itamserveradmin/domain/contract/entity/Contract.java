@@ -23,23 +23,20 @@ public class Contract {
     @Id
     private String contId;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ast_id")
     private Asset ast;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "corp_id")
     private Corporation corp;
 
     @OneToOne
     private NewAssetRequest newAstReq;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "usr_id")
     private User user;
-
-    @OneToMany(mappedBy = "contract", fetch = FetchType.LAZY)
-    private List<ContractRecord> records = new ArrayList<>();
 
     private LocalDateTime contRegDate;
     private String contLicTag;
