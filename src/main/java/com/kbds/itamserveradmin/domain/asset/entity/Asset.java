@@ -21,6 +21,8 @@ public class Asset {
     private String astId;
     private String astName;
     private Boolean isAstInternal;
+
+    @Enumerated(EnumType.STRING)
     private AstTag astTag;
 
     @ManyToOne(fetch = FetchType.LAZY)
