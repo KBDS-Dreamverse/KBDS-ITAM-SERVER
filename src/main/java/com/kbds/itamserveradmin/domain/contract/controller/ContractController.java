@@ -13,10 +13,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 public class ContractController {
-    private ContractService contractService;
+    private final ContractService contractService;
 
-//    @GetMapping("/kbitam/{dept}/{contId}/dashboard")
-//    public ResponseEntity<>getDashboard(@PathVariable String dept, @PathVariable String contId) {
-//        DashBoardRes dashBoardRes =  contractService.createDashBoard(contId);
-//    }
+    @GetMapping("/kbitam/{dept}/{contId}/dashboard")
+    public ResponseEntity<DashBoardRes>getDashboard(@PathVariable String dept, @PathVariable String contId) {
+        DashBoardRes dashBoardRes =  contractService.createDashBoard(contId);
+        return ResponseEntity.ok(dashBoardRes);
+    }
 }

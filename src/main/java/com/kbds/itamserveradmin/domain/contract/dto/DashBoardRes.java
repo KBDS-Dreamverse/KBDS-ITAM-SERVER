@@ -4,6 +4,7 @@ import lombok.Builder;
 import lombok.Data;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 @Data
@@ -17,6 +18,10 @@ public class DashBoardRes {
      * */
     private List<String> licNames = new ArrayList<>();
 
+    /**
+     * 라이선스 값들 담겨 있는 Map
+     */
+    private HashMap<String, Object> licValues = new HashMap<>();
 
 
 
