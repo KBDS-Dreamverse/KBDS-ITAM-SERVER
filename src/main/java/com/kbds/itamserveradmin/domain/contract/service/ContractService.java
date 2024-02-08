@@ -15,6 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 @Slf4j
@@ -93,10 +94,15 @@ public class ContractService {
             licValues.put("acsUrl", supplyType.getAcsUrl());
         }
 
-        // 3.2 기간
+        // 3.2 기간 (1. yml에서 write-dates-as-timestamps: false 로 설정해도 날짜 리스트로 출력)
+        // (2. PeriodType에서 @JsonFormat으로 설정해도 수정 안된다)
         PeriodType periodType = periodTypeRepository.findByCont_ContId(contId);
-        licValues.put("contStartDate", periodType.getContStartDate());
-        licValues.put("contEndDate", periodType.getContEndDate());
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        String formattedStartDate = periodType.getContStartDate().format(formatter);
+        String formattedEndDate = periodType.getContEndDate().format(formatter);
+        licValues.put("contStartDate", formattedStartDate);
+        licValues.put("contEndDate", formattedEndDate);
+
 
         // 3.3 사용자
         NumOfUsersType numOfUsersType = numOfUsersTypeRepository.findByCont_ContId(contId);
