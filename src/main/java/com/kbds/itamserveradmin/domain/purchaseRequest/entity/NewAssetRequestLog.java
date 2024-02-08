@@ -29,7 +29,7 @@ public class NewAssetRequestLog {
 
     private String newAstReqUsePlan;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "dept_id")
     private Department department;
 

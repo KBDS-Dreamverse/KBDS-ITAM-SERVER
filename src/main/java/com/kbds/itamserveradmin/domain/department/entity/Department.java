@@ -27,20 +27,9 @@ public class Department {
 
     //==연관관계==//
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "corp_id")
     private Corporation corporation;
 
-    @OneToMany(mappedBy = "department",fetch = FetchType.LAZY)
-    @Builder.Default
-    private List<User> users = new ArrayList<>();
-
-    @OneToMany(mappedBy = "department",fetch = FetchType.LAZY)
-    @Builder.Default
-    private List<DepartmentAsset> departmentAssets = new ArrayList<>();
-
-    @OneToMany(mappedBy = "department",fetch = FetchType.LAZY)
-    @Builder.Default
-    private List<NewAssetRequest> newAssetRequests = new ArrayList<>();
     //==연관관계==//
 }
