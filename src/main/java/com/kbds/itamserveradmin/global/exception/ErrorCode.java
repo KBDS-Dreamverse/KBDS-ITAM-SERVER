@@ -10,8 +10,12 @@ import org.springframework.http.HttpStatus;
 @Getter
 public enum ErrorCode {
 
+    //user
+    NOT_FIND_USER(HttpStatus.BAD_REQUEST,"U-001","사용자를 찾을 수 없습니다."),
+
     // contract
-    CONTRACT_RECORD_TYPE_NOT_FOUND(HttpStatus.NOT_FOUND, "C-001", "활동 기록 타입을 찾을 수 없습니다."),
+    NOT_FIND_CONTRACT(HttpStatus.BAD_REQUEST,"C-001","계약을 찾을 수 없습니다."),
+    CONTRACT_RECORD_TYPE_NOT_FOUND(HttpStatus.NOT_FOUND, "C-002", "활동 기록 타입을 찾을 수 없습니다."),
 
     //기타
     INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "I-001", "내부 에러가 발생했습니다.");

@@ -52,6 +52,8 @@ public class AssetRequestController {
 //        System.out.println(req.getAstReqReason());
 //        System.out.println(req.getUserId());
 
+        assetRequestService.RequestAsset(req);
+
 
         return ResponseEntity.ok("성공");
 
