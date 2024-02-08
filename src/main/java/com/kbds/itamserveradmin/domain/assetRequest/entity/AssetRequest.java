@@ -1,6 +1,7 @@
 package com.kbds.itamserveradmin.domain.assetRequest.entity;
 
 import com.kbds.itamserveradmin.domain.assetRequest.entity.RequestStatus;
+import com.kbds.itamserveradmin.domain.contract.entity.Contract;
 import com.kbds.itamserveradmin.domain.user.entity.User;
 import com.kbds.itamserveradmin.global.entity.BaseEntity;
 import lombok.AllArgsConstructor;
@@ -40,13 +41,13 @@ public class AssetRequest {
 
     //==연관관계==//
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ast_req_user_id")
     private User astRequestUser;
 
-//    @ManyToOne
-//    @JoinColumn(name = "cont_id")
-//    private Contract contract;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "cont_id")
+    private Contract contract;
 
     //==연관관계==//
 
