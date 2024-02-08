@@ -5,8 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 @Data
@@ -20,7 +19,7 @@ public class CALKey {
     private KeyStatus calKeyStatus;
 
     //==연관관계==//
-//    @ManyToOne
-//    @JoinColumn(name = "cont_id")
-//    private Contract contract;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "cont_id")
+    private Contract contract;
 }

@@ -35,10 +35,8 @@ public class NewAssetRequest {
 
     //==연관관계==//
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "dept_id")
     private Department department;
 
-    @OneToMany(mappedBy = "newAssetRequest")
-    private List<NewAssetRequestAdmin> newAssetRequestAdmins = new ArrayList<>();
 }

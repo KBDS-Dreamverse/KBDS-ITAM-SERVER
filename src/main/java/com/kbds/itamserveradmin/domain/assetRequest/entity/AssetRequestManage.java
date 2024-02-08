@@ -1,6 +1,7 @@
 package com.kbds.itamserveradmin.domain.assetRequest.entity;
 
 import com.kbds.itamserveradmin.domain.user.entity.AssetAdmin;
+import com.kbds.itamserveradmin.global.entity.BaseEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -21,25 +22,35 @@ public class AssetRequestManage {
     @Id
     private String astReqMgId;
 
-    private LocalDateTime astReqMgDate;
-    private LocalDateTime astReqMgSud;
-
     @Enumerated(EnumType.STRING)
     private RequestMangeStatus astReqMgStatus;
+
+    private LocalDateTime astReqMgDate;
+    private LocalDateTime astReqMgSud;
 
     private String astReqDept;
     private String astReqName;
 
 
     //==연관관계==//
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ast_admin_id")
     private AssetAdmin assetAdmin;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ast_req_id")
     private AssetRequest assetRequest;
 
-    @OneToMany(mappedBy = "assetRequestMange")
-    private List<AssetRequestManageLog> assetRequestManageLogs = new ArrayList<>();
+    @PrePersist
+    public void prePersist() {
+        LocalDateTime now = LocalDateTime.now();
+        astReqMgDate = now;
+        astReqMgSud = now;
+    }
+
+    @PreUpdate
+    public void preUpdate() {
+        astReqMgSud = LocalDateTime.now();
+    }
+
 }
