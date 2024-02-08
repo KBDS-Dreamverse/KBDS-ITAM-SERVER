@@ -5,13 +5,6 @@ import com.kbds.itamserveradmin.domain.corporation.entity.Corporation;
 import com.kbds.itamserveradmin.domain.user.entity.User;
 import lombok.Builder;
 import lombok.Data;
-import org.springframework.beans.annotation.AnnotationBeanUtils;
-
-import javax.persistence.FetchType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import java.util.List;
 
 @Data
 @Builder
@@ -30,7 +23,7 @@ public class AssetRes {
     private String astSpd;
     private String astDpd;
 
-    public static AssetRes of (Asset asset){
+    public static AssetRes assetInfo (Asset asset){
         return AssetRes.builder()
                 .astId(asset.getAstId())
                 .astName(asset.getAstName())

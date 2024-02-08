@@ -20,6 +20,6 @@ public class AssetService {
         if (asset == null) {
             return null;
         }
-        return AssetRes.of(asset);
+        return AssetRes.assetInfo(asset);
     }
 }
