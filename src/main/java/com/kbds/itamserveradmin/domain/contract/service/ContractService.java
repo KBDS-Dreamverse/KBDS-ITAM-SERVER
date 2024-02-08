@@ -1,5 +1,7 @@
 package com.kbds.itamserveradmin.domain.contract.service;
 
+import com.kbds.itamserveradmin.domain.asset.entity.Asset;
+import com.kbds.itamserveradmin.domain.contract.entity.Contract;
 import com.kbds.itamserveradmin.domain.contract.repository.ContractRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -56,5 +58,12 @@ public class ContractService {
         return licenseTypes;
     }
 
-
+    //Ast id 찾는 메서드
+    public Asset getAstIdByContId(String contId){
+        Contract contract = contractRepository.findByContId(contId);
+        if (contract == null){
+            return null;
+        }
+        return contract.getAst();
+    }
 }
