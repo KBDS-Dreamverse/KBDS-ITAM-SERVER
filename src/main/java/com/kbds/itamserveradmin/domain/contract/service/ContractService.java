@@ -1,6 +1,5 @@
 package com.kbds.itamserveradmin.domain.contract.service;
 
-import com.kbds.itamserveradmin.domain.assetRequest.entity.AssetRequest;
 import com.kbds.itamserveradmin.domain.assetRequest.entity.UserAssetRequestInfo;
 import com.kbds.itamserveradmin.domain.assetRequest.repository.AssetRequestRepository;
 import com.kbds.itamserveradmin.domain.assetRequest.repository.UserAssetRequestInfoRepository;
@@ -12,10 +11,8 @@ import com.kbds.itamserveradmin.domain.contract.repository.ContractRepository;
 import com.kbds.itamserveradmin.domain.contract.repository.NumOfUsersTypeRepository;
 import com.kbds.itamserveradmin.domain.contract.repository.PeriodTypeRepository;
 import com.kbds.itamserveradmin.domain.contract.repository.SupplyTypeRepository;
-import com.kbds.itamserveradmin.domain.purchaseRequest.entity.NewAssetRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -34,7 +31,6 @@ public class ContractService {
     private final SupplyTypeRepository supplyTypeRepository;
     private final PeriodTypeRepository periodTypeRepository;
     private final NumOfUsersTypeRepository numOfUsersTypeRepository;
-    private final AssetRequestRepository assetRequestRepository;
     private final UserAssetRequestInfoRepository userAssetRequestInfoRepository;
 
     private final AssetRequestService assetRequestService;
@@ -173,6 +169,13 @@ public class ContractService {
     }
 
     public CalKeyRes getCalKey(String userId, String contId) {
+        Contract findContract =  contractRepository.findById(contId)
+                .orElseThrow(() -> new IllegalArgumentException(String.valueOf(CONTRACT_NOT_FOUND)));
+        
+        // 해당 계약의 라이선스 조합이 서버접속이 아닌 경우 -> Exception 던지기
+        if (findContract.getContLicTag().charAt(2) != '5') {
+            return null;
+        }
         String astReqId = assetRequestService.getAstReqIdByUserIdAndContId(userId, contId);
         UserAssetRequestInfo userAstReqInfo = userAssetRequestInfoRepository.findByAssetRequest_AstReqId(astReqId);
 

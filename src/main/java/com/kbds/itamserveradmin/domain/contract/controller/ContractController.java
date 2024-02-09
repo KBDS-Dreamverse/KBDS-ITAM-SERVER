@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
+import static com.kbds.itamserveradmin.global.exception.ErrorCode.CONTRACT_IS_NOT_CAL_LIC;
 import static com.kbds.itamserveradmin.global.exception.ErrorCode.PASSWORD_INCORRECT;
 import static org.springframework.http.ResponseEntity.ok;
 
@@ -34,14 +35,19 @@ public class ContractController {
             @PathVariable(name = "contId") String contId,
             @RequestBody PasswordReq pwReq,
             @RequestHeader String userId) {
+
         final String correctPw = "1234";
 
-        if (correctPw.equals(pwReq.getPw())) {
-            CalKeyRes calKey = contractService.getCalKey(userId, contId);
-            return ResponseEntity.ok(calKey);
-        } else {
+        if (!correctPw.equals(pwReq.getPw())) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(PASSWORD_INCORRECT);
         }
+
+        CalKeyRes calKey = contractService.getCalKey(userId, contId);
+        if (calKey == null) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(CONTRACT_IS_NOT_CAL_LIC);
+        }
+        return ResponseEntity.ok(calKey);
+
 
     }
 }
