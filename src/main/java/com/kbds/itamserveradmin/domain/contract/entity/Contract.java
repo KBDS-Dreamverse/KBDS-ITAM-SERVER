@@ -45,6 +45,10 @@ public class Contract {
     private Integer contPrice;
     private String contAdminName;
     private String contVer;
+
+
+
+    @Enumerated(EnumType.STRING)
     private OpStatus contOpStatus;
 
     @PrePersist
