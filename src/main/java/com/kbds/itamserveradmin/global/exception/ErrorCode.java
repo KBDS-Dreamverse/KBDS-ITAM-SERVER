@@ -13,11 +13,13 @@ public enum ErrorCode {
     // contract
     CONTRACT_RECORD_TYPE_NOT_FOUND(HttpStatus.NOT_FOUND, "C-001", "활동 기록 타입을 찾을 수 없습니다."),
     CONTRACT_NOT_FOUND(HttpStatus.NOT_FOUND, "C-002", "해당 계약을 찾을 수 없습니다."),
-
+    
     //기타
-    INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "I-001", "내부 에러가 발생했습니다.");
+    INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "I-001", "내부 에러가 발생했습니다."),
 
-
+    // cal key 조회를 위한 pw
+    PASSWORD_INCORRECT(HttpStatus.UNAUTHORIZED, "P-001", "비밀번호가 틀립니다.");
+    
 
 
     private final HttpStatus httpStatus;

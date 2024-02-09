@@ -2,6 +2,7 @@ package com.kbds.itamserveradmin.domain.contract.dto;
 
 import lombok.Builder;
 import lombok.Data;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.HashMap;

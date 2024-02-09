@@ -6,4 +6,8 @@ import lombok.Data;
 @Data
 @Builder
 public class CalKeyRes {
+
+    private String calKey;
+    private String calKeyStatus;
+
 }
