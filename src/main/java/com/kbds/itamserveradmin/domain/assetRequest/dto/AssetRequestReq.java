@@ -18,8 +18,8 @@ import java.time.LocalDateTime;
 public class AssetRequestReq {
 
 
-    @ApiModelProperty(notes = "계약서 ID",example = "")
-    private String contId;
+//    @ApiModelProperty(notes = "계약서 ID",example = "")
+//    private String contId;
 
     @ApiModelProperty(notes = "사용시작일",example = "2022-08-04")
     @JsonFormat(pattern = "yyyy-MM-dd")
@@ -39,8 +39,17 @@ public class AssetRequestReq {
     private String astReqReason;
 
 
-    @ApiModelProperty(notes = "사용자ID",example = "")
+    @ApiModelProperty(notes = "요청자의 ID (사용자ID), 요청자가 누군지 식별",example = "")
     private String userId;
+
+
+
+
+
+
+
+
+
 
 
 

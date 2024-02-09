@@ -1,8 +1,12 @@
 package com.kbds.itamserveradmin.domain.contract.service;
 
+import com.kbds.itamserveradmin.domain.contract.entity.Contract;
 import com.kbds.itamserveradmin.domain.contract.repository.ContractRepository;
+import com.kbds.itamserveradmin.global.exception.BaseException;
+import com.kbds.itamserveradmin.global.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,10 +17,22 @@ import java.util.Map;
 @Slf4j
 @Service
 @Transactional
-@RequiredArgsConstructor
 public class ContractService {
 
     private final ContractRepository contractRepository;
+
+    @Autowired
+    public ContractService(ContractRepository contractRepository) {
+        this.contractRepository = contractRepository;
+    }
+
+
+
+    public Contract getContract(String contId){
+        return  contractRepository.findById(contId).orElseThrow(
+                () -> new BaseException(ErrorCode.NOT_FIND_CONTRACT) );
+    }
+
 
     public static List<String> parseContLicTag(String contLicTag) {
         // 분류별 의미를 저장하는 맵 정의

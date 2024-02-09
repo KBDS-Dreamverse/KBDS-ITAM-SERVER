@@ -11,6 +11,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class AssetRequestRes {
+
+
     private String astReqId;
 
     public static AssetRequestRes of(String astReqId){
@@ -18,3 +20,5 @@ public class AssetRequestRes {
 
     }
 }
+
+

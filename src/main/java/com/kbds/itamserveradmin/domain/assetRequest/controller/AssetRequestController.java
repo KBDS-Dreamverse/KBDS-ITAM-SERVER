@@ -4,11 +4,15 @@ package com.kbds.itamserveradmin.domain.assetRequest.controller;
 import com.kbds.itamserveradmin.domain.assetRequest.dto.AssetRequestReq;
 import com.kbds.itamserveradmin.domain.assetRequest.entity.AssetRequest;
 import com.kbds.itamserveradmin.domain.assetRequest.service.AssetRequestService;
+import com.kbds.itamserveradmin.domain.user.dto.AssetAdminList;
+import com.kbds.itamserveradmin.domain.user.dto.AssetAdminListRes;
 import com.kbds.itamserveradmin.global.exception.BaseException;
 import com.kbds.itamserveradmin.global.exception.ErrorCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 public class AssetRequestController {
@@ -52,11 +56,21 @@ public class AssetRequestController {
 //        System.out.println(req.getAstReqReason());
 //        System.out.println(req.getUserId());
 
-        assetRequestService.RequestAsset(req);
+        assetRequestService.RequestAsset(contId,req);
 
 
         return ResponseEntity.ok("성공");
 
 
+    }
+
+    @GetMapping("/kbitam/getassetadminList/{conId}")
+    @ResponseBody
+    public ResponseEntity<AssetAdminListRes> getAssetAdminList(@PathVariable String conId){
+//        AssetAdminListRes result = assetRequestService.getAssetAdminList(conId);
+//        System.out.println("hello1");
+//        System.out.println(result.getCount() + result.getData().toString());
+//        System.out.println("hello2");
+        return ResponseEntity.ok(assetRequestService.getAssetAdminList(conId));
     }
 }

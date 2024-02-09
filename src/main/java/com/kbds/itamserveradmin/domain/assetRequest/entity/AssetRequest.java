@@ -51,4 +51,12 @@ public class AssetRequest {
 
     //==연관관계==//
 
+//    public static AssetRequest from()
+
+
+
+
+
+
+
 }
