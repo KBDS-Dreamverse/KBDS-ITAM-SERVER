@@ -35,4 +35,8 @@ public class UserAssetRequestInfo {
     @JoinColumn(name = "lic_key_id")
     private LicenseKey licenseKey;
 
+    @OneToOne
+    private AssetRequest assetRequest;
+
+
 }
