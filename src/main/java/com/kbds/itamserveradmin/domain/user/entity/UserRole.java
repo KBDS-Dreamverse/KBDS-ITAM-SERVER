@@ -13,5 +13,4 @@ public enum UserRole {
     L4_1("L4","부장"),L4_2("L4","본부장");
     private final String code;
     private final String value;
-
 }
