@@ -1,6 +1,6 @@
 package com.kbds.itamserveradmin.domain.department.entity;
 
-import com.kbds.itamserveradmin.domain.cooperation.entity.Cooperation;
+import com.kbds.itamserveradmin.domain.corporation.entity.Corporation;
 import com.kbds.itamserveradmin.domain.purchaseRequest.entity.NewAssetRequest;
 import com.kbds.itamserveradmin.domain.user.entity.User;
 import lombok.AllArgsConstructor;
@@ -27,17 +27,9 @@ public class Department {
 
     //==연관관계==//
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "corp_id")
-    private Cooperation cooperation;
+    private Corporation corporation;
 
-    @OneToMany(mappedBy = "department")
-    private List<User> users = new ArrayList<>();
-
-    @OneToMany(mappedBy = "department")
-    private List<DepartmentAsset> departmentAssets = new ArrayList<>();
-
-    @OneToMany(mappedBy = "department")
-    private List<NewAssetRequest> newAssetRequests = new ArrayList<>();
     //==연관관계==//
 }
