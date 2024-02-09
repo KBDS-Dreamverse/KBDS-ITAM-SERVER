@@ -77,7 +77,14 @@ public class ContractService {
 
         return licenseTypes;
     }
-
+    //Ast id 찾는 메서드
+    public Asset getAstIdByContId(String contId){
+        Contract contract = contractRepository.findByContId(contId);
+        if (contract == null){
+            return null;
+        }
+        return contract.getAst();
+    }
     /**
      * DashBoard에 보여줄 데이터 가져오는 메서드
      * @param contId
@@ -181,7 +188,5 @@ public class ContractService {
                 .calKeyStatus(status)
                 .build();
     }
-
-
 
 }
