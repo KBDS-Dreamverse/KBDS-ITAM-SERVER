@@ -2,12 +2,14 @@ package com.kbds.itamserveradmin.domain.assetRequest.controller;
 
 
 import com.kbds.itamserveradmin.domain.assetRequest.dto.AssetRequestReq;
+import com.kbds.itamserveradmin.domain.assetRequest.dto.AssetRequestRes;
 import com.kbds.itamserveradmin.domain.assetRequest.entity.AssetRequest;
 import com.kbds.itamserveradmin.domain.assetRequest.service.AssetRequestService;
 import com.kbds.itamserveradmin.domain.user.dto.AssetAdminList;
 import com.kbds.itamserveradmin.domain.user.dto.AssetAdminListRes;
 import com.kbds.itamserveradmin.global.exception.BaseException;
 import com.kbds.itamserveradmin.global.exception.ErrorCode;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -43,23 +45,14 @@ public class AssetRequestController {
 
     @PostMapping("/kbitam/{dept}/{contId}/request")
     @ResponseBody
-    public ResponseEntity<String> requestAsset(@PathVariable String dept,
-                                               @PathVariable String contId,
-                                               @RequestBody AssetRequestReq req){
-
-//        System.out.println("dept :"+dept+"  conId:"+contId);
-//        System.out.println(req.getContId());
-//        System.out.println(req.getAstReqStartDate());
-//        System.out.println(req.getAstReqEndDate());
-//        System.out.println(req.getAstReqEndDate());
-//        System.out.println(req.getAstReqMgDate());
-//        System.out.println(req.getAstReqReason());
-//        System.out.println(req.getUserId());
-
-        assetRequestService.RequestAsset(contId,req);
+    public ResponseEntity<AssetRequestRes> requestAsset(@PathVariable String dept,
+                                                        @PathVariable String contId,
+                                                        @RequestBody AssetRequestReq req){
 
 
-        return ResponseEntity.ok("성공");
+        AssetRequestRes as = assetRequestService.RequestAsset(dept,contId,req);
+
+        return ResponseEntity.ok(as);
 
 
     }
