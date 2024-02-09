@@ -11,8 +11,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
+
 
 @Entity
 @Data
@@ -20,6 +19,7 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 public class Contract {
+
     @Id
     private String contId;
 
@@ -31,20 +31,25 @@ public class Contract {
     @JoinColumn(name = "corp_id")
     private Corporation corp;
 
-    @OneToOne
+    @OneToOne(optional = false)
     private NewAssetRequest newAstReq;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "usr_id")
     private User user;
 
+
     private LocalDateTime contRegDate;
+    private String contName;
     private String contLicTag;
-    private int contPrice;
+    private Integer contPrice;
     private String contAdminName;
     private String contVer;
+
+
+
+    @Enumerated(EnumType.STRING)
     private OpStatus contOpStatus;
-    private String contName;
 
     @PrePersist
     public void prePersist() {

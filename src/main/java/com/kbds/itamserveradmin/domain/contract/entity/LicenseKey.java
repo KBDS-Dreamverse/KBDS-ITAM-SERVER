@@ -16,6 +16,7 @@ public class LicenseKey {
     @Id
     private String licKeyId;
 
+    @Enumerated(EnumType.STRING)
     private KeyStatus licKeyStatus;
 
     //==연관관계==//

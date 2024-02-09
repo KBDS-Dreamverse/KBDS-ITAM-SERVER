@@ -46,21 +46,6 @@ public class Corporation {
     @Column(name = "is_sub_corp")
     private boolean isSubCorp;
 
-    //==연관관계==//
-    @OneToMany(mappedBy = "cooperation",fetch = FetchType.LAZY)
-    @Builder.Default
-    private List<Department> departments = new ArrayList<>();
-
-    @OneToMany(mappedBy = "cooperation",fetch = FetchType.LAZY)
-    @Builder.Default
-    private List<User> users = new ArrayList<>();
-
-
-    @OneToMany(mappedBy = "corp",fetch = FetchType.LAZY)
-    @Builder.Default
-    private List<Contract> contracts = new ArrayList<>();
-
-    //==연관관계==//
 
 
 }

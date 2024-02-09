@@ -16,6 +16,7 @@ public class CALKey {
     @Id
     private String calId;
 
+    @Enumerated(EnumType.STRING)
     private KeyStatus calKeyStatus;
 
     //==연관관계==//
