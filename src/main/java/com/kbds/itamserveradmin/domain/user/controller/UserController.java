@@ -12,11 +12,11 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @RequestMapping("/kbitam")
 public class UserController {
+
     private final UserService userService;
 
-    @PostMapping("/")
-    public ResponseEntity<UserInfoRes>GetUserInfo(@RequestBody String userId){
-
+    @GetMapping("/userInfo")
+    public ResponseEntity<UserInfoRes> getUserInfo(@RequestParam String userId) {
         return ResponseEntity.ok(userService.GetUserInfo(userId));
     }
 }

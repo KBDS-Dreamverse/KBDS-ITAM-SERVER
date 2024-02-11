@@ -14,7 +14,7 @@ public enum UserRole {
     L2_1("L2","과장"),L2_2("L2","차장"),
     L3_1("L3","수석 차장"),L3_2("L3","팀장"),
     L4_1("L4","부장"),L4_2("L4","본부장");
+
     private final String code;
-    @JsonValue
     private final String value;
 }
