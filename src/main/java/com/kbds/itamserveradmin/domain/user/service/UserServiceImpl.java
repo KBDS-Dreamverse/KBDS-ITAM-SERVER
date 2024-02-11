@@ -8,19 +8,21 @@ import com.kbds.itamserveradmin.domain.user.entity.UserRole;
 import com.kbds.itamserveradmin.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 @Slf4j
 @RequiredArgsConstructor
-public class UserServiceImpl implements UserService{
-    private final UserRepository userRepository;
-    private final DepartmentRepository departmentRepository;
-    public UserInfoRes GetUserInfo(String userId){
-        System.out.println("userId : "+ userId);
-        UserInfoRes userInfoRes = userRepository.findUserInfoWithCooperationAndDepartmentByUserId(userId);
-        System.out.println(userInfoRes.toString());
-        return userInfoRes;
+public class UserServiceImpl implements UserService {
 
+    private final UserRepository userRepository;
+
+    @Override
+    public UserInfoRes GetUserInfo(String userId) {
+        log.info("userId : {}", userId);
+        UserInfoRes userInfoRes = userRepository.findUserInfoWithCooperationAndDepartmentByUserId(userId);
+        log.info(userInfoRes.toString());
+        return userInfoRes;
     }
 }
