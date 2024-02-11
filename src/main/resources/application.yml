@@ -1,5 +1,5 @@
 server:
-  port: 9000
+  port: 8080
   servlet:
     context-path: /
     encoding:
@@ -8,21 +8,23 @@ server:
       force: true
 
 spring:
+  jackson:
+    property-naming-strategy: SNAKE_CASE
 
   application:
     name : itam-server-admin
-#
-#  datasource:
-#    platform: mysql
-#    url: jdbc:mysql://localhost:3306/kbds?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
-#    username: root
-#    password: smilechs5542
-#    driver-class-name: com.mysql.cj.jdbc.Driver # mysql 8버전
-#
+
+  datasource:
+    platform: mysql
+    url: jdbc:mysql://localhost:3306/kbds?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    username: root
+    password: 1234
+    driver-class-name: com.mysql.cj.jdbc.Driver # mysql 8버전
+
 
   jpa:
     hibernate:
-      ddl-auto: create # create, update, none
+      ddl-auto: update # create, update, none
       #naming:
         #entity만들때, 변수명 그대로 데이터베이스 필드에 넣어주겠다.
         #만약, org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy 전략을 사용하겠다고 하면,

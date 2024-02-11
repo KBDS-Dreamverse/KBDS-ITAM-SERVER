@@ -30,12 +30,15 @@ public class AssetRequestLog {
     private Long astReqCnt;
 
     private LocalDateTime astReqSud;
+
+
     //==연관관계==//
-    @ManyToOne
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ast_req_id")
     private AssetRequest assetRequest;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ast_req_user_id")
     private User assetRequestUser;
     //==연관관계==//

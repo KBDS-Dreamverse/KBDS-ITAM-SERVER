@@ -19,11 +19,11 @@ public class ContractRecord extends BaseEntity {
 
     private RecordType recordType;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(nullable = false, name = "user_Id")
     private User user;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(nullable = false, name = "contract_id")
     private Contract contract;
 }

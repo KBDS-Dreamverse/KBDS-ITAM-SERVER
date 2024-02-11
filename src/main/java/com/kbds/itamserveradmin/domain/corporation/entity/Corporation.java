@@ -1,4 +1,4 @@
-package com.kbds.itamserveradmin.domain.cooperation.entity;
+package com.kbds.itamserveradmin.domain.corporation.entity;
 
 import com.kbds.itamserveradmin.domain.contract.entity.Contract;
 import com.kbds.itamserveradmin.domain.department.entity.Department;
@@ -17,7 +17,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Cooperation {
+public class Corporation {
     @Id
     @Column(name = "corp_id")
     private String corpId;
@@ -46,23 +46,6 @@ public class Cooperation {
     @Column(name = "is_sub_corp")
     private boolean isSubCorp;
 
-    //==연관관계==//
-    @OneToMany(mappedBy = "cooperation",fetch = FetchType.LAZY)
-    @Builder.Default
-    private List<Department> departments = new ArrayList<>();
-
-    @OneToMany(mappedBy = "cooperation",fetch = FetchType.LAZY)
-    @Builder.Default
-    private List<User> users = new ArrayList<>();
-
-//    @OneToMany(mappedBy ="cooperation")
-//    private List<Asset> assets = new ArrayList<>();
-
-    @OneToMany(mappedBy = "corp",fetch = FetchType.LAZY)
-    @Builder.Default
-    private List<Contract> contracts = new ArrayList<>();
-
-    //==연관관계==//
 
 
 }

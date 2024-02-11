@@ -1,10 +1,11 @@
 package com.kbds.itamserveradmin.domain.user.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.kbds.itamserveradmin.domain.asset.entity.AssetNotice;
 import com.kbds.itamserveradmin.domain.assetRequest.entity.AssetRequest;
 import com.kbds.itamserveradmin.domain.contract.entity.ContractRecord;
-import com.kbds.itamserveradmin.domain.cooperation.entity.Cooperation;
+import com.kbds.itamserveradmin.domain.corporation.entity.Corporation;
 import com.kbds.itamserveradmin.domain.department.entity.Department;
 import com.kbds.itamserveradmin.global.entity.BaseEntity;
 import lombok.AllArgsConstructor;
@@ -23,7 +24,6 @@ import java.util.List;
 @Builder
 public class User extends BaseEntity {
     @Id
-    @Column(name = "user_id")
     private String userId;
 
     @Column(name = "user_name")
@@ -44,35 +44,12 @@ public class User extends BaseEntity {
 
 
     //==연관관계==//
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "dept_id")
     private Department department;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "corp_id")
-    private Cooperation cooperation;
+    private Corporation corporation;
 
-    @OneToMany(mappedBy = "user",fetch = FetchType.LAZY)
-    @Builder.Default
-    private List<UserLog> userLogs = new ArrayList<>();
-
-    @OneToMany(mappedBy = "writer",fetch = FetchType.LAZY)
-    @Builder.Default
-    private List<AssetNotice> assetNotices = new ArrayList<>();
-    //==연관관계==//
-
-    @OneToMany(mappedBy = "manager",fetch = FetchType.LAZY)
-    @Builder.Default
-    private List<AssetAdmin> assetAdmins = new ArrayList<>();
-
-    @OneToMany(mappedBy = "astRequestUser",fetch = FetchType.LAZY)
-    @Builder.Default
-    private List<AssetRequest> assetRequests = new ArrayList<>();
-
-    @OneToMany(mappedBy = "user",fetch = FetchType.LAZY)
-    @Builder.Default
-    private List<NewAssetRequestAdmin> newAssetRequestAdmins = new ArrayList<>();
-
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-    private List<ContractRecord> records = new ArrayList<>();
 }

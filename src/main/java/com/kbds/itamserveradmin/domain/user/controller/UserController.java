@@ -1,6 +1,6 @@
 package com.kbds.itamserveradmin.domain.user.controller;
 
-import com.kbds.itamserveradmin.domain.user.dto.MainRes;
+import com.kbds.itamserveradmin.domain.user.dto.UserInfoRes;
 import com.kbds.itamserveradmin.domain.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -15,8 +15,8 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping("/")
-    public ResponseEntity<MainRes>GetUserInfo(@RequestBody String userId){
+    public ResponseEntity<UserInfoRes>GetUserInfo(@RequestBody String userId){
 
-        return ResponseEntity.ok(null);
+        return ResponseEntity.ok(userService.GetUserInfo(userId));
     }
 }
