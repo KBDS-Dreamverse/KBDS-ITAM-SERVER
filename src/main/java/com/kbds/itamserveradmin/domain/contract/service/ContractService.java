@@ -1,5 +1,6 @@
 package com.kbds.itamserveradmin.domain.contract.service;
 
+import com.kbds.itamserveradmin.domain.asset.entity.Asset;
 import com.kbds.itamserveradmin.domain.assetRequest.entity.AssetRequest;
 import com.kbds.itamserveradmin.domain.assetRequest.entity.UserAssetRequestInfo;
 import com.kbds.itamserveradmin.domain.assetRequest.repository.AssetRequestRepository;
