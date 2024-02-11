@@ -1,28 +1,31 @@
 package com.kbds.itamserveradmin.domain.contract.service;
 
 import com.kbds.itamserveradmin.domain.asset.entity.Asset;
-import com.kbds.itamserveradmin.domain.assetRequest.entity.AssetRequest;
 import com.kbds.itamserveradmin.domain.assetRequest.entity.UserAssetRequestInfo;
 import com.kbds.itamserveradmin.domain.assetRequest.repository.AssetRequestRepository;
 import com.kbds.itamserveradmin.domain.assetRequest.repository.UserAssetRequestInfoRepository;
 import com.kbds.itamserveradmin.domain.assetRequest.service.AssetRequestService;
 import com.kbds.itamserveradmin.domain.contract.dto.CalKeyRes;
+import com.kbds.itamserveradmin.domain.contract.dto.ContExpireRes;
 import com.kbds.itamserveradmin.domain.contract.dto.DashBoardRes;
 import com.kbds.itamserveradmin.domain.contract.entity.*;
 import com.kbds.itamserveradmin.domain.contract.repository.ContractRepository;
 import com.kbds.itamserveradmin.domain.contract.repository.NumOfUsersTypeRepository;
 import com.kbds.itamserveradmin.domain.contract.repository.PeriodTypeRepository;
 import com.kbds.itamserveradmin.domain.contract.repository.SupplyTypeRepository;
-import com.kbds.itamserveradmin.domain.purchaseRequest.entity.NewAssetRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.*;
 
+import static com.kbds.itamserveradmin.domain.contract.entity.OpStatus.IN_DISPOSAL;
+import static com.kbds.itamserveradmin.domain.contract.entity.OpStatus.IN_OPERATION;
+import static com.kbds.itamserveradmin.global.exception.ErrorCode.CONTRACT_IS_ALREADY_IN_DISPOSAL;
 import static com.kbds.itamserveradmin.global.exception.ErrorCode.CONTRACT_NOT_FOUND;
 
 @Slf4j
@@ -77,6 +80,15 @@ public class ContractService {
 
         return licenseTypes;
     }
+    //Ast id 찾는 메서드
+    public Asset getAstIdByContId(String contId){
+        Contract contract =  contractRepository.findById(contId)
+                .orElseThrow(() -> new IllegalArgumentException(String.valueOf(CONTRACT_NOT_FOUND)));
+        if (contract == null){
+            return null;
+        }
+        return contract.getAst();
+    }
     /**
      * DashBoard에 보여줄 데이터 가져오는 메서드
      * @param contId
@@ -110,12 +122,10 @@ public class ContractService {
 
         // 3.2 기간 (1. yml에서 write-dates-as-timestamps: false 로 설정해도 날짜 리스트로 출력)
         // (2. PeriodType에서 @JsonFormat으로 설정해도 수정 안된다)
-        PeriodType periodType = periodTypeRepository.findByCont_ContId(contId);
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        String formattedStartDate = periodType.getContStartDate().format(formatter);
-        String formattedEndDate = periodType.getContEndDate().format(formatter);
-        licValues.put("contStartDate", formattedStartDate);
-        licValues.put("contEndDate", formattedEndDate);
+        List<LocalDateTime> dateTimeList = getPeriod(contId);
+        List<String> formattedDate = getFormattedDate(dateTimeList);
+        licValues.put("contStartDate", formattedDate.get(0));
+        licValues.put("contEndDate", formattedDate.get(1));
 
 
         // 3.3 사용자
@@ -165,6 +175,13 @@ public class ContractService {
     }
 
     public CalKeyRes getCalKey(String userId, String contId) {
+        Contract findContract =  contractRepository.findById(contId)
+                .orElseThrow(() -> new IllegalArgumentException(String.valueOf(CONTRACT_NOT_FOUND)));
+        
+        // 해당 계약의 라이선스 조합이 서버접속이 아닌 경우 -> Exception 던지기
+        if (findContract.getContLicTag().charAt(2) != '5') {
+            return null;
+        }
         String astReqId = assetRequestService.getAstReqIdByUserIdAndContId(userId, contId);
         UserAssetRequestInfo userAstReqInfo = userAssetRequestInfoRepository.findByAssetRequest_AstReqId(astReqId);
 
@@ -181,13 +198,47 @@ public class ContractService {
                 .build();
     }
 
-    //Ast id 찾는 메서드
-    public Asset getAstIdByContId(String contId){
-        Contract contract = contractRepository.findByContId(contId);
-        if (contract == null){
-            return null;
+    public List<LocalDateTime> getPeriod(String contId) {
+        List<LocalDateTime> period = new ArrayList<>(2);
+        PeriodType periodType = periodTypeRepository.findByCont_ContId(contId);
+        period.add(periodType.getContStartDate());
+        period.add(periodType.getContEndDate());
+        return period;
+    }
+
+    public List<String> getFormattedDate(List<LocalDateTime> dateTimeList) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        String formattedStartDate = dateTimeList.get(0).format(formatter);
+        String formattedEndDate = dateTimeList.get(1).format(formatter);
+
+        List<String> formatted = new ArrayList<>();
+        formatted.add(formattedStartDate);
+        formatted.add(formattedEndDate);
+        return formatted;
+    }
+
+    public ContExpireRes getExpire(String contId) {
+        List<LocalDateTime> period = getPeriod(contId);
+        List<String> formattedDate = getFormattedDate(period);
+
+        Long between =  ChronoUnit.DAYS.between(LocalDateTime.now(), period.get(1));
+
+        return ContExpireRes.builder()
+                .contStartDate(formattedDate.get(0))
+                .contEndDate(formattedDate.get(1))
+                .remainingDays(between)
+                .build();
+    }
+
+    public void stopContract(String contId) {
+        Contract contract = contractRepository.findById(contId)
+                .orElseThrow(() -> new IllegalArgumentException(String.valueOf(CONTRACT_NOT_FOUND)));
+
+        if (contract.getContOpStatus() == IN_OPERATION) {
+            contract.setContOpStatus(IN_DISPOSAL);
+        } else {
+            throw new IllegalStateException(String.valueOf(CONTRACT_IS_ALREADY_IN_DISPOSAL));
         }
-        return contract.getAst();
     }
 
 }
