@@ -52,3 +52,5 @@ spring:
 #    org.hibernate.SQL: debug # 하이버네이트가 생성하는 SQL이 다보인다.
 ##    org.hibernate.type:  #binding parameter의 값이 무엇인지를 알려줌.
 
+file:
+  dir: /Desktop/images

@@ -1,5 +1,6 @@
 package com.kbds.itamserveradmin.domain.contract.service;
 
+import com.kbds.itamserveradmin.domain.asset.entity.Asset;
 import com.kbds.itamserveradmin.domain.assetRequest.entity.AssetRequest;
 import com.kbds.itamserveradmin.domain.assetRequest.entity.UserAssetRequestInfo;
 import com.kbds.itamserveradmin.domain.assetRequest.repository.AssetRequestRepository;
@@ -34,7 +35,6 @@ public class ContractService {
     private final SupplyTypeRepository supplyTypeRepository;
     private final PeriodTypeRepository periodTypeRepository;
     private final NumOfUsersTypeRepository numOfUsersTypeRepository;
-    private final AssetRequestRepository assetRequestRepository;
     private final UserAssetRequestInfoRepository userAssetRequestInfoRepository;
 
     private final AssetRequestService assetRequestService;
@@ -76,14 +76,6 @@ public class ContractService {
         licenseTypes.add(user);
 
         return licenseTypes;
-    }
-    //Ast id 찾는 메서드
-    public Asset getAstIdByContId(String contId){
-        Contract contract = contractRepository.findByContId(contId);
-        if (contract == null){
-            return null;
-        }
-        return contract.getAst();
     }
     /**
      * DashBoard에 보여줄 데이터 가져오는 메서드
@@ -187,6 +179,15 @@ public class ContractService {
                 .calKey(userAstReqInfo.getCalKey().getCalId())
                 .calKeyStatus(status)
                 .build();
+    }
+
+    //Ast id 찾는 메서드
+    public Asset getAstIdByContId(String contId){
+        Contract contract = contractRepository.findByContId(contId);
+        if (contract == null){
+            return null;
+        }
+        return contract.getAst();
     }
 
 }
