@@ -1,26 +1,39 @@
 package com.kbds.itamserveradmin.domain.asset.service;
 
+import com.kbds.itamserveradmin.domain.asset.dto.ManualLogReq;
+import com.kbds.itamserveradmin.domain.asset.dto.ManualLogRes;
 import com.kbds.itamserveradmin.domain.asset.entity.ManualLog;
 import com.kbds.itamserveradmin.domain.asset.repository.ManualLogRepository;
+import com.kbds.itamserveradmin.global.file.FileUploadService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.io.IOException;
 
 
 @Service
 @RequiredArgsConstructor
 public class ManualLogService {
     private final ManualLogRepository manualLogRepository;
+    private final FileUploadService fileUploadService;
 
     public ManualLog findByAsset_AstId(String astId){
         return manualLogRepository.findByAsset_AstId(astId);
     }
+    //일단 로컬에 파일 업로드 로직을 작성했습니다.(asset에 연결 아직못함)
+    @Transactional
+    public void saveInstallFile(ManualLogReq manualLogReq)throws IOException{
+        ManualLog manualLog = new ManualLog();
+        String filePath = fileUploadService.saveFile(manualLogReq.getFile());
+        manualLog.updateInstallFilePath(filePath);
 
-//    //파일을 가져온다.. 넣지말고 일단 디비에 파일이 이
-//    public void getFile(ManualLog manualLog, MultipartFile multipartFile){
-//        String filePath = System.getProperty("");
-//        UUID uuid = UUID.randomUUID();
-//        String fileName = uuid + "_" + multipartFile.getOriginalFilename();
-//        File saveFile = new File();
+        manualLogRepository.save(manualLog);
+    }
 
-//    }
+    public ManualLog findByMnLogId(String mnLogId){
+        return manualLogRepository.findByMnLogId(mnLogId);
+    }
+
+
 }
