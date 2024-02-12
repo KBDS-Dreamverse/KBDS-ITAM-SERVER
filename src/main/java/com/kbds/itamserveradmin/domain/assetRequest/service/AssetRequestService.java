@@ -1,10 +1,7 @@
 package com.kbds.itamserveradmin.domain.assetRequest.service;
 
 
-import com.kbds.itamserveradmin.domain.assetRequest.dto.AssetRequestReq;
-import com.kbds.itamserveradmin.domain.assetRequest.dto.AssetRequestRes;
-import com.kbds.itamserveradmin.domain.assetRequest.dto.AstReqSearchReq;
-import com.kbds.itamserveradmin.domain.assetRequest.dto.AstReqSearchRes;
+import com.kbds.itamserveradmin.domain.assetRequest.dto.*;
 import com.kbds.itamserveradmin.domain.assetRequest.entity.*;
 import com.kbds.itamserveradmin.domain.assetRequest.repository.AssetRequestLogRepository;
 import com.kbds.itamserveradmin.domain.assetRequest.repository.AssetRequestManageLogRepository;
@@ -28,9 +25,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -67,9 +66,9 @@ public class AssetRequestService {
     public AssetAdminListRes getAssetAdminList(String conId){
 
         List<AssetAdminList> astadminList = (List<AssetAdminList>) assetAdminRepository.getAssetAdminList(conId);
-        for(AssetAdminList aa : astadminList){
-            System.out.println(aa.getDept_name());
-        }
+//        for(AssetAdminList aa : astadminList){
+//            System.out.println(aa.getDept_name());
+//        }
         return AssetAdminListRes.of(astadminList.size(),astadminList);
     }
 
@@ -190,6 +189,80 @@ public class AssetRequestService {
         return t;
 
     }
+
+//    public AstReqDetailRes getAstReqDetatils(String astReqId, String userId){
+//
+//        List<AssetRequestManage> e = assetRequestManageRepository.findByAstReqIdWithAssetRequest(astReqId);
+//        System.out.println(e.size());
+//        System.out.println(e.toString());
+//        System.out.println("=======");
+//        List<AstReqAdminList> admins = e.stream()
+//                        .map(o -> new AstReqAdminList(o))
+//                                .collect(Collectors.toList());
+//        System.out.println(admins.size());
+//
+//
+//
+//
+//        AssetRequest astreq = e.get(0).getAssetRequest();
+//        String astReqName = e.get(0).getAstReqName();
+//        String requestStatus = astreq.getAstReqStatus().getValue();
+//        LocalDateTime astReqStartDate = astreq.getAstReqStartDate();
+//        LocalDateTime astReqEndDate =astreq.getAstReqEndDate();
+//        String astReqReason = astreq.getAstReqReason();
+//        User user = userService.getUser(userId);
+//
+//
+//
+//
+//        AstReqDetailRes res = AstReqDetailRes.of(astReqName,requestStatus,astReqStartDate,astReqEndDate,astReqReason,user,admins);
+//
+//
+//
+//        return res;
+//
+//
+//    }
+
+
+    public AstReqDetailRes getAstReqDetatils(String astReqId, String userId){
+
+        //List<AssetRequestManage> e = assetRequestManageRepository.findByAstReqIdWithAssetRequest(astReqId);
+        List<AssetRequestManage> e = assetRequestManageRepository.findByAssetRequestMange_AstReqId(astReqId);
+
+        System.out.println(e.size());
+        System.out.println(e.toString());
+        System.out.println("=======");
+        List<AstReqAdminList> admins = e.stream()
+                .map(o -> new AstReqAdminList(o))
+                .collect(Collectors.toList());
+        System.out.println(admins.size());
+
+
+
+
+        AssetRequest astreq = e.get(0).getAssetRequest();
+        String astReqName = e.get(0).getAstReqName();
+        String requestStatus = astreq.getAstReqStatus().getValue();
+        LocalDateTime astReqStartDate = astreq.getAstReqStartDate();
+        LocalDateTime astReqEndDate =astreq.getAstReqEndDate();
+        String astReqReason = astreq.getAstReqReason();
+        User user = userService.getUser(userId);
+
+
+
+
+        AstReqDetailRes res = AstReqDetailRes.of(astReqName,requestStatus,astReqStartDate,astReqEndDate,astReqReason,user,admins);
+
+
+
+        return res;
+
+
+    }
+
+
+
 
 
     public String test(String userId){

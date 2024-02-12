@@ -1,10 +1,7 @@
 package com.kbds.itamserveradmin.domain.assetRequest.controller;
 
 
-import com.kbds.itamserveradmin.domain.assetRequest.dto.AssetRequestReq;
-import com.kbds.itamserveradmin.domain.assetRequest.dto.AssetRequestRes;
-import com.kbds.itamserveradmin.domain.assetRequest.dto.AstReqSearchReq;
-import com.kbds.itamserveradmin.domain.assetRequest.dto.AstReqSearchRes;
+import com.kbds.itamserveradmin.domain.assetRequest.dto.*;
 import com.kbds.itamserveradmin.domain.assetRequest.entity.AssetRequest;
 import com.kbds.itamserveradmin.domain.assetRequest.service.AssetRequestService;
 import com.kbds.itamserveradmin.domain.user.dto.AssetAdminList;
@@ -99,6 +96,17 @@ public class AssetRequestController {
         String t = assetRequestService.test(userId);
         System.out.println("빠이");
         return ResponseEntity.ok(t);
+
+    }
+
+
+    @GetMapping("/kbitam/mypage/{userId}/requestList/{astReqId}")
+    public ResponseEntity<AstReqDetailRes> getUserRequestDetails(String userId, String astReqId){
+
+        AstReqDetailRes res = assetRequestService.getAstReqDetatils(astReqId,userId);
+
+        return ResponseEntity.ok(res);
+
 
     }
 }
