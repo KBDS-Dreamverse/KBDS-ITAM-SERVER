@@ -22,7 +22,8 @@ public enum ErrorCode {
     PASSWORD_INCORRECT(HttpStatus.UNAUTHORIZED, "P-001", "비밀번호가 틀립니다."),
 
     // asset
-    ASSET_IS_NOT_INUSE(HttpStatus.CONFLICT, "A-001", "사용중인 상태가 아닙니다.");
+    ASSET_IS_NOT_INUSE(HttpStatus.CONFLICT, "A-001", "사용중인 상태가 아닙니다."),
+    ASSET_IS_EXPIRE(HttpStatus.FORBIDDEN, "A-002", "사용이 만료되었습니다.");
 
     
 
