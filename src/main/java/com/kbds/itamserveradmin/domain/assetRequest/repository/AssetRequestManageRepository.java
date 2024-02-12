@@ -31,10 +31,10 @@ public interface AssetRequestManageRepository extends JpaRepository<AssetRequest
             "WHERE ar.assetRequest.astReqId = :astReqId ")
     public List<AssetRequestManage> findByAstReqId(@Param("astReqId") String astReqId);
 
-//
-//    @Query("SELECT ar FROM AssetRequestManage ar " +
-//            "WHERE ar.astReqId = :astReqId ")
-//    public List<AssetRequestManage> findByAstReqId(@Param("astReqId") String astReqId);
+
+    @Query("SELECT ar FROM AssetRequestManage ar " +
+            "WHERE ar.astReqMgId = :astReqMgId ")
+    AssetRequestManage findByAstReqMgId(@Param("astReqMgId") String astReqMgId);
 
 
 

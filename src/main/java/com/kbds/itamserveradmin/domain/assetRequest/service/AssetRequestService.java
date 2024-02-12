@@ -304,14 +304,19 @@ public class AssetRequestService {
 
     }
 
-//    public AstReqDetailForAdminRes getAstReqDetatilsForAdmin(String astReqId, String userId){
-//
-//        List<AssetRequestManage> e = assetRequestManageRepository.findByAstReqId(astReqId);
-//
-//
-//
-//        return
-//    }
+    public AstReqDetailForAdminRes getAstReqDetatilsForAdmin(String astReqMgId, String userId){
+
+        AssetRequestManage e = assetRequestManageRepository.findByAstReqMgId(astReqMgId);
+
+
+
+
+
+
+
+
+        return
+    }
 
 
     public void updateUserRequestStatus(String astReqId){
