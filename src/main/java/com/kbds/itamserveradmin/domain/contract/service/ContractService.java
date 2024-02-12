@@ -2,7 +2,6 @@ package com.kbds.itamserveradmin.domain.contract.service;
 
 import com.kbds.itamserveradmin.domain.asset.entity.Asset;
 import com.kbds.itamserveradmin.domain.assetRequest.entity.UserAssetRequestInfo;
-import com.kbds.itamserveradmin.domain.assetRequest.repository.AssetRequestRepository;
 import com.kbds.itamserveradmin.domain.assetRequest.repository.UserAssetRequestInfoRepository;
 import com.kbds.itamserveradmin.domain.assetRequest.service.AssetRequestService;
 import com.kbds.itamserveradmin.domain.contract.dto.CalKeyRes;
