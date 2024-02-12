@@ -1,6 +1,7 @@
 package com.kbds.itamserveradmin.domain.user.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.kbds.itamserveradmin.domain.asset.entity.AssetNotice;
 import com.kbds.itamserveradmin.domain.assetRequest.entity.AssetRequest;
 import com.kbds.itamserveradmin.domain.contract.entity.ContractRecord;
@@ -23,7 +24,6 @@ import java.util.List;
 @Builder
 public class User extends BaseEntity {
     @Id
-    @Column(name = "user_id")
     private String userId;
 
     @Column(name = "user_name")

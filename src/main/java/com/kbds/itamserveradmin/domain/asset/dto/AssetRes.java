@@ -27,9 +27,9 @@ public class AssetRes {
         return AssetRes.builder()
                 .astId(asset.getAstId())
                 .astName(asset.getAstName())
-                .astTag(asset.getAstTag()) //자산태그
-                .astDpd(asset.getAstDpd()) //상세설명
-                .astSpd(asset.getAstSpd()) //간략설명
+                .astTag(asset.getAstTag())
+                .astDpd(asset.getAstDpd())
+                .astSpd(asset.getAstSpd())
                 .astVer(asset.getAstVer())
                 .astPrice(asset.getAstPrice())
                 .build();
