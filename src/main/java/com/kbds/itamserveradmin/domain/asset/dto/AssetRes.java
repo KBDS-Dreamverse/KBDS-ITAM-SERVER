@@ -34,5 +34,4 @@ public class AssetRes {
                 .astPrice(asset.getAstPrice())
                 .build();
     }
-
 }

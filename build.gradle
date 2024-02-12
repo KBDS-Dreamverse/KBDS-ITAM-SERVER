@@ -29,10 +29,8 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
 
-
 	//h2 DB
 	runtimeOnly 'com.h2database:h2'
-
 
 	runtimeOnly ('mysql:mysql-connector-java') //mysql8
 	implementation 'org.springframework.boot:spring-boot-starter-jdbc'
@@ -40,8 +38,6 @@ dependencies {
 
 	//jasypt 설정파일 암호화 라이브러리
 	implementation 'com.github.ulisesbocchio:jasypt-spring-boot-starter:3.0.5'
-
-
 
 	// Security, Authentication
 	// 시큐리티 추가
@@ -52,10 +48,13 @@ dependencies {
 	implementation 'io.springfox:springfox-boot-starter:3.0.0'
 	implementation 'io.springfox:springfox-swagger-ui:3.0.0'
 
-
-
-	// 이미지 S3 업로드
-	//implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
+	//pdf view
+	implementation 'com.itextpdf:itext7-core:7.1.15'
+//	// 이미지 S3 업로드
+//	implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
+//	implementation 'com.amazonaws:aws-java-sdk-s3:1.12.476'
+//	implementation 'org.apache.tika:tika-core:2.5.0'
+//	annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
 
 
 
