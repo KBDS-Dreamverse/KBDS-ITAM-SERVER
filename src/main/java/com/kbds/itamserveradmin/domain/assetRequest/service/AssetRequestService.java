@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 @Slf4j
 @Service
@@ -27,6 +28,17 @@ public class AssetRequestService {
                 .findFirst()
                 .orElse(null);
     }
+
+    public AssetRequest findAssetRequestByUserIdAndContId(String userId, String contId) {
+        List<AssetRequest> astReqs = astReqRepository.findByAstRequestUserUserId(userId);
+        Optional<AssetRequest> matchedAstReq = astReqs.stream()
+                .filter(astReq -> astReq.getContract() != null && contId.equals(astReq.getContract().getContId()))
+                .findFirst();
+
+        return matchedAstReq.orElse(null);
+    }
+
+
 
 
 }

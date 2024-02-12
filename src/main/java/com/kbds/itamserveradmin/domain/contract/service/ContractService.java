@@ -1,6 +1,8 @@
 package com.kbds.itamserveradmin.domain.contract.service;
 
 import com.kbds.itamserveradmin.domain.asset.entity.Asset;
+import com.kbds.itamserveradmin.domain.assetRequest.entity.AssetRequest;
+import com.kbds.itamserveradmin.domain.assetRequest.entity.RequestStatus;
 import com.kbds.itamserveradmin.domain.assetRequest.entity.UserAssetRequestInfo;
 import com.kbds.itamserveradmin.domain.assetRequest.repository.AssetRequestRepository;
 import com.kbds.itamserveradmin.domain.assetRequest.repository.UserAssetRequestInfoRepository;
@@ -25,8 +27,7 @@ import java.util.*;
 
 import static com.kbds.itamserveradmin.domain.contract.entity.OpStatus.IN_DISPOSAL;
 import static com.kbds.itamserveradmin.domain.contract.entity.OpStatus.IN_OPERATION;
-import static com.kbds.itamserveradmin.global.exception.ErrorCode.CONTRACT_IS_ALREADY_IN_DISPOSAL;
-import static com.kbds.itamserveradmin.global.exception.ErrorCode.CONTRACT_NOT_FOUND;
+import static com.kbds.itamserveradmin.global.exception.ErrorCode.*;
 
 @Slf4j
 @Service
@@ -206,6 +207,14 @@ public class ContractService {
         return period;
     }
 
+    public List<LocalDateTime> getAstReqPeriod(String contId, String userId) {
+        List<LocalDateTime> period = new ArrayList<>(2);
+        AssetRequest assetRequest = assetRequestService.findAssetRequestByUserIdAndContId(userId, contId);
+        period.add(assetRequest.getAstReqStartDate());
+        period.add(assetRequest.getAstReqEndDate());
+        return period;
+    }
+
     public List<String> getFormattedDate(List<LocalDateTime> dateTimeList) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         String formattedStartDate = dateTimeList.get(0).format(formatter);
@@ -217,8 +226,13 @@ public class ContractService {
         return formatted;
     }
 
-    public ContExpireRes getExpire(String contId) {
-        List<LocalDateTime> period = getPeriod(contId);
+    public ContExpireRes getExpire(String contId, String userId) {
+        AssetRequest assetRequest = assetRequestService.findAssetRequestByUserIdAndContId(userId, contId);
+        if (assetRequest.getAstReqStatus() != RequestStatus.IN_USE) {
+            throw new IllegalStateException(String.valueOf(ASSET_IS_NOT_INUSE));
+        }
+
+        List<LocalDateTime> period = getAstReqPeriod(contId, userId);
         List<String> formattedDate = getFormattedDate(period);
 
         Long between =  ChronoUnit.DAYS.between(LocalDateTime.now(), period.get(1));
@@ -230,14 +244,13 @@ public class ContractService {
                 .build();
     }
 
-    public void stopContract(String contId) {
-        Contract contract = contractRepository.findById(contId)
-                .orElseThrow(() -> new IllegalArgumentException(String.valueOf(CONTRACT_NOT_FOUND)));
+    public void stopContract(String contId, String userId) {
+        AssetRequest assetRequest = assetRequestService.findAssetRequestByUserIdAndContId(userId, contId);
 
-        if (contract.getContOpStatus() == IN_OPERATION) {
-            contract.setContOpStatus(IN_DISPOSAL);
+        if (assetRequest.getAstReqStatus() == RequestStatus.IN_USE) {
+            assetRequest.setAstReqStatus(RequestStatus.EXPIRED);
         } else {
-            throw new IllegalStateException(String.valueOf(CONTRACT_IS_ALREADY_IN_DISPOSAL));
+            throw new IllegalStateException(String.valueOf(ASSET_IS_NOT_INUSE));
         }
     }
 
