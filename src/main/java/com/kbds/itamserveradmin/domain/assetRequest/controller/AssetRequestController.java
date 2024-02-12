@@ -101,7 +101,7 @@ public class AssetRequestController {
 
 
     @GetMapping("/kbitam/mypage/{userId}/requestList/{astReqId}")
-    public ResponseEntity<AstReqDetailRes> getUserRequestDetails(String userId, String astReqId){
+    public ResponseEntity<AstReqDetailRes> getUserRequestDetails(@PathVariable  String userId, @PathVariable String astReqId){
 
         AstReqDetailRes res = assetRequestService.getAstReqDetatils(astReqId,userId);
 

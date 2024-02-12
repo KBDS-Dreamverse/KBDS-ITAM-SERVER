@@ -189,16 +189,64 @@ public class AssetRequestService {
         return t;
 
     }
+//
+//    public AstReqDetailRes getAstReqDetatils(String astReqId, String userId){
+//        System.out.println("zzzzz");
+//        List<AssetRequestManage> e = assetRequestManageRepository.findByAstReqIdWithAssetRequest(astReqId);
+//        System.out.println(e.size());
+//        System.out.println(e.toString());
+//        System.out.println("====1===");
+//        List<AstReqAdminList> admins = e.stream()
+//                        .map(o -> new AstReqAdminList(o))
+//                                .collect(Collectors.toList());
+//        System.out.println(admins.size());
+//
+//        System.out.println("====2===");
+//
+//
+//
+//
+//
+//        AssetRequest astreq = e.get(0).getAssetRequest();
+//        String astReqName = e.get(0).getAstReqName();
+//        String requestStatus = astreq.getAstReqStatus().getValue();
+//        LocalDateTime astReqStartDate = astreq.getAstReqStartDate();
+//        LocalDateTime astReqEndDate =astreq.getAstReqEndDate();
+//        String astReqReason = astreq.getAstReqReason();
+//
+//        System.out.println("====3===");
+//
+//        User user = userService.getUser(userId);
+//
+//        System.out.println("====4===");
+//
+//
+//
+//
+//
+//        AstReqDetailRes res = AstReqDetailRes.of(astReqName,requestStatus,astReqStartDate,astReqEndDate,astReqReason,user,admins);
+//
+//        System.out.println("====5===");
+//
+//
+//        return res;
+//
+//
+//    }
 
+//
 //    public AstReqDetailRes getAstReqDetatils(String astReqId, String userId){
 //
 //        List<AssetRequestManage> e = assetRequestManageRepository.findByAstReqIdWithAssetRequest(astReqId);
+//        List<AssetRequestManage> e = assetRequestManageRepository.findByAstReqId(astReqId);
+//
+//
 //        System.out.println(e.size());
 //        System.out.println(e.toString());
 //        System.out.println("=======");
 //        List<AstReqAdminList> admins = e.stream()
-//                        .map(o -> new AstReqAdminList(o))
-//                                .collect(Collectors.toList());
+//                .map(o -> new AstReqAdminList(o))
+//                .collect(Collectors.toList());
 //        System.out.println(admins.size());
 //
 //
@@ -223,43 +271,6 @@ public class AssetRequestService {
 //
 //
 //    }
-
-
-    public AstReqDetailRes getAstReqDetatils(String astReqId, String userId){
-
-        //List<AssetRequestManage> e = assetRequestManageRepository.findByAstReqIdWithAssetRequest(astReqId);
-        List<AssetRequestManage> e = assetRequestManageRepository.findByAssetRequestMange_AstReqId(astReqId);
-
-        System.out.println(e.size());
-        System.out.println(e.toString());
-        System.out.println("=======");
-        List<AstReqAdminList> admins = e.stream()
-                .map(o -> new AstReqAdminList(o))
-                .collect(Collectors.toList());
-        System.out.println(admins.size());
-
-
-
-
-        AssetRequest astreq = e.get(0).getAssetRequest();
-        String astReqName = e.get(0).getAstReqName();
-        String requestStatus = astreq.getAstReqStatus().getValue();
-        LocalDateTime astReqStartDate = astreq.getAstReqStartDate();
-        LocalDateTime astReqEndDate =astreq.getAstReqEndDate();
-        String astReqReason = astreq.getAstReqReason();
-        User user = userService.getUser(userId);
-
-
-
-
-        AstReqDetailRes res = AstReqDetailRes.of(astReqName,requestStatus,astReqStartDate,astReqEndDate,astReqReason,user,admins);
-
-
-
-        return res;
-
-
-    }
 
 
 

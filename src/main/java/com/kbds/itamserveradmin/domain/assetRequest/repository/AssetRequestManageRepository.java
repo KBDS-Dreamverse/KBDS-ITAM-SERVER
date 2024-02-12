@@ -27,7 +27,9 @@ public interface AssetRequestManageRepository extends JpaRepository<AssetRequest
 
 
 
-    public List<AssetRequestManage> findByAssetRequestMange_AstReqId(@Param("astReqId") String astReqId);
+    @Query("SELECT ar FROM AssetRequestManage ar " +
+            "WHERE ar.assetRequest.astReqId = :astReqId ")
+    public List<AssetRequestManage> findByAstReqId(@Param("astReqId") String astReqId);
 
 
 

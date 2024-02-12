@@ -23,11 +23,16 @@ public class AstReqAdminList {
     private String status;
 
     public AstReqAdminList(AssetRequestManage assetRequestManage) {
+        System.out.println("====adminList===");
+
         User user = assetRequestManage.getAssetAdmin().getManager();
         this.userName = user.getUserName();
         this.userRole = user.getUserRole().getValue();
         this.corporation = user.getCorporation().getCorpName();
         this.department = user.getDepartment().getDeptName();
         this.status = assetRequestManage.getAstReqMgStatus().getValue();
+
+        System.out.println("====adminList22222===");
+
     }
 }
