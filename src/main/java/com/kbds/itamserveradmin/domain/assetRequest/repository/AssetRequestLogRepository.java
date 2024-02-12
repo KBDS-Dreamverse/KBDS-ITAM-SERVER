@@ -7,5 +7,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 
 @Repository
-public interface AssetRequestLogRepository extends JpaRepository<AssetRequestLog, String> {
+public interface AssetRequestLogRepository extends JpaRepository<AssetRequestLog, String> ,AssetRequestLogRepositoryCustom{
+
+
+
+
 }

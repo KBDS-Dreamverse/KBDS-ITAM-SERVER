@@ -15,7 +15,6 @@ import com.kbds.itamserveradmin.domain.user.dto.AssetAdminList;
 import com.kbds.itamserveradmin.domain.user.dto.AssetAdminListRes;
 import com.kbds.itamserveradmin.domain.user.entity.User;
 import com.kbds.itamserveradmin.domain.user.repository.AssetAdminRepository;
-import com.kbds.itamserveradmin.domain.user.repository.UserRepository;
 import com.kbds.itamserveradmin.domain.user.service.UserService;
 import com.kbds.itamserveradmin.global.exception.BaseException;
 import com.kbds.itamserveradmin.global.exception.ErrorCode;
@@ -234,43 +233,112 @@ public class AssetRequestService {
 //
 //    }
 
-//
-//    public AstReqDetailRes getAstReqDetatils(String astReqId, String userId){
-//
-//        List<AssetRequestManage> e = assetRequestManageRepository.findByAstReqIdWithAssetRequest(astReqId);
-//        List<AssetRequestManage> e = assetRequestManageRepository.findByAstReqId(astReqId);
-//
-//
-//        System.out.println(e.size());
-//        System.out.println(e.toString());
-//        System.out.println("=======");
-//        List<AstReqAdminList> admins = e.stream()
-//                .map(o -> new AstReqAdminList(o))
-//                .collect(Collectors.toList());
-//        System.out.println(admins.size());
-//
-//
-//
-//
-//        AssetRequest astreq = e.get(0).getAssetRequest();
-//        String astReqName = e.get(0).getAstReqName();
-//        String requestStatus = astreq.getAstReqStatus().getValue();
-//        LocalDateTime astReqStartDate = astreq.getAstReqStartDate();
-//        LocalDateTime astReqEndDate =astreq.getAstReqEndDate();
-//        String astReqReason = astreq.getAstReqReason();
-//        User user = userService.getUser(userId);
-//
-//
-//
-//
-//        AstReqDetailRes res = AstReqDetailRes.of(astReqName,requestStatus,astReqStartDate,astReqEndDate,astReqReason,user,admins);
-//
-//
-//
-//        return res;
-//
-//
-//    }
+
+    public AstReqDetailRes getAstReqDetatils(String astReqId, String userId){
+        System.out.println("===1===");
+
+        List<AssetRequestManage> e = assetRequestManageRepository.findByAstReqId(astReqId);
+        System.out.println(e.size());
+        System.out.println("===2===");
+
+        List<AstReqAdminList> admins = e.stream()
+                .map(o -> new AstReqAdminList(o))
+                .collect(Collectors.toList());
+
+        System.out.println(admins.size());
+        System.out.println("===3===");
+
+
+
+
+        AssetRequest astreq = e.get(0).getAssetRequest();
+        System.out.println(astreq.getAstReqId());
+        System.out.println("===4===");
+
+        String astReqName = e.get(0).getAstReqName();
+
+        System.out.println(astReqName);
+        System.out.println("===4===");
+
+
+        String requestStatus = astreq.getAstReqStatus().getValue();
+
+        System.out.println(requestStatus);
+        System.out.println("===5===");
+        LocalDateTime astReqStartDate = astreq.getAstReqStartDate();
+        LocalDateTime astReqEndDate =astreq.getAstReqEndDate();
+
+        System.out.println(astReqStartDate);
+        System.out.println("===6===");
+        String astReqReason = astreq.getAstReqReason();
+
+        System.out.println(astReqReason);
+        System.out.println("===7===");
+        User user = userService.getUser(userId);
+
+        System.out.println(user.getUserName());
+        System.out.println("===8-==");
+
+
+
+
+        AstReqDetailRes res = AstReqDetailRes.of(astReqName,requestStatus,astReqStartDate,astReqEndDate,astReqReason,user,admins);
+
+
+
+        return res;
+
+
+    }
+
+
+    public void updateUserRequestStatus(String astReqId){
+        //변경 가능한지에 대한 유효성 검사
+
+        //변경 가능하다면 변경 시작
+        AssetRequest assetRequest = assetRequestRepository.findById(astReqId).orElseThrow(
+                ()-> new BaseException(ErrorCode.INTERNAL_SERVER_ERROR)
+        );
+
+        if(assetRequest.getAstReqStatus() != RequestStatus.APPROVAL_WAIT){
+            new BaseException(ErrorCode.INTERNAL_SERVER_ERROR); //변경불가
+        }
+
+        assetRequest.setAstReqStatus(RequestStatus.CANCEL);
+
+
+    }
+
+    public AstReqStatusUpdateRes saveLogUpdateUserRequestStatus(String astReqID, RequestStatus status){
+
+        //로그 가져와서~
+        AssetRequestLog recent = assetRequestLogRepository.getRecentLog(astReqID);
+
+//        String PK = recent.getAstReqLogId().charAt(recent.getAstReqLogId().length() - 1)
+
+        //002 하드 코딩 하면 안됨..PK 바꾸는 로직 추가하면 바뀔 예정..
+        AssetRequestLog astLog = AssetRequestLog.builder()
+                .astReqLogId(recent.getAstReqLogId()+"002")
+                .astReqLogStatus(status)
+                .astReqVer(recent.getAstReqVer())
+                .astReqName(recent.getAstReqName())
+                .astReqCnt(0L)
+                .assetRequest(recent.getAssetRequest())
+                .assetRequestUser(recent.getAssetRequestUser()).build();
+
+        AssetRequestLog saved = null;
+
+        try{
+            saved = assetRequestLogRepository.save(astLog);
+        }catch (Exception e){
+            throw new BaseException(ErrorCode.FAIL_SAVED_ASSETREQUESTLOG);
+        }
+
+
+        return AstReqStatusUpdateRes.of(saved.getAstReqLogId(),astReqID, saved.getAstReqLogStatus());
+
+
+    }
 
 
 

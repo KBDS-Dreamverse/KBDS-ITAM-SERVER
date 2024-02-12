@@ -13,6 +13,7 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter
 public class AstReqDetailRes {
 
     private String astReqName;
@@ -30,6 +31,7 @@ public class AstReqDetailRes {
 
 
     public static AstReqDetailRes of(String astReqName,String requestStatus, LocalDateTime astReqStartDate, LocalDateTime astReqEndDate,String astReqReason, User u, List<AstReqAdminList> astAdminList){
+        System.out.println("와?");
         return AstReqDetailRes.builder()
                 .astReqName(astReqName)
                 .requestStatus(requestStatus)

@@ -3,6 +3,7 @@ package com.kbds.itamserveradmin.domain.assetRequest.controller;
 
 import com.kbds.itamserveradmin.domain.assetRequest.dto.*;
 import com.kbds.itamserveradmin.domain.assetRequest.entity.AssetRequest;
+import com.kbds.itamserveradmin.domain.assetRequest.entity.RequestStatus;
 import com.kbds.itamserveradmin.domain.assetRequest.service.AssetRequestService;
 import com.kbds.itamserveradmin.domain.user.dto.AssetAdminList;
 import com.kbds.itamserveradmin.domain.user.dto.AssetAdminListRes;
@@ -104,9 +105,24 @@ public class AssetRequestController {
     public ResponseEntity<AstReqDetailRes> getUserRequestDetails(@PathVariable  String userId, @PathVariable String astReqId){
 
         AstReqDetailRes res = assetRequestService.getAstReqDetatils(astReqId,userId);
+        System.out.println("왔어?ㅠㅠ");
+        //System.out.println(res.getAstReqName());
+        System.out.println("-----dsadhsja----");
 
         return ResponseEntity.ok(res);
 
+
+    }
+
+    @PatchMapping("/kbitam/mypage/{userId}/requestList/{contId}/update")
+    public ResponseEntity<AstReqStatusUpdateRes> updateUserRequestStatus(@PathVariable String userId, @PathVariable String contId, @RequestBody AstReqStatusUpdateReq req){
+
+        assetRequestService.updateUserRequestStatus(req.getAstReqId());
+        System.out.println("변경완료");
+
+        AstReqStatusUpdateRes t = assetRequestService.saveLogUpdateUserRequestStatus(req.getAstReqId(), RequestStatus.CANCEL);
+
+        return ResponseEntity.ok(t);
 
     }
 }
