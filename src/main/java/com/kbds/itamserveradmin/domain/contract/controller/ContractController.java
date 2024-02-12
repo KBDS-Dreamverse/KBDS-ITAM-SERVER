@@ -11,7 +11,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
-import static com.kbds.itamserveradmin.global.exception.ErrorCode.PASSWORD_INCORRECT;
+import static com.kbds.itamserveradmin.global.exception.ErrorCode.*;
+
 import static org.springframework.http.ResponseEntity.ok;
 
 @Slf4j
@@ -43,5 +44,48 @@ public class ContractController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(PASSWORD_INCORRECT);
         }
 
+        CalKeyRes calKey = contractService.getCalKey(userId, contId);
+        if (calKey == null) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(CONTRACT_IS_NOT_CAL_LIC);
+        }
+        return ResponseEntity.ok(calKey);
     }
+
+    @GetMapping("/kbitam/{dept}/{contId}/expire")
+    public ResponseEntity<?> expire(
+            @PathVariable String dept,
+            @PathVariable String contId,
+            @RequestHeader String userId) {
+        try {
+            ContExpireRes contExpireRes = contractService.getExpire(contId, userId);
+            return ResponseEntity.ok(contExpireRes);
+        } catch (IllegalStateException e) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(ASSET_IS_NOT_INUSE);
+        }
+    }
+
+//    @PatchMapping("/kbitam/{dept}/{contId}/renewal")
+//    public ResponseEntity<?> renewal(
+//            @PathVariable String dept,
+//            @PathVariable String contId) {
+//
+//    }
+        @PatchMapping("/kbitam/{dept}/{contId}/stop")
+        public ResponseEntity<?> stop(
+                @PathVariable String dept,
+                @PathVariable String contId,
+                @RequestHeader String userId) {
+            try {
+                contractService.stopContract(contId, userId);
+                return ResponseEntity.ok("Successfully stop the contract!");
+            } catch (IllegalArgumentException e) {
+                return ResponseEntity.notFound().build();
+            } catch (IllegalStateException e) {
+                // CONTRACT_IS_ALREADY_IN_DISPOSAL 예외 처리
+                return ResponseEntity.status(HttpStatus.CONFLICT).body(ASSET_IS_NOT_INUSE);
+            }
+        }
+
+
+
 }

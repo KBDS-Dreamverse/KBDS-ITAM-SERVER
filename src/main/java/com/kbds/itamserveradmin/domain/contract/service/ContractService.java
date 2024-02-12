@@ -2,6 +2,8 @@ package com.kbds.itamserveradmin.domain.contract.service;
 
 import com.kbds.itamserveradmin.domain.asset.entity.Asset;
 import com.kbds.itamserveradmin.domain.assetRequest.entity.AssetRequest;
+import com.kbds.itamserveradmin.domain.assetRequest.entity.RequestStatus;
+
 import com.kbds.itamserveradmin.domain.assetRequest.entity.UserAssetRequestInfo;
 import com.kbds.itamserveradmin.domain.assetRequest.repository.AssetRequestRepository;
 import com.kbds.itamserveradmin.domain.assetRequest.repository.UserAssetRequestInfoRepository;
@@ -23,7 +25,10 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
-import static com.kbds.itamserveradmin.global.exception.ErrorCode.CONTRACT_NOT_FOUND;
+import static com.kbds.itamserveradmin.domain.contract.entity.OpStatus.IN_DISPOSAL;
+import static com.kbds.itamserveradmin.domain.contract.entity.OpStatus.IN_OPERATION;
+import static com.kbds.itamserveradmin.global.exception.ErrorCode.*;
+
 
 @Slf4j
 @Service
@@ -189,5 +194,61 @@ public class ContractService {
                 .calKeyStatus(status)
                 .build();
     }
+
+    public List<LocalDateTime> getPeriod(String contId) {
+        List<LocalDateTime> period = new ArrayList<>(2);
+        PeriodType periodType = periodTypeRepository.findByCont_ContId(contId);
+        period.add(periodType.getContStartDate());
+        period.add(periodType.getContEndDate());
+        return period;
+    }
+
+    public List<LocalDateTime> getAstReqPeriod(String contId, String userId) {
+        List<LocalDateTime> period = new ArrayList<>(2);
+        AssetRequest assetRequest = assetRequestService.findAssetRequestByUserIdAndContId(userId, contId);
+        period.add(assetRequest.getAstReqStartDate());
+        period.add(assetRequest.getAstReqEndDate());
+        return period;
+    }
+
+    public List<String> getFormattedDate(List<LocalDateTime> dateTimeList) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        String formattedStartDate = dateTimeList.get(0).format(formatter);
+        String formattedEndDate = dateTimeList.get(1).format(formatter);
+
+        List<String> formatted = new ArrayList<>();
+        formatted.add(formattedStartDate);
+        formatted.add(formattedEndDate);
+        return formatted;
+    }
+
+    public ContExpireRes getExpire(String contId, String userId) {
+        AssetRequest assetRequest = assetRequestService.findAssetRequestByUserIdAndContId(userId, contId);
+        if (assetRequest.getAstReqStatus() != RequestStatus.IN_USE) {
+            throw new IllegalStateException(String.valueOf(ASSET_IS_NOT_INUSE));
+        }
+
+        List<LocalDateTime> period = getAstReqPeriod(contId, userId);
+        List<String> formattedDate = getFormattedDate(period);
+
+        Long between =  ChronoUnit.DAYS.between(LocalDateTime.now(), period.get(1));
+
+        return ContExpireRes.builder()
+                .contStartDate(formattedDate.get(0))
+                .contEndDate(formattedDate.get(1))
+                .remainingDays(between)
+                .build();
+    }
+
+    public void stopContract(String contId, String userId) {
+        AssetRequest assetRequest = assetRequestService.findAssetRequestByUserIdAndContId(userId, contId);
+
+        if (assetRequest.getAstReqStatus() == RequestStatus.IN_USE) {
+            assetRequest.setAstReqStatus(RequestStatus.EXPIRED);
+        } else {
+            throw new IllegalStateException(String.valueOf(ASSET_IS_NOT_INUSE));
+        }
+    }
+
 
 }
