@@ -74,6 +74,7 @@ public class AssetRequestRepositoryImpl implements AssetRequestRepositoryCustom 
         List<AstReqSearchForAdminRes> contents = queryFactory
                 .select(Projections.fields(AstReqSearchForAdminRes.class,
                         QAssetRequestManage.assetRequestManage.astReqName, //자산이름
+                        QAssetRequestManage.assetRequestManage.astReqMgId,
                         QAssetRequestManage.assetRequestManage.assetRequest.astReqId, //요청PK
                         QAssetRequestManage.assetRequestManage.astReqMgDate, //요청날짜
                         QAssetRequestManage.assetRequestManage.astReqMgStatus, //요청관리 상리
