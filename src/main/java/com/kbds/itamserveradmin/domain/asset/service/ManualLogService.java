@@ -1,7 +1,6 @@
 package com.kbds.itamserveradmin.domain.asset.service;
 
 import com.kbds.itamserveradmin.domain.asset.dto.ManualLogReq;
-import com.kbds.itamserveradmin.domain.asset.dto.ManualLogRes;
 import com.kbds.itamserveradmin.domain.asset.entity.ManualLog;
 import com.kbds.itamserveradmin.domain.asset.repository.ManualLogRepository;
 import com.kbds.itamserveradmin.global.file.FileUploadService;
@@ -10,6 +9,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
+
+
 
 
 @Service
@@ -34,6 +35,4 @@ public class ManualLogService {
     public ManualLog findByMnLogId(String mnLogId){
         return manualLogRepository.findByMnLogId(mnLogId);
     }
-
-
 }
