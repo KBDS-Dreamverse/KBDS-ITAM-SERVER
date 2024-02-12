@@ -3,6 +3,8 @@ package com.kbds.itamserveradmin.domain.assetRequest.service;
 
 import com.kbds.itamserveradmin.domain.assetRequest.dto.AssetRequestReq;
 import com.kbds.itamserveradmin.domain.assetRequest.dto.AssetRequestRes;
+import com.kbds.itamserveradmin.domain.assetRequest.dto.AstReqSearchReq;
+import com.kbds.itamserveradmin.domain.assetRequest.dto.AstReqSearchRes;
 import com.kbds.itamserveradmin.domain.assetRequest.entity.*;
 import com.kbds.itamserveradmin.domain.assetRequest.repository.AssetRequestLogRepository;
 import com.kbds.itamserveradmin.domain.assetRequest.repository.AssetRequestManageLogRepository;
@@ -21,6 +23,8 @@ import com.kbds.itamserveradmin.domain.user.service.UserService;
 import com.kbds.itamserveradmin.global.exception.BaseException;
 import com.kbds.itamserveradmin.global.exception.ErrorCode;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -95,7 +99,7 @@ public class AssetRequestService {
         //운영중인 계약임. 신청 가능함.
         //신청 진행
         AssetRequest astReq = AssetRequest.builder()
-                .astReqId("1")
+                .astReqId(UUID.randomUUID().toString())
                 .astReqReason(req.getAstReqReason())
                 .astReqStartDate(req.getAstReqStartDate().atStartOfDay())
                 .astReqEndDate(req.getAstReqEndDate().atStartOfDay())
@@ -180,6 +184,20 @@ public class AssetRequestService {
 
     }
 
+    public Page<AstReqSearchRes> userRequestSearch(AstReqSearchReq req, Pageable pageable){
+        System.out.println("====서비스 =====");
+        Page<AstReqSearchRes> t= assetRequestRepository.search(req,pageable);
+        return t;
+
+    }
+
+
+    public String test(String userId){
+
+        assetRequestRepository.test(userId);
+        return "zz";
+
+    }
 
 
 

@@ -52,4 +52,7 @@ public class User extends BaseEntity {
     @JoinColumn(name = "corp_id")
     private Corporation corporation;
 
+
+
+
 }

@@ -40,4 +40,8 @@ public class Asset {
     private String astSpd;
     private String astDpd;
 
+
+
+
+
 }

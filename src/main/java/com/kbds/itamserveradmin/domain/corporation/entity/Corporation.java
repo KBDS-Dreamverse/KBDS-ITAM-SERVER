@@ -22,6 +22,11 @@ public class Corporation {
     @Column(name = "corp_id")
     private String corpId;
 
+//    @Id
+//    @Column(name = "corp_id")
+//    @Enumerated(EnumType.STRING)
+//    private CorpPK corpId;
+
     @Column(name = "corp_name")
     private String corpName;
 

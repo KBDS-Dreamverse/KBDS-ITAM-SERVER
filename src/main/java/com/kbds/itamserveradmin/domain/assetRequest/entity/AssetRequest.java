@@ -49,6 +49,24 @@ public class AssetRequest {
     @JoinColumn(name = "cont_id")
     private Contract contract;
 
+
+
+
+    private LocalDateTime astReqMgDate;
+    private LocalDateTime astReqMgSud;
+
+    @PrePersist
+    public void prePersist() {
+        LocalDateTime now = LocalDateTime.now();
+        astReqMgDate = now;
+        astReqMgSud = now;
+    }
+
+    @PreUpdate
+    public void preUpdate() {
+        astReqMgSud = LocalDateTime.now();
+    }
+
     //==연관관계==//
 
 //    public static AssetRequest from()
