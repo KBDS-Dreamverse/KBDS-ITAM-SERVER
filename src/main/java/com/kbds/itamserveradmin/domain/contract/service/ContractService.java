@@ -229,8 +229,13 @@ public class ContractService {
     public ContExpireRes getExpire(String contId, String userId) {
         AssetRequest assetRequest = assetRequestService.findAssetRequestByUserIdAndContId(userId, contId);
         if (assetRequest.getAstReqStatus() != RequestStatus.IN_USE) {
+            if (assetRequest.getAstReqStatus() == RequestStatus.EXPIRED) {
+                throw new IllegalStateException(String.valueOf(ASSET_IS_EXPIRE));
+            }
             throw new IllegalStateException(String.valueOf(ASSET_IS_NOT_INUSE));
         }
+
+
 
         List<LocalDateTime> period = getAstReqPeriod(contId, userId);
         List<String> formattedDate = getFormattedDate(period);
