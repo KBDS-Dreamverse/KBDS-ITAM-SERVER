@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 class Test {
 
-    @PostMapping("/test")
+    @PostMapping("/TestEntity")
     public ResponseEntity<String> test(){
         boolean test = true;
         System.out.println("시작");

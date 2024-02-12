@@ -13,7 +13,6 @@ import java.io.Serializable;
 @Embeddable
 public class NewAssetReqeustAdminId implements Serializable {
 
-
     private String userId;
     private String newAstReqId;
 }
