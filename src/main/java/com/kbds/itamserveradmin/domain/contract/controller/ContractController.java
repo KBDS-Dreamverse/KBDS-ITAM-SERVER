@@ -60,10 +60,10 @@ public class ContractController {
             @PathVariable String contId,
             @RequestHeader String userId) {
         try {
-            ContExpireRes contExpireRes = contractService.getExpire(contId, userId);
+            ContExpireRes contExpireRes = contractService.getExpireInfo(contId, userId);
             return ResponseEntity.ok(contExpireRes);
         } catch (IllegalStateException e) {
-            return ResponseEntity.status(HttpStatus.CONFLICT).body(ASSET_IS_NOT_INUSE);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
     }
 

@@ -4,7 +4,6 @@ import com.kbds.itamserveradmin.domain.asset.entity.Asset;
 import com.kbds.itamserveradmin.domain.assetRequest.entity.AssetRequest;
 import com.kbds.itamserveradmin.domain.assetRequest.entity.RequestStatus;
 import com.kbds.itamserveradmin.domain.assetRequest.entity.UserAssetRequestInfo;
-import com.kbds.itamserveradmin.domain.assetRequest.repository.AssetRequestRepository;
 import com.kbds.itamserveradmin.domain.assetRequest.repository.UserAssetRequestInfoRepository;
 import com.kbds.itamserveradmin.domain.assetRequest.service.AssetRequestService;
 import com.kbds.itamserveradmin.domain.contract.dto.CalKeyRes;
@@ -25,8 +24,6 @@ import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
 
-import static com.kbds.itamserveradmin.domain.contract.entity.OpStatus.IN_DISPOSAL;
-import static com.kbds.itamserveradmin.domain.contract.entity.OpStatus.IN_OPERATION;
 import static com.kbds.itamserveradmin.global.exception.ErrorCode.*;
 
 @Slf4j
@@ -226,7 +223,7 @@ public class ContractService {
         return formatted;
     }
 
-    public ContExpireRes getExpire(String contId, String userId) {
+    public ContExpireRes getExpireInfo(String contId, String userId) {
         AssetRequest assetRequest = assetRequestService.findAssetRequestByUserIdAndContId(userId, contId);
         if (assetRequest.getAstReqStatus() != RequestStatus.IN_USE) {
             if (assetRequest.getAstReqStatus() == RequestStatus.EXPIRED) {
