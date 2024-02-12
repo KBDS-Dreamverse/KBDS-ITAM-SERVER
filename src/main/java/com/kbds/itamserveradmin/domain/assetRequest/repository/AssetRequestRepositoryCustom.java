@@ -1,5 +1,7 @@
 package com.kbds.itamserveradmin.domain.assetRequest.repository;
 
+import com.kbds.itamserveradmin.domain.assetRequest.dto.AstReqSearchForAdminReq;
+import com.kbds.itamserveradmin.domain.assetRequest.dto.AstReqSearchForAdminRes;
 import com.kbds.itamserveradmin.domain.assetRequest.dto.AstReqSearchReq;
 import com.kbds.itamserveradmin.domain.assetRequest.dto.AstReqSearchRes;
 import com.kbds.itamserveradmin.domain.assetRequest.entity.AssetRequest;
@@ -12,6 +14,7 @@ public interface AssetRequestRepositoryCustom {
 
 
     Page<AstReqSearchRes> search(AstReqSearchReq req, Pageable pageable);
+    Page<AstReqSearchForAdminRes> searchForAdmin(AstReqSearchForAdminReq req, Pageable pageable);
 
     List<AssetRequest> test(String userId);
 

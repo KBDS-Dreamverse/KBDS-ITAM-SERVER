@@ -188,6 +188,19 @@ public class AssetRequestService {
         return t;
 
     }
+
+    public Page<AstReqSearchForAdminRes> searchForAdmin(AstReqSearchForAdminReq req, Pageable pageable){
+        System.out.println("====서비스 =====");
+
+
+        Page<AstReqSearchForAdminRes> t= assetRequestRepository.searchForAdmin(req,pageable);
+
+        return t;
+
+    }
+
+
+
 //
 //    public AstReqDetailRes getAstReqDetatils(String astReqId, String userId){
 //        System.out.println("zzzzz");
@@ -290,6 +303,13 @@ public class AssetRequestService {
 
 
     }
+
+//    public AstReqDetailForAdminRes getAstReqDetatilsForAdmin(String astReqId, String userId){
+//
+//        List<AssetRequestManage> e = assetRequestManageRepository.findByAstReqId(astReqId);
+//
+//        return
+//    }
 
 
     public void updateUserRequestStatus(String astReqId){

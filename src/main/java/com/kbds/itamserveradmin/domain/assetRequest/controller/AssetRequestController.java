@@ -89,6 +89,27 @@ public class AssetRequestController {
 
     }
 
+
+
+    @GetMapping("/kbitam/mypage/{userId}/receptionList/search")
+    @ResponseBody
+    public ResponseEntity<Page<AstReqSearchForAdminRes>> adminRequestSearch(@PathVariable String userId,
+                                                                           @RequestParam(name = "start", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime start,
+                                                                           @RequestParam(name = "end", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime end,
+                                                                           @RequestParam(name= "userName", required = false) String userName,
+                                                                           @RequestParam(name= "astReqDept", required = false) String astReqDept,
+                                                                           @RequestParam(name="astReqMgStatus",required = false) String astReqMgStatus,
+                                                                           @PageableDefault(size=5) Pageable pageable){
+
+        System.out.println("시작 : "+userId);
+        AstReqSearchForAdminReq req = new AstReqSearchForAdminReq(userId,start,end,userName,astReqDept,astReqMgStatus);
+
+        Page<AstReqSearchForAdminRes> t = assetRequestService.searchForAdmin(req, pageable);
+        System.out.println("빠이");
+        return ResponseEntity.ok(t);
+
+    }
+
     @GetMapping("/kk/{userId}")
     @ResponseBody
     public ResponseEntity<String> test(@PathVariable String userId){
@@ -114,6 +135,20 @@ public class AssetRequestController {
 
     }
 
+
+    @GetMapping("/kbitam/mypage/{userId}/receptionList/{contId}")
+    public ResponseEntity<AstReqDetailRes> getAdminRequestDetails(@PathVariable  String userId, @PathVariable String astReqId){
+
+        AstReqDetailRes res = assetRequestService.getAstReqDetatils(astReqId,userId);
+        System.out.println("왔어?ㅠㅠ");
+        //System.out.println(res.getAstReqName());
+        System.out.println("-----dsadhsja----");
+
+        return ResponseEntity.ok(res);
+
+
+    }
+
     @PatchMapping("/kbitam/mypage/{userId}/requestList/{contId}/update")
     public ResponseEntity<AstReqStatusUpdateRes> updateUserRequestStatus(@PathVariable String userId, @PathVariable String contId, @RequestBody AstReqStatusUpdateReq req){
 
@@ -125,4 +160,11 @@ public class AssetRequestController {
         return ResponseEntity.ok(t);
 
     }
+
+
+
+
+
+
+
 }
