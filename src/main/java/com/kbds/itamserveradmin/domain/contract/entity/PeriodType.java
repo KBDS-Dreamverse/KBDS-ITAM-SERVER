@@ -1,5 +1,7 @@
 package com.kbds.itamserveradmin.domain.contract.entity;
 
+import com.kbds.itamserveradmin.domain.contract.dto.request.PeriodLicenseReq;
+import com.kbds.itamserveradmin.global.utils.DateTimeUtil;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -27,4 +29,12 @@ public class PeriodType {
     private LocalDateTime contStartDate;
 
     private LocalDateTime contEndDate;
+
+    public static PeriodType toEntity(Contract contract, PeriodLicenseReq periodLicenseReq) {
+        return PeriodType.builder()
+                .cont(contract)
+                .contStartDate(DateTimeUtil.stringToLocalDate(periodLicenseReq.getStartDate()))
+                .contEndDate(DateTimeUtil.stringToLocalDate(periodLicenseReq.getEndDate()))
+                .build();
+    }
 }

@@ -30,7 +30,7 @@ public class SwaggerConfig {
                 .useDefaultResponseMessages(true)
                 .apiInfo(apiInfo())
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.kbitam.api"))
+                .apis(RequestHandlerSelectors.basePackage("kbdsitamserveradmin"))
                 .paths(PathSelectors.any())
                 .build();
     }

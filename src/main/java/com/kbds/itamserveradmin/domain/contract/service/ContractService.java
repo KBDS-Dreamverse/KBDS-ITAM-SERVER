@@ -1,6 +1,7 @@
 package com.kbds.itamserveradmin.domain.contract.service;
 
 import com.kbds.itamserveradmin.domain.asset.entity.Asset;
+import com.kbds.itamserveradmin.domain.asset.repository.AssetRepository;
 import com.kbds.itamserveradmin.domain.assetRequest.entity.AssetRequest;
 import com.kbds.itamserveradmin.domain.assetRequest.entity.RequestStatus;
 import com.kbds.itamserveradmin.domain.assetRequest.entity.UserAssetRequestInfo;
@@ -9,11 +10,23 @@ import com.kbds.itamserveradmin.domain.assetRequest.service.AssetRequestService;
 import com.kbds.itamserveradmin.domain.contract.dto.CalKeyRes;
 import com.kbds.itamserveradmin.domain.contract.dto.ContExpireRes;
 import com.kbds.itamserveradmin.domain.contract.dto.DashBoardRes;
+import com.kbds.itamserveradmin.domain.contract.dto.request.NumberOfUsersReq;
+import com.kbds.itamserveradmin.domain.contract.dto.request.PeriodLicenseReq;
+import com.kbds.itamserveradmin.domain.contract.dto.request.RegisterContractReq;
+import com.kbds.itamserveradmin.domain.contract.dto.request.SupplyLicense;
 import com.kbds.itamserveradmin.domain.contract.entity.*;
 import com.kbds.itamserveradmin.domain.contract.repository.ContractRepository;
 import com.kbds.itamserveradmin.domain.contract.repository.NumOfUsersTypeRepository;
 import com.kbds.itamserveradmin.domain.contract.repository.PeriodTypeRepository;
 import com.kbds.itamserveradmin.domain.contract.repository.SupplyTypeRepository;
+import com.kbds.itamserveradmin.domain.corporation.entity.Corporation;
+import com.kbds.itamserveradmin.domain.corporation.repository.CorporationRepository;
+import com.kbds.itamserveradmin.domain.purchaseRequest.entity.NewAssetRequest;
+import com.kbds.itamserveradmin.domain.purchaseRequest.repository.NewAssetRequestRepository;
+import com.kbds.itamserveradmin.domain.user.entity.User;
+import com.kbds.itamserveradmin.domain.user.repository.UserRepository;
+import com.kbds.itamserveradmin.global.exception.BaseException;
+import com.kbds.itamserveradmin.global.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -32,11 +45,15 @@ import static com.kbds.itamserveradmin.global.exception.ErrorCode.*;
 @RequiredArgsConstructor
 public class ContractService {
 
+    private final UserRepository userRepository;
+    private final AssetRepository assetRepository;
+    private final CorporationRepository corporationRepository;
     private final ContractRepository contractRepository;
     private final SupplyTypeRepository supplyTypeRepository;
     private final PeriodTypeRepository periodTypeRepository;
     private final NumOfUsersTypeRepository numOfUsersTypeRepository;
     private final UserAssetRequestInfoRepository userAssetRequestInfoRepository;
+    private final NewAssetRequestRepository newAssetRequestRepository;
 
     private final AssetRequestService assetRequestService;
 
@@ -256,4 +273,39 @@ public class ContractService {
         }
     }
 
+    @Transactional
+    public Contract registerContract(String userId, RegisterContractReq registerContractReq) {
+        User user = userRepository.findById(userId).orElseThrow(() -> new BaseException(ErrorCode.USER_NOT_FOUND));
+        Asset asset = assetRepository.findById(registerContractReq.getAssetId()).orElseThrow(() -> new BaseException(ErrorCode.ASSET_NOT_FOUND));
+        Corporation corporation = corporationRepository.findById(registerContractReq.getCorporationId()).orElseThrow(() -> new BaseException(CORPORATION_NOT_FOUND));
+        return contractRepository.save(Contract.toEntity(registerContractReq, asset, corporation, user));
+    }
+
+    @Transactional
+    public void registerSupplyLicense(String userId, String contractId, SupplyLicense supplyLicense) {
+        User user = userRepository.findById(userId).orElseThrow(() -> new BaseException(ErrorCode.USER_NOT_FOUND));
+        Contract contract = contractRepository.findById(contractId).orElseThrow(() -> new BaseException(CONTRACT_NOT_FOUND));
+        supplyTypeRepository.save(SupplyType.toEntity(contract, supplyLicense));
+    }
+
+    @Transactional
+    public void registerPeriodLicense(String userId, String contractId, PeriodLicenseReq periodLicenseReq) {
+        User user = userRepository.findById(userId).orElseThrow(() -> new BaseException(ErrorCode.USER_NOT_FOUND));
+        Contract contract = contractRepository.findById(contractId).orElseThrow(() -> new BaseException(CONTRACT_NOT_FOUND));
+        periodTypeRepository.save(PeriodType.toEntity(contract, periodLicenseReq));
+    }
+
+    @Transactional
+    public void registerNumberOfUsersLicense(String userId, String contractId, NumberOfUsersReq numberOfUsersReq) {
+        User user = userRepository.findById(userId).orElseThrow(() -> new BaseException(ErrorCode.USER_NOT_FOUND));
+        Contract contract = contractRepository.findById(contractId).orElseThrow(() -> new BaseException(CONTRACT_NOT_FOUND));
+        numOfUsersTypeRepository.save(NumOfUsersType.toEntity(contract, numberOfUsersReq));
+    }
+
+    @Transactional
+    public void registerContractByRequest(String userId, String newAssetRequestId, RegisterContractReq registerContractReq) {
+        Contract contract = registerContract(userId, registerContractReq);
+        NewAssetRequest newAssetRequest = newAssetRequestRepository.findById(newAssetRequestId).orElseThrow(() -> new BaseException(NEW_ASSET_REQUEST_NOT_FOUND));
+        contract.toUpdateNewAssetRequest(newAssetRequest);
+    }
 }
