@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @Slf4j
 @RequiredArgsConstructor
+@CrossOrigin(origins ="*", allowedHeaders = "*")
 @RequestMapping("/kbitam")
 public class UserController {
 

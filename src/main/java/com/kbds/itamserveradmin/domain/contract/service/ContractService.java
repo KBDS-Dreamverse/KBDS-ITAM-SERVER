@@ -1,6 +1,7 @@
 package com.kbds.itamserveradmin.domain.contract.service;
 
 import com.kbds.itamserveradmin.domain.asset.entity.Asset;
+import com.kbds.itamserveradmin.domain.asset.repository.AssetRepository;
 import com.kbds.itamserveradmin.domain.assetRequest.entity.AssetRequest;
 import com.kbds.itamserveradmin.domain.assetRequest.entity.RequestStatus;
 import com.kbds.itamserveradmin.domain.assetRequest.entity.UserAssetRequestInfo;
@@ -33,6 +34,7 @@ import static com.kbds.itamserveradmin.global.exception.ErrorCode.*;
 public class ContractService {
 
     private final ContractRepository contractRepository;
+    private final AssetRepository assetRepository;
     private final SupplyTypeRepository supplyTypeRepository;
     private final PeriodTypeRepository periodTypeRepository;
     private final NumOfUsersTypeRepository numOfUsersTypeRepository;
@@ -98,6 +100,9 @@ public class ContractService {
         Contract findContract =  contractRepository.findById(contId)
                 .orElseThrow(() -> new IllegalArgumentException(String.valueOf(CONTRACT_NOT_FOUND)));
 
+        String astName = findContract.getAst().getAstName();
+        log.info("astName" + astName);
+        System.out.println("[asset name] " + astName);
         // 2. Contract.contLicTag 값 파싱
         List<String> licNames = parseContLicTag(findContract.getContLicTag());
 
@@ -138,7 +143,7 @@ public class ContractService {
         }
 
         String astReqId = assetRequestService.getAstReqIdByUserIdAndContId(userId, contId);
-        System.out.println("[asset_request_id]" + astReqId);
+//        System.out.println("[asset_request_id]" + astReqId);
         UserAssetRequestInfo userAstReqInfo = userAssetRequestInfoRepository.findByAssetRequest_AstReqId(astReqId);
         if (licTag.charAt(2) == '2') {   // 사이트
             licValues.put("ipRange", numOfUsersType.getIpRange());
@@ -165,7 +170,7 @@ public class ContractService {
         // 4. 찾은 값들을 DashBoardRes에 담아 전달하기
 
         return DashBoardRes.builder()
-                .contName(findContract.getContName())
+                .astName(astName)
                 .licNames(licNames)
                 .licValues(licValues)
                 .build();

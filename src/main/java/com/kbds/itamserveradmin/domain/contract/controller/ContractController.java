@@ -17,11 +17,12 @@ import static org.springframework.http.ResponseEntity.ok;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
+@CrossOrigin(origins ="*", allowedHeaders = "*")
 public class ContractController {
     private final ContractService contractService;
 
     @GetMapping("/kbitam/{dept}/{contId}/dashboard")
-    public ResponseEntity<DashBoardRes> getDashboard(
+    public ResponseEntity<?> getDashboard(
             @PathVariable String dept,
             @PathVariable String contId,
             @RequestHeader String userId) {
@@ -30,7 +31,7 @@ public class ContractController {
             return ok(dashBoardRes);
         } catch (IllegalArgumentException e) {
             // CONTRACT_NOT_FOUND 예외 처리
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
     }
 
@@ -44,7 +45,7 @@ public class ContractController {
         final String correctPw = "1234";
 
         if (!correctPw.equals(pwReq.getPw())) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(PASSWORD_INCORRECT);
+            return ResponseEntity.ok(PASSWORD_INCORRECT);
         }
 
         CalKeyRes calKey = contractService.getCalKey(userId, contId);
@@ -53,6 +54,7 @@ public class ContractController {
         }
         return ResponseEntity.ok(calKey);
     }
+
 
     @GetMapping("/kbitam/{dept}/{contId}/expire")
     public ResponseEntity<?> expire(
@@ -91,3 +93,4 @@ public class ContractController {
 
 
 }
+
