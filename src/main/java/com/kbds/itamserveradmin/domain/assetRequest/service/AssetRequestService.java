@@ -46,14 +46,24 @@ public class AssetRequestService {
     private final AssetRequestManageRepository assetRequestManageRepository;
     private final AssetRequestRepository assetRequestRepository;
     private final ContractRepository contractRepository;
-    private final ContractService contractService;
+//    private final ContractService contractService;
     private final UserService userService;
     private final AssetAdminRepository assetAdminRepository;
     private final AssetRequestLogRepository assetRequestLogRepository;
     private final AssetRequestManageLogRepository assetRequestManageLogRepository;
 
 
-
+//    @Autowired
+//    public AssetRequestService(AssetRequestManageRepository assetRequestManageRepository, AssetRequestRepository assetRequestRepository, ContractRepository contractRepository, ContractService contractService, UserService userService, AssetAdminRepository assetAdminRepository, AssetRequestLogRepository assetRequestLogRepository, AssetRequestManageLogRepository assetRequestManageLogRepository) {
+//        this.assetRequestManageRepository = assetRequestManageRepository;
+//        this.assetRequestRepository = assetRequestRepository;
+//        this.contractRepository = contractRepository;
+//        this.contractService = contractService;
+//        this.userService = userService;
+//        this.assetAdminRepository = assetAdminRepository;
+//        this.assetRequestLogRepository = assetRequestLogRepository;
+//        this.assetRequestManageLogRepository = assetRequestManageLogRepository;
+//    }
 
     public String getAstReqIdByUserIdAndContId(String userId, String contId) {
         List<AssetRequest> astReqs = assetRequestRepository.findByAstRequestUserUserId(userId);
@@ -64,6 +74,7 @@ public class AssetRequestService {
                 .findFirst()
                 .orElse(null);
     }
+
 
     public AssetRequest findAssetRequestByUserIdAndContId(String userId, String contId) {
         List<AssetRequest> astReqs = assetRequestRepository.findByAstRequestUserUserId(userId);
@@ -105,7 +116,10 @@ public class AssetRequestService {
         User user = userService.getUser(req.getUserId());
 
         //계약존재?
-        Contract contract = contractService.getContract(contId);
+        //Contract contract = contractService.getContract(contId);
+        Contract contract = contractRepository.findById(contId).orElseThrow(
+                () -> new BaseException(ErrorCode.NOT_FIND_CONTRACT) );
+
 
         //운영중인 계약?
         if(contract.getContOpStatus() != OpStatus.IN_OPERATION ){

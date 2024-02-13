@@ -12,7 +12,7 @@ import java.util.List;
 @Builder
 public class DashBoardRes {
 
-    private String contName;
+    private String astName;
 
     /**
      * 라이선스 이름 리스트

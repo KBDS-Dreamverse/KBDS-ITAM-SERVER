@@ -17,6 +17,7 @@ import static org.springframework.http.ResponseEntity.ok;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
+@CrossOrigin(origins ="*", allowedHeaders = "*")
 public class ContractController {
     private final ContractService contractService;
 
