@@ -1,6 +1,8 @@
 package com.kbds.itamserveradmin.domain.asset.dto;
 import com.kbds.itamserveradmin.domain.asset.entity.Asset;
 import com.kbds.itamserveradmin.domain.asset.entity.AstTag;
+import com.kbds.itamserveradmin.domain.assetRequest.entity.AssetRequest;
+import com.kbds.itamserveradmin.domain.assetRequest.entity.RequestStatus;
 import com.kbds.itamserveradmin.domain.corporation.entity.Corporation;
 import com.kbds.itamserveradmin.domain.user.entity.User;
 import lombok.Builder;
@@ -14,7 +16,7 @@ public class AssetRes {
     private String astName;
     private Boolean isAstInternal;
     private AstTag astTag;
-    private Corporation corp;
+    private String corpName;
     private User user;
     private String astSwCtgy;
     private String astPrice;
@@ -22,8 +24,9 @@ public class AssetRes {
     private Boolean isAstInstallFile;
     private String astSpd;
     private String astDpd;
+    private RequestStatus requestStatus;
 
-    public static AssetRes assetInfo (Asset asset){
+    public static AssetRes assetInfo (Asset asset, AssetRequest ar){
         return AssetRes.builder()
                 .astId(asset.getAstId())
                 .astName(asset.getAstName())
@@ -32,6 +35,8 @@ public class AssetRes {
                 .astSpd(asset.getAstSpd())
                 .astVer(asset.getAstVer())
                 .astPrice(asset.getAstPrice())
+                .corpName(asset.getCorp().getCorpName())
+                .requestStatus(ar.getAstReqStatus())
                 .build();
     }
 }

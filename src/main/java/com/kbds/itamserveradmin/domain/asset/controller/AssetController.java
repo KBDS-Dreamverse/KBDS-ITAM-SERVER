@@ -17,7 +17,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
-
+@CrossOrigin(origins ="*", allowedHeaders = "*")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/kbitam")
@@ -28,8 +28,8 @@ public class AssetController {
     public final ContractService contractService;
 
     @GetMapping("/{dept}/{cont-id}/info")
-    public ResponseEntity<AssetRes> info(@PathVariable("cont-id") String contId, @PathVariable String dept){
-        AssetRes assetRes = assetService.getInfo(contId);
+    public ResponseEntity<AssetRes> info(@PathVariable("cont-id") String contId, @PathVariable String dept, @RequestHeader String userId){
+        AssetRes assetRes = assetService.getInfo(contId, userId);
         if (assetRes == null){
             return ResponseEntity.notFound().build();
         }
