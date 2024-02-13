@@ -89,5 +89,51 @@ public class ContractController {
         }
     }
 
+    // 계약 등록
+    @PostMapping("/kbitam")
+    public ResponseEntity<?> registerContract(
+
+    )
+    {
+        return null;
+    }
+
+    // 계약 등록 (요청 ID)
+    @PostMapping("/kbitam")
+    public ResponseEntity<?> registerContractByRequest(
+
+    )
+    {
+        return null;
+    }
+
+    // 계약업체 조회
+    @GetMapping("/kbitam/corporations")
+    public ResponseEntity<?> getCorporation(
+
+    )
+    {
+        return null;
+    }
+
+    // 계약 조회
+    @GetMapping("/kbitam")
+    public ResponseEntity<?> getContract(
+
+    )
+    {
+        return null;
+    }
+
+    // 계약 조회
+    @PatchMapping("/kbitam/{contractId}")
+    public ResponseEntity<?> updateContract(
+            @PathVariable Long contractId
+    )
+    {
+
+        return null;
+    }
+
 
 }
