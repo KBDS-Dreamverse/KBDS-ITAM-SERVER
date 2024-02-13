@@ -16,7 +16,7 @@ public class AssetService {
 
     @Transactional
     public AssetRes getInfo(String contId) {
-        Asset asset = contractService.getAstIdByContId(contId);
+        Asset asset = contractService.findAstIdByContId(contId);
         if (asset == null) {
             return null;
         }
