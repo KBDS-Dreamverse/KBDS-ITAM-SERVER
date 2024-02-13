@@ -27,4 +27,8 @@ public class ManualLog {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ast_id")
     private Asset asset;
+
+    public void updateInstallFilePath(String InsFilePath){
+        this.mnLogInstallFile = InsFilePath;
+    }
 }

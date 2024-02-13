@@ -15,6 +15,8 @@ import com.kbds.itamserveradmin.domain.contract.repository.ContractRepository;
 import com.kbds.itamserveradmin.domain.contract.repository.NumOfUsersTypeRepository;
 import com.kbds.itamserveradmin.domain.contract.repository.PeriodTypeRepository;
 import com.kbds.itamserveradmin.domain.contract.repository.SupplyTypeRepository;
+import com.kbds.itamserveradmin.global.exception.BaseException;
+import com.kbds.itamserveradmin.global.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -31,6 +33,7 @@ import static com.kbds.itamserveradmin.global.exception.ErrorCode.*;
 @Service
 @Transactional
 @RequiredArgsConstructor
+
 public class ContractService {
 
     private final ContractRepository contractRepository;
@@ -41,6 +44,13 @@ public class ContractService {
     private final UserAssetRequestInfoRepository userAssetRequestInfoRepository;
 
     private final AssetRequestService assetRequestService;
+
+
+    public Contract getContract(String contId){
+        return  contractRepository.findById(contId).orElseThrow(
+                () -> new BaseException(ErrorCode.NOT_FIND_CONTRACT) );
+    }
+
 
 
     public static List<String> parseContLicTag(String contLicTag) {
@@ -81,6 +91,19 @@ public class ContractService {
         return licenseTypes;
     }
     //Ast id 찾는 메서드
+
+
+//    public Asset getAstIdByContId(String contId){
+//        Contract contract =  contractRepository.findById(contId)
+//                .orElseThrow(() -> new IllegalArgumentException(String.valueOf(CONTRACT_NOT_FOUND)));
+//        if (contract == null){
+//            return null;
+//        }
+//        return contract.getAst();
+//    }
+
+    //Ast id 찾는 메서드
+
     public Asset findAstIdByContId(String contId){
         Contract contract =  contractRepository.findById(contId)
                 .orElseThrow(() -> new IllegalArgumentException(String.valueOf(CONTRACT_NOT_FOUND)));
@@ -89,6 +112,7 @@ public class ContractService {
         }
         return contract.getAst();
     }
+
     /**
      * DashBoard에 보여줄 데이터 가져오는 메서드
      * @param contId
