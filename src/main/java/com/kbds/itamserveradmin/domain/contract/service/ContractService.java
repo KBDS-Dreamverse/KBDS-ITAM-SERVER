@@ -91,6 +91,8 @@ public class ContractService {
         return licenseTypes;
     }
     //Ast id 찾는 메서드
+
+
 //    public Asset getAstIdByContId(String contId){
 //        Contract contract =  contractRepository.findById(contId)
 //                .orElseThrow(() -> new IllegalArgumentException(String.valueOf(CONTRACT_NOT_FOUND)));
@@ -101,6 +103,7 @@ public class ContractService {
 //    }
 
     //Ast id 찾는 메서드
+
     public Asset findAstIdByContId(String contId){
         Contract contract =  contractRepository.findById(contId)
                 .orElseThrow(() -> new IllegalArgumentException(String.valueOf(CONTRACT_NOT_FOUND)));
