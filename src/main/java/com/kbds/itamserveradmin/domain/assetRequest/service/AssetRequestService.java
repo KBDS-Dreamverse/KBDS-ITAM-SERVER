@@ -309,13 +309,13 @@ public class AssetRequestService {
         AssetRequestManage e = assetRequestManageRepository.findByAstReqMgId(astReqMgId);
 
 
+        AstReqDetailForAdminRes t = null;
 
 
 
 
 
-
-        return
+        return t;
     }
 
 
