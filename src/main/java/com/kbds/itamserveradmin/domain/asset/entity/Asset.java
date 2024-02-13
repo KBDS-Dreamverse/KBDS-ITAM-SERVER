@@ -37,5 +37,6 @@ public class Asset {
     private Boolean isAstInstallFile;
     private String astSpd;
     private String astDpd;
+    private String astImgUrl;
 
 }

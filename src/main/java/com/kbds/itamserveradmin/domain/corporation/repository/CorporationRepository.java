@@ -4,5 +4,6 @@ import com.kbds.itamserveradmin.domain.corporation.entity.Corporation;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface CorporationRepository extends JpaRepository<Corporation,String> {
+    Corporation findCorporationByCorpName(String CorpName);
 
 }

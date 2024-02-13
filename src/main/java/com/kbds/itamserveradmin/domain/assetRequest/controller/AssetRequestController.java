@@ -6,20 +6,19 @@ import com.kbds.itamserveradmin.domain.assetRequest.entity.AssetRequest;
 import com.kbds.itamserveradmin.domain.assetRequest.service.AssetRequestService;
 import com.kbds.itamserveradmin.global.exception.BaseException;
 import com.kbds.itamserveradmin.global.exception.ErrorCode;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@Slf4j
+@RequiredArgsConstructor
 public class AssetRequestController {
 
 
-//    private final AssetRequestService assetRequestService;
-//
-//    @Autowired
-//    public AssetRequestController(AssetRequestService assetRequestService) {
-//        this.assetRequestService = assetRequestService;
-//    }
+    private final AssetRequestService assetRequestService;
 //
 //
 //    @PostMapping("/test")

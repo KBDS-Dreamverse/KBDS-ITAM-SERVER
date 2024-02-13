@@ -18,4 +18,6 @@ public interface UserRepository extends JpaRepository<User,String> {
             "FROM User u JOIN u.department d JOIN u.corporation c " +
             "WHERE u.userId = :userId")
     UserInfoRes findUserInfoWithCooperationAndDepartmentByUserId(@Param("userId") String userId);
+
+    User findUserByUserId(String userId);
 }
