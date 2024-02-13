@@ -17,15 +17,22 @@ import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.kbds.itamserveradmin.domain.asset.service.AssetService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/kbitam")
 public class AssetController {
 
-    public final AssetService assetService;
-    public final ManualLogService manualLogService;
-    public final ContractService contractService;
+    private final AssetService assetService;
+    private final ManualLogService manualLogService;
+    private final ContractService contractService;
 
     @GetMapping("/{dept}/{cont-id}/info")
     public ResponseEntity<AssetRes> info(@PathVariable("cont-id") String contId, @PathVariable String dept){
@@ -35,6 +42,18 @@ public class AssetController {
         }
         return ResponseEntity.ok(assetRes);
     }
+
+
+    @GetMapping("/d/{corpId}")
+    public ResponseEntity<String> PKtest(@PathVariable("corpId")String corpId){
+
+        System.out.println(corpId+"!!!");
+
+
+        return ResponseEntity.ok( assetService.testSaveForcreatePk(corpId));
+
+    }
+
 
     @GetMapping("/{dept}/{cont-id}/allver")
     public ResponseEntity<List<ManualLogRes>> allVer(@PathVariable("cont-id") String contId, @PathVariable String dept){

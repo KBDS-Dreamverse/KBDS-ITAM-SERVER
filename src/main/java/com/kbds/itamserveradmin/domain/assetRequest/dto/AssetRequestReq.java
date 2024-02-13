@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Builder
@@ -18,8 +19,8 @@ import java.time.LocalDateTime;
 public class AssetRequestReq {
 
 
-    @ApiModelProperty(notes = "계약서 ID",example = "")
-    private String contId;
+//    @ApiModelProperty(notes = "계약서 ID",example = "")
+//    private String contId;
 
     @ApiModelProperty(notes = "사용시작일",example = "2022-08-04")
     @JsonFormat(pattern = "yyyy-MM-dd")
@@ -39,8 +40,32 @@ public class AssetRequestReq {
     private String astReqReason;
 
 
-    @ApiModelProperty(notes = "사용자ID",example = "")
+    @ApiModelProperty(notes = "요청자의 ID (사용자ID), 요청자가 누군지 식별",example = "")
     private String userId;
+
+
+    private List<String> assetAdminList;
+
+
+    private String astName; //요청 자산 이름
+
+    private String astVer; //요청버전
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

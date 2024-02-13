@@ -14,6 +14,8 @@ import com.kbds.itamserveradmin.domain.contract.repository.ContractRepository;
 import com.kbds.itamserveradmin.domain.contract.repository.NumOfUsersTypeRepository;
 import com.kbds.itamserveradmin.domain.contract.repository.PeriodTypeRepository;
 import com.kbds.itamserveradmin.domain.contract.repository.SupplyTypeRepository;
+import com.kbds.itamserveradmin.global.exception.BaseException;
+import com.kbds.itamserveradmin.global.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -37,8 +39,14 @@ public class ContractService {
     private final PeriodTypeRepository periodTypeRepository;
     private final NumOfUsersTypeRepository numOfUsersTypeRepository;
     private final UserAssetRequestInfoRepository userAssetRequestInfoRepository;
-
     private final AssetRequestService assetRequestService;
+
+
+
+    public Contract getContract(String contId){
+        return  contractRepository.findById(contId).orElseThrow(
+                () -> new BaseException(ErrorCode.NOT_FIND_CONTRACT) );
+    }
 
 
     public static List<String> parseContLicTag(String contLicTag) {
