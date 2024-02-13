@@ -1,12 +1,14 @@
 package com.kbds.itamserveradmin.domain.cooperation.dto;
 
+import com.kbds.itamserveradmin.domain.cooperation.entity.Cooperation;
 import lombok.*;
 
 @Getter
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class RegisterCooperationDto {
+public class RequestCooperationDto {
     String corpName;
     String crn;
     String corpContact;
@@ -15,4 +17,5 @@ public class RegisterCooperationDto {
     String corpOwner;
     String corpRemarks;
     boolean isSubCorp;
+
 }
