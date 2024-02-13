@@ -1,7 +1,7 @@
-package com.kbds.itamserveradmin.domain.cooperation.controller;
+package com.kbds.itamserveradmin.domain.coperation.controller;
 
-import com.kbds.itamserveradmin.domain.cooperation.dto.CooperationDto;
-import com.kbds.itamserveradmin.domain.cooperation.service.CooperationService;
+import com.kbds.itamserveradmin.domain.coperation.dto.RegisterCorporationDto;
+import com.kbds.itamserveradmin.domain.coperation.service.CooperationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,19 +18,20 @@ public class CooperationController {
     private final CooperationService cooperationService;
     private static final Logger logger = LoggerFactory.getLogger(CooperationController.class);
 
+
     @PostMapping(value = "/cooperation")
-    public ResponseEntity<?> createCooperation(@RequestBody CooperationDto cooperationDto) {
+    public ResponseEntity<?> createCooperation(@RequestBody RegisterCorporationDto registerCorporationDto) {
         try {
-            validateCooperationDto(cooperationDto);
-            CooperationDto resultDto = cooperationService.saveCorp(
-                    cooperationDto.getCorpName(),
-                    cooperationDto.getCrn(),
-                    cooperationDto.getCorpContact(),
-                    cooperationDto.getCorpAddr(),
-                    cooperationDto.getCorpUrl(),
-                    cooperationDto.getCorpOwner(),
-                    cooperationDto.getCorpRemarks(),
-                    cooperationDto.isSubCorp()
+            validateCooperationDto(registerCorporationDto);
+            RegisterCorporationDto resultDto = cooperationService.saveCorp(
+                    registerCorporationDto.getCorpName(),
+                    registerCorporationDto.getCrn(),
+                    registerCorporationDto.getCorpContact(),
+                    registerCorporationDto.getCorpAddr(),
+                    registerCorporationDto.getCorpUrl(),
+                    registerCorporationDto.getCorpOwner(),
+                    registerCorporationDto.getCorpRemarks(),
+                    registerCorporationDto.isSubCorp()
             );
             return ResponseEntity.ok(resultDto);
         } catch (IllegalArgumentException e) {
@@ -42,14 +43,14 @@ public class CooperationController {
         }
     }
 
-    private void validateCooperationDto(CooperationDto cooperationDto) {
-        if (org.springframework.util.StringUtils.isEmpty(cooperationDto.getCorpName())
-                || org.springframework.util.StringUtils.isEmpty(cooperationDto.getCrn())
-                || org.springframework.util.StringUtils.isEmpty(cooperationDto.getCorpContact())
-                || org.springframework.util.StringUtils.isEmpty(cooperationDto.getCorpAddr())
-                || org.springframework.util.StringUtils.isEmpty(cooperationDto.getCorpUrl())
-                || org.springframework.util.StringUtils.isEmpty(cooperationDto.getCorpOwner())
-                || org.springframework.util.StringUtils.isEmpty(cooperationDto.getCorpRemarks())) {
+    private void validateCooperationDto(RegisterCorporationDto registerCorporationDto) {
+        if (org.springframework.util.StringUtils.isEmpty(registerCorporationDto.getCorpName())
+                || org.springframework.util.StringUtils.isEmpty(registerCorporationDto.getCrn())
+                || org.springframework.util.StringUtils.isEmpty(registerCorporationDto.getCorpContact())
+                || org.springframework.util.StringUtils.isEmpty(registerCorporationDto.getCorpAddr())
+                || org.springframework.util.StringUtils.isEmpty(registerCorporationDto.getCorpUrl())
+                || org.springframework.util.StringUtils.isEmpty(registerCorporationDto.getCorpOwner())
+                || org.springframework.util.StringUtils.isEmpty(registerCorporationDto.getCorpRemarks())) {
             throw new IllegalArgumentException("400 ERROR");
         }
     }

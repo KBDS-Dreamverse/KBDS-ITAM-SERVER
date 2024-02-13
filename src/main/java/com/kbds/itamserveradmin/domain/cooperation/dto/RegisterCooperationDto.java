@@ -1,4 +1,4 @@
-package com.kbds.itamserveradmin.domain.cooperation.dto;
+package com.kbds.itamserveradmin.domain.coperation.dto;
 
 import lombok.*;
 
@@ -6,7 +6,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class CooperationDto {
+public class RegisterCorporationDto {
     String corpName;
     String crn;
     String corpContact;
@@ -15,5 +15,4 @@ public class CooperationDto {
     String corpOwner;
     String corpRemarks;
     boolean isSubCorp;
-
 }
