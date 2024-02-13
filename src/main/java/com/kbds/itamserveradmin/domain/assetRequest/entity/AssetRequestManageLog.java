@@ -27,7 +27,7 @@ public class AssetRequestManageLog {
 
     //==연관관계==//
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ast_req_mg_id")
     private AssetRequestManage assetRequestManage;
 

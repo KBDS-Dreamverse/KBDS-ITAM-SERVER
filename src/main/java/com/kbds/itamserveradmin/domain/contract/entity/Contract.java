@@ -1,7 +1,7 @@
 package com.kbds.itamserveradmin.domain.contract.entity;
 
 import com.kbds.itamserveradmin.domain.asset.entity.Asset;
-import com.kbds.itamserveradmin.domain.cooperation.entity.Cooperation;
+import com.kbds.itamserveradmin.domain.corporation.entity.Corporation;
 import com.kbds.itamserveradmin.domain.purchaseRequest.entity.NewAssetRequest;
 import com.kbds.itamserveradmin.domain.user.entity.User;
 import lombok.AllArgsConstructor;
@@ -29,7 +29,7 @@ public class Contract {
 
     @ManyToOne
     @JoinColumn(name = "corp_id")
-    private Cooperation corp;
+    private Corporation corp;
 
     @OneToOne
     private NewAssetRequest newAstReq;

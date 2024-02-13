@@ -22,7 +22,7 @@ public class UserLog {
     private UserStatus userStatus;
 
     //==연관관계==//
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
 }

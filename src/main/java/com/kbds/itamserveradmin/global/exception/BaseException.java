@@ -19,4 +19,3 @@ public class BaseException extends RuntimeException {
         this.errorCode = ErrorCode.INTERNAL_SERVER_ERROR;
     }
 }
-

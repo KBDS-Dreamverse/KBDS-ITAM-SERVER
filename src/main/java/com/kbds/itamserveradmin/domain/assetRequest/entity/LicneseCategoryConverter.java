@@ -20,4 +20,3 @@ public class LicneseCategoryConverter implements AttributeConverter<LicenseCateg
         throw new IllegalArgumentException("Unknown ApprovalStatus code: " + dbData);
     }
 }
-

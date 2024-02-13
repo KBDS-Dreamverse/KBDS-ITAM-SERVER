@@ -1,32 +1,30 @@
 server:
-  port: 9000
+  port: 8080
   servlet:
     context-path: /
     encoding:
-      charset: UTF-8
+      charset: utf-8
       enabled: true
       force: true
 
 spring:
+  jackson:
+    property-naming-strategy: SNAKE_CASE
 
   application:
     name : itam-server-admin
 
-#  datasource:
-#    platform: mysql
-#    url: jdbc:mysql://localhost:3306/kbds?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
-#    username: root
-#    password: smilechs5542
-#    driver-class-name: com.mysql.cj.jdbc.Driver # mysql 8버전
   datasource:
-    url: jdbc:h2:tcp://localhost/~/testKBDS
-    username: sa
+    platform: mysql
+    url: jdbc:mysql://localhost:3306/kbds?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    username: root
     password: 1234
+    driver-class-name: com.mysql.cj.jdbc.Driver # mysql 8버전
 
 
   jpa:
     hibernate:
-      ddl-auto: create # create, update, none
+      ddl-auto: update # create, update, none
       #naming:
         #entity만들때, 변수명 그대로 데이터베이스 필드에 넣어주겠다.
         #만약, org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy 전략을 사용하겠다고 하면,
@@ -41,19 +39,19 @@ spring:
         use_sql_comments: true #querydsl jpql 보기
     # turn OSIV off
     open-in-view: false
-#    database: mysql
-    database: h2
-
-
+    database: mysql
+  servlet:
+    multipart:
+      max-request-size: 500MB
+      max-file-size: 500MB
   security:
     user:
-      name: sa
+      name: test
       password: 1234
-#      name: TestEntity
-#      password: 1234
+file:
+  dir: /Users/minizi015/Desktop/images #다들 파일업로드 경로 설정해주세요,,!
 
 #logging:
 #  level:
 #    org.hibernate.SQL: debug # 하이버네이트가 생성하는 SQL이 다보인다.
 ##    org.hibernate.type:  #binding parameter의 값이 무엇인지를 알려줌.
-
