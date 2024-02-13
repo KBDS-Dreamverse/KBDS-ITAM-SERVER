@@ -8,15 +8,13 @@ import com.kbds.itamserveradmin.domain.contract.entity.ContractRecord;
 import com.kbds.itamserveradmin.domain.corporation.entity.Corporation;
 import com.kbds.itamserveradmin.domain.department.entity.Department;
 import com.kbds.itamserveradmin.global.entity.BaseEntity;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@EqualsAndHashCode(callSuper = true)
 @Entity
 @Data
 @NoArgsConstructor

@@ -79,7 +79,7 @@ public class ContractService {
         return licenseTypes;
     }
     //Ast id 찾는 메서드
-    public Asset getAstIdByContId(String contId){
+    public Asset findAstIdByContId(String contId){
         Contract contract =  contractRepository.findById(contId)
                 .orElseThrow(() -> new IllegalArgumentException(String.valueOf(CONTRACT_NOT_FOUND)));
         if (contract == null){
@@ -87,6 +87,7 @@ public class ContractService {
         }
         return contract.getAst();
     }
+
     /**
      * DashBoard에 보여줄 데이터 가져오는 메서드
      * @param contId
