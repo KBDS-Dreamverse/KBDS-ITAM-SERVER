@@ -1,8 +1,11 @@
 package com.kbds.itamserveradmin.domain.asset.controller;
 import com.kbds.itamserveradmin.domain.asset.dto.AssetRes;
 import com.kbds.itamserveradmin.domain.asset.dto.ManualLogRes;
+import com.kbds.itamserveradmin.domain.asset.entity.Asset;
+import com.kbds.itamserveradmin.domain.asset.entity.ManualLog;
 import com.kbds.itamserveradmin.domain.asset.service.AssetService;
 import com.kbds.itamserveradmin.domain.asset.service.ManualLogService;
+import com.kbds.itamserveradmin.domain.contract.service.ContractService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -10,10 +13,9 @@ import org.springframework.web.bind.annotation.*;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfReader;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.Base64;
+import java.util.List;
+import java.util.stream.Collectors;
 
 
 @RestController
@@ -23,6 +25,7 @@ public class AssetController {
 
     public final AssetService assetService;
     public final ManualLogService manualLogService;
+    public final ContractService contractService;
 
     @GetMapping("/{dept}/{cont-id}/info")
     public ResponseEntity<AssetRes> info(@PathVariable("cont-id") String contId, @PathVariable String dept){
@@ -31,6 +34,18 @@ public class AssetController {
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(assetRes);
+    }
+
+    @GetMapping("/{dept}/{cont-id}/allver")
+    public ResponseEntity<List<ManualLogRes>> allVer(@PathVariable("cont-id") String contId, @PathVariable String dept){
+        Asset asset = contractService.findAstIdByContId(contId);
+
+        List<ManualLog> manualLogs = manualLogService.findByAstId(asset);
+        List<ManualLogRes> mnLogVersList = manualLogs.stream()
+                .map(ManualLogRes::allvers)
+                .collect(Collectors.toList());
+
+        return ResponseEntity.ok(mnLogVersList);
     }
 
     @GetMapping("/{dept}/{cont-id}/installguide")

@@ -24,4 +24,11 @@ public class ManualLogRes {
                 .mnLogInstallGuide(manualLog.getMnLogInstallGuide())
                 .build();
     }
+
+    public static ManualLogRes allvers(ManualLog manualLog){
+        return ManualLogRes.builder()
+                .assetId(manualLog.getAsset().getAstId())
+                .mnLogVer(manualLog.getMnLogVer())
+                .build();
+    }
 }
