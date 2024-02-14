@@ -10,6 +10,7 @@ import com.kbds.itamserveradmin.domain.user.dto.AssetAdminListRes;
 import com.kbds.itamserveradmin.global.exception.BaseException;
 import com.kbds.itamserveradmin.global.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -22,6 +23,8 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
+@Slf4j
+@RequiredArgsConstructor
 public class AssetRequestController {
 
 

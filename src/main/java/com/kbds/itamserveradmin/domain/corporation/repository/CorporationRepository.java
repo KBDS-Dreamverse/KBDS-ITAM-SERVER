@@ -7,5 +7,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface CorporationRepository extends JpaRepository<Corporation,String> {
+    Corporation findCorporationByCorpName(String CorpName);
 
 }

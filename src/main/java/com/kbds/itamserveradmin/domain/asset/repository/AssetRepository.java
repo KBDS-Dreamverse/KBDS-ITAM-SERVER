@@ -15,6 +15,10 @@ import java.util.Optional;
 @Repository
 public interface AssetRepository extends JpaRepository<Asset, String> {
 
+    Asset findAssetByAstId(String astId);
+
+
+
 
 
 //    @Query("SELECT a  " +
@@ -28,4 +32,5 @@ public interface AssetRepository extends JpaRepository<Asset, String> {
             "WHERE a.corp.corpId = :corp_id " + // WHERE 절에 공백을 추가하고 corp_id의 앞에 콜론(:)을 빼먹지 않아야 함
             "ORDER BY a.astId DESC") // ORDER BY 구문을 추가하고 astId 앞에 a.를 빼먹지 않아야 함
     String findCorpCntById(@Param("corp_id") String corp_id);
+
 }

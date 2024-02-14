@@ -12,12 +12,13 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @CrossOrigin(origins ="*", allowedHeaders = "*")
 @RequestMapping("/kbitam")
+@CrossOrigin(origins ="*", allowedHeaders = "*")
 public class UserController {
 
     private final UserService userService;
 
     @GetMapping("/userInfo")
-    public ResponseEntity<UserInfoRes> getUserInfo(@RequestParam String userId) {
+    public ResponseEntity<UserInfoRes> getUserInfo(@RequestParam("userId") String userId) {
         return ResponseEntity.ok(userService.GetUserInfo(userId));
     }
 }
