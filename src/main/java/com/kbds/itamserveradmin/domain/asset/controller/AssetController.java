@@ -3,9 +3,12 @@ import com.kbds.itamserveradmin.domain.asset.dto.AssetRes;
 import com.kbds.itamserveradmin.domain.asset.dto.ManualLogRes;
 import com.kbds.itamserveradmin.domain.asset.entity.Asset;
 import com.kbds.itamserveradmin.domain.asset.entity.ManualLog;
+import com.kbds.itamserveradmin.domain.asset.entity.QManualLog;
 import com.kbds.itamserveradmin.domain.asset.service.AssetService;
 import com.kbds.itamserveradmin.domain.asset.service.ManualLogService;
 import com.kbds.itamserveradmin.domain.contract.service.ContractService;
+import com.querydsl.core.types.Projections;
+import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +20,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
+
 @CrossOrigin(origins ="*", allowedHeaders = "*")
 @RestController
 @RequiredArgsConstructor
@@ -27,12 +31,15 @@ public class AssetController {
     public final ManualLogService manualLogService;
     public final ContractService contractService;
 
+
+
     @GetMapping("/{dept}/{cont-id}/info")
     public ResponseEntity<AssetRes> info(@PathVariable("cont-id") String contId, @PathVariable String dept, @RequestHeader String userId){
         AssetRes assetRes = assetService.getInfo(contId, userId);
         if (assetRes == null){
             return ResponseEntity.notFound().build();
         }
+
         return ResponseEntity.ok(assetRes);
     }
 
