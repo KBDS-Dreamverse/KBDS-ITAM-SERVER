@@ -49,7 +49,6 @@ public class ContractService {
     private final AssetRepository assetRepository;
     private final CorporationRepository corporationRepository;
     private final ContractRepository contractRepository;
-    private final AssetRepository assetRepository;
     private final SupplyTypeRepository supplyTypeRepository;
     private final PeriodTypeRepository periodTypeRepository;
     private final NumOfUsersTypeRepository numOfUsersTypeRepository;
