@@ -17,13 +17,16 @@ public enum ErrorCode {
     CONTRACT_RECORD_TYPE_NOT_FOUND(HttpStatus.NOT_FOUND, "C-001", "활동 기록 타입을 찾을 수 없습니다."),
     CONTRACT_NOT_FOUND(HttpStatus.NOT_FOUND, "C-002", "해당 계약을 찾을 수 없습니다."),
     CONTRACT_IS_NOT_CAL_LIC(HttpStatus.FORBIDDEN, "C-003", "해당 계약은 cal 라이선스가 아닙니다."),
+    CONTRACT_TYPE_NOT_FOUND(HttpStatus.NOT_FOUND, "C-004", "계약 종류(공급형태, 기간, 사용자수)를 찾을 수 없습니다."),
+
+    // corporation
+    CORPORATION_NOT_FOUND(HttpStatus.NOT_FOUND, "P-001", "id에 해당하는 업체가 존재하지 않습니다."),
     NOT_FIND_CONTRACT(HttpStatus.BAD_REQUEST,"C-004","계약을 찾을 수 없습니다."),
     CONTRACT_IS_NOT_IN_OPERATION(HttpStatus.BAD_REQUEST,"C-005","운영중인 자산이 아닙니다."),
 
     //Log
     FAIL_SAVED_ASSETREQUESTLOG(HttpStatus.INTERNAL_SERVER_ERROR,"L-001","자산 요청 로그 저장 실패"),
     FAIL_SAVED_ASSETREQUESTMGLOG(HttpStatus.INTERNAL_SERVER_ERROR,"L-002","자산 요청 관리 로그 저장 실패"),
-
 
     //기타
     INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "I-001", "내부 에러가 발생했습니다."),
@@ -33,9 +36,16 @@ public enum ErrorCode {
 
     // asset
     ASSET_IS_NOT_INUSE(HttpStatus.CONFLICT, "A-001", "사용중인 상태가 아닙니다."),
-    ASSET_IS_EXPIRE(HttpStatus.FORBIDDEN, "A-002", "사용이 만료되었습니다.");
+    ASSET_IS_EXPIRE(HttpStatus.FORBIDDEN, "A-002", "사용이 만료되었습니다."),
+    ASSET_NOT_FOUND(HttpStatus.NOT_FOUND, "A-003", "id에 일치하는 자산을 찾을 수 없습니다."),
 
-    
+    // new asset
+    NEW_ASSET_REQUEST_NOT_FOUND(HttpStatus.NOT_FOUND, "N-001", "id에 일치하는 자산 요청 기록을 찾을 수 없습니다."),
+
+    // user
+    USER_NOT_FOUND(HttpStatus.NOT_FOUND, "U-001", "id에 일치하는 유저를 찾을 수 없습니다.");
+
+
 
 
     private final HttpStatus httpStatus;

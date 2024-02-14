@@ -1,5 +1,6 @@
 package com.kbds.itamserveradmin.domain.contract.entity;
 
+import com.kbds.itamserveradmin.domain.contract.dto.request.NumberOfUsersReq;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -32,4 +33,18 @@ public class NumOfUsersType {
     private Integer totalNumPur;
     private Integer totalServer;
     private Integer totalCal;
+
+    public static NumOfUsersType toEntity(Contract contract, NumberOfUsersReq numberOfUsersReq) {
+        return NumOfUsersType.builder()
+                .cont(contract)
+                .maxUsersLimit(numberOfUsersReq.getMaxUsersLimit())
+                .maxCoreLimit(numberOfUsersReq.getMaxCoreLimit())
+                .ipRange(numberOfUsersReq.getIpRange())
+                .currUsers(numberOfUsersReq.getCurrentUsers())
+                .currCore(numberOfUsersReq.getCurrentCore())
+                .totalNumPur(numberOfUsersReq.getTotalNumPur())
+                .totalServer(numberOfUsersReq.getTotalServer())
+                .totalCal(numberOfUsersReq.getTotalCal())
+                .build();
+    }
 }

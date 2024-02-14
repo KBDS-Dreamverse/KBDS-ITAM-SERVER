@@ -4,12 +4,18 @@ import com.kbds.itamserveradmin.domain.contract.dto.CalKeyRes;
 import com.kbds.itamserveradmin.domain.contract.dto.ContExpireRes;
 import com.kbds.itamserveradmin.domain.contract.dto.DashBoardRes;
 import com.kbds.itamserveradmin.domain.contract.dto.PasswordReq;
+import com.kbds.itamserveradmin.domain.contract.dto.request.NumberOfUsersReq;
+import com.kbds.itamserveradmin.domain.contract.dto.request.PeriodLicenseReq;
+import com.kbds.itamserveradmin.domain.contract.dto.request.SupplyLicense;
+import com.kbds.itamserveradmin.domain.contract.dto.request.RegisterContractReq;
 import com.kbds.itamserveradmin.domain.contract.service.ContractService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 import static com.kbds.itamserveradmin.global.exception.ErrorCode.*;
 import static org.springframework.http.ResponseEntity.ok;
@@ -91,6 +97,100 @@ public class ContractController {
         }
     }
 
+    // 계약 등록 (요청 없이)
+    @PostMapping("/kbitam/")
+    public ResponseEntity<?> registerContract(
+            @RequestHeader String userId,
+            @RequestBody @Valid RegisterContractReq registerContractReq
+    )
+    {
+        contractService.registerContract(userId, registerContractReq);
+        return ResponseEntity.ok("Successfully registered contract!");
+    }
 
+    // 라이센스 공급형태
+    @PostMapping("/kbitam/supply/{contractId}")
+    public ResponseEntity<?> registerSupplyLicense(
+            @RequestHeader String userId,
+            @PathVariable String contractId,
+            @RequestBody @Valid SupplyLicense supplyLicense
+    )
+    {
+        contractService.registerSupplyLicense(userId, contractId, supplyLicense);
+        return ResponseEntity.ok("Successfully registered contract!");
+    }
+
+    // 라이센스 기간
+    @PostMapping("/kbitam/period/{contractId}")
+    public ResponseEntity<?> registerPeriodLicense(
+            @RequestHeader String userId,
+            @PathVariable String contractId,
+            @RequestBody @Valid PeriodLicenseReq periodLicenseReq
+    )
+    {
+        contractService.registerPeriodLicense(userId, contractId, periodLicenseReq);
+        return ResponseEntity.ok("Successfully registered contract!");
+    }
+
+    // 라이센스 사용자 수
+    @PostMapping("/kbitam/numbers/{contractId}")
+    public ResponseEntity<?> registerNumberOfUsersLicense(
+            @RequestHeader String userId,
+            @PathVariable String contractId,
+            @RequestBody @Valid NumberOfUsersReq numberOfUsersReq
+    )
+    {
+        contractService.registerNumberOfUsersLicense(userId, contractId, numberOfUsersReq);
+        return ResponseEntity.ok("Successfully registered contract!");
+    }
+
+    // 계약 등록 (요청 ID)
+    @PostMapping("/kbitam/{newAssetRequestId}")
+    public ResponseEntity<?> registerContractByRequest(
+            @RequestHeader String userId,
+            @PathVariable String newAssetRequestId,
+            @RequestBody @Valid RegisterContractReq registerContractReq
+    )
+    {
+        contractService.registerContractByRequest(userId, newAssetRequestId, registerContractReq);
+        return ResponseEntity.ok("Successfully registered contract!");
+    }
+
+    // 계약대상 자산 조회
+    @GetMapping("/kbitam/assets")
+    public ResponseEntity<?> getAssets(
+
+    )
+    {
+        return null;
+    }
+
+    // 계약업체 조회
+    @GetMapping("/kbitam/corporations")
+    public ResponseEntity<?> getCorporation(
+
+    )
+    {
+        return null;
+    }
+
+    // 계약 조회
+    @GetMapping("/kbitam")
+    public ResponseEntity<?> getContract(
+
+    )
+    {
+        return null;
+    }
+
+    // 계약 조회
+    @PatchMapping("/kbitam/{contractId}")
+    public ResponseEntity<?> updateContract(
+            @PathVariable Long contractId
+    )
+    {
+
+        return null;
+    }
 }
 

@@ -1,6 +1,7 @@
 package com.kbds.itamserveradmin.domain.contract.entity;
 
 import com.kbds.itamserveradmin.domain.asset.entity.Asset;
+import com.kbds.itamserveradmin.domain.contract.dto.request.RegisterContractReq;
 import com.kbds.itamserveradmin.domain.corporation.entity.Corporation;
 import com.kbds.itamserveradmin.domain.purchaseRequest.entity.NewAssetRequest;
 import com.kbds.itamserveradmin.domain.user.entity.User;
@@ -57,4 +58,19 @@ public class Contract {
         contRegDate = now;
     }
 
+    public static Contract toEntity(RegisterContractReq registerContractReq, Asset ast, Corporation corp, User user) {
+        return Contract.builder()
+                .ast(ast)
+                .corp(corp)
+                .user(user)
+                .contName(registerContractReq.getContractName())
+                .contPrice(registerContractReq.getContractPrice())
+                .contAdminName(registerContractReq.getContractAdminName())
+                .contOpStatus(OpStatus.IN_OPERATION)
+                .build();
+    }
+
+    public void toUpdateNewAssetRequest(NewAssetRequest newAstReq) {
+        this.newAstReq = newAstReq;
+    }
 }

@@ -1,5 +1,5 @@
 package com.kbds.itamserveradmin.domain.contract.entity;
-import com.kbds.itamserveradmin.domain.contract.entity.Contract;
+import com.kbds.itamserveradmin.domain.contract.dto.request.SupplyLicense;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -29,4 +29,15 @@ public class SupplyType {
     private String acsUrl;
     private String splyVer;
     private String splyUserGuide;
+
+    public static SupplyType toEntity(Contract contract, SupplyLicense licenseSupplyReq) {
+        return SupplyType.builder()
+                .cont(contract)
+                .splyInstallFile(licenseSupplyReq.getSupplyInstallFile())
+                .splyInstallGuide(licenseSupplyReq.getSupplyInstallGuide())
+                .acsUrl(licenseSupplyReq.getAcsUrl())
+                .splyVer(licenseSupplyReq.getSupplyVersion())
+                .splyUserGuide(licenseSupplyReq.getSupplyUserGuide())
+                .build();
+    }
 }
