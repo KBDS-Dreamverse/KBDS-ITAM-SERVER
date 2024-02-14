@@ -1,5 +1,5 @@
 server:
-  port: 8080
+  port: 9000
   servlet:
     context-path: /
     encoding:
@@ -51,7 +51,8 @@ spring:
 file:
   dir: /Users/minizi015/Desktop/images #다들 파일업로드 경로 설정해주세요,,!
 
-#logging:
-#  level:
-#    org.hibernate.SQL: debug # 하이버네이트가 생성하는 SQL이 다보인다.
-##    org.hibernate.type:  #binding parameter의 값이 무엇인지를 알려줌.
+logging:
+  level:
+    org.hibernate.SQL: debug # 하이버네이트가 생성하는 SQL이 다보인다.
+#    org.hibernate.type:  #binding parameter의 값이 무엇인지를 알려줌.
+

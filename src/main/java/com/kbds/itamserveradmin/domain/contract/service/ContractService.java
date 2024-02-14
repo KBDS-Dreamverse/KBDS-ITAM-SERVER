@@ -31,7 +31,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
@@ -43,12 +42,14 @@ import static com.kbds.itamserveradmin.global.exception.ErrorCode.*;
 @Service
 @Transactional
 @RequiredArgsConstructor
+
 public class ContractService {
 
     private final UserRepository userRepository;
     private final AssetRepository assetRepository;
     private final CorporationRepository corporationRepository;
     private final ContractRepository contractRepository;
+    private final AssetRepository assetRepository;
     private final SupplyTypeRepository supplyTypeRepository;
     private final PeriodTypeRepository periodTypeRepository;
     private final NumOfUsersTypeRepository numOfUsersTypeRepository;
@@ -56,6 +57,13 @@ public class ContractService {
     private final NewAssetRequestRepository newAssetRequestRepository;
 
     private final AssetRequestService assetRequestService;
+
+
+    public Contract getContract(String contId){
+        return  contractRepository.findById(contId).orElseThrow(
+                () -> new BaseException(ErrorCode.NOT_FIND_CONTRACT) );
+    }
+
 
 
     public static List<String> parseContLicTag(String contLicTag) {
@@ -96,7 +104,20 @@ public class ContractService {
         return licenseTypes;
     }
     //Ast id 찾는 메서드
-    public Asset getAstIdByContId(String contId){
+
+
+//    public Asset getAstIdByContId(String contId){
+//        Contract contract =  contractRepository.findById(contId)
+//                .orElseThrow(() -> new IllegalArgumentException(String.valueOf(CONTRACT_NOT_FOUND)));
+//        if (contract == null){
+//            return null;
+//        }
+//        return contract.getAst();
+//    }
+
+    //Ast id 찾는 메서드
+
+    public Asset findAstIdByContId(String contId){
         Contract contract =  contractRepository.findById(contId)
                 .orElseThrow(() -> new IllegalArgumentException(String.valueOf(CONTRACT_NOT_FOUND)));
         if (contract == null){
@@ -104,6 +125,7 @@ public class ContractService {
         }
         return contract.getAst();
     }
+
     /**
      * DashBoard에 보여줄 데이터 가져오는 메서드
      * @param contId
@@ -115,6 +137,9 @@ public class ContractService {
         Contract findContract =  contractRepository.findById(contId)
                 .orElseThrow(() -> new IllegalArgumentException(String.valueOf(CONTRACT_NOT_FOUND)));
 
+        String astName = findContract.getAst().getAstName();
+        log.info("astName" + astName);
+        System.out.println("[asset name] " + astName);
         // 2. Contract.contLicTag 값 파싱
         List<String> licNames = parseContLicTag(findContract.getContLicTag());
 
@@ -155,7 +180,7 @@ public class ContractService {
         }
 
         String astReqId = assetRequestService.getAstReqIdByUserIdAndContId(userId, contId);
-        System.out.println("[asset_request_id]" + astReqId);
+//        System.out.println("[asset_request_id]" + astReqId);
         UserAssetRequestInfo userAstReqInfo = userAssetRequestInfoRepository.findByAssetRequest_AstReqId(astReqId);
         if (licTag.charAt(2) == '2') {   // 사이트
             licValues.put("ipRange", numOfUsersType.getIpRange());
@@ -182,7 +207,7 @@ public class ContractService {
         // 4. 찾은 값들을 DashBoardRes에 담아 전달하기
 
         return DashBoardRes.builder()
-                .contName(findContract.getContName())
+                .astName(astName)
                 .licNames(licNames)
                 .licValues(licValues)
                 .build();
@@ -273,6 +298,7 @@ public class ContractService {
         }
     }
 
+
     @Transactional
     public Contract registerContract(String userId, RegisterContractReq registerContractReq) {
         User user = userRepository.findById(userId).orElseThrow(() -> new BaseException(ErrorCode.USER_NOT_FOUND));
@@ -308,4 +334,6 @@ public class ContractService {
         NewAssetRequest newAssetRequest = newAssetRequestRepository.findById(newAssetRequestId).orElseThrow(() -> new BaseException(NEW_ASSET_REQUEST_NOT_FOUND));
         contract.toUpdateNewAssetRequest(newAssetRequest);
     }
+
 }
+
