@@ -30,10 +30,10 @@ public class AssetRequestController {
 
     private final AssetRequestService assetRequestService;
 
-    @Autowired
-    public AssetRequestController(AssetRequestService assetRequestService) {
-        this.assetRequestService = assetRequestService;
-    }
+//    @Autowired
+//    public AssetRequestController(AssetRequestService assetRequestService) {
+//        this.assetRequestService = assetRequestService;
+//    }
 
 
     @PostMapping("/test")

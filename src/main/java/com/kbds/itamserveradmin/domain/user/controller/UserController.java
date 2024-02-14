@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @CrossOrigin(origins ="*", allowedHeaders = "*")
 @RequestMapping("/kbitam")
-@CrossOrigin(origins ="*", allowedHeaders = "*")
 public class UserController {
 
     private final UserService userService;
