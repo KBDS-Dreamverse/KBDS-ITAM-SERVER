@@ -16,9 +16,9 @@ spring:
 
   datasource:
     platform: mysql
-    url: jdbc:mysql://localhost:3306/kbds?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    url: jdbc:mysql://localhost:3306/KBDS_ITAM?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
     username: root
-    password: smilechs5542
+    password: 123456789
     driver-class-name: com.mysql.cj.jdbc.Driver # mysql 8버전
 
 

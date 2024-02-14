@@ -1,7 +1,7 @@
 package com.kbds.itamserveradmin.domain.asset.repository;
 
 import com.kbds.itamserveradmin.domain.asset.entity.Asset;
-import com.kbds.itamserveradmin.domain.corporation.entity.CorpPK;
+//import com.kbds.itamserveradmin.domain.corporation.entity.CorpPK;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

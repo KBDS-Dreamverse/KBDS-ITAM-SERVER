@@ -1,5 +1,6 @@
 package com.kbds.itamserveradmin.domain.asset.entity;
 
+import com.kbds.itamserveradmin.domain.asset.dto.AssetRes;
 import com.kbds.itamserveradmin.domain.corporation.entity.Corporation;
 import com.kbds.itamserveradmin.domain.user.entity.User;
 import lombok.*;
@@ -39,8 +40,18 @@ public class Asset {
     private String astDpd;
     private String astImgUrl;
 
+    public static Asset toSaveEntity(AssetRes assetRes) {
+        Asset asset = new Asset();
+        asset.setAstName(assetRes.getAstName());
+        asset.setAstTag(assetRes.getAstTag());
+        asset.setAstSwCtgy(assetRes.getAstSwCtgy());
+        asset.setAstPrice(assetRes.getAstPrice());
+        asset.setAstVer(assetRes.getAstVer());
+        asset.setAstSpd(assetRes.getAstSpd());
+        asset.setAstDpd(assetRes.getAstDpd());
+        asset.setIsAstInternal(assetRes.getIsAstInternal());
+        asset.setIsAstInstallFile(assetRes.getIsAstInstallFile());
 
-
-
-
+        return asset;
+    }
 }
