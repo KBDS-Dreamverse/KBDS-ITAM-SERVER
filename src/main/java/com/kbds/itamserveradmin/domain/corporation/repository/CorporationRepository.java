@@ -2,11 +2,8 @@ package com.kbds.itamserveradmin.domain.corporation.repository;
 
 import com.kbds.itamserveradmin.domain.corporation.entity.Corporation;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
 
-@Repository
-public interface CorporationRepository extends JpaRepository<Corporation,String> {
-    Corporation findCorporationByCorpName(String CorpName);
-
+public interface CorporationRepository extends JpaRepository<Corporation,Integer> {
 }

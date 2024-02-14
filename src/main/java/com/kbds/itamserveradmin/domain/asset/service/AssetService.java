@@ -20,7 +20,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-
+import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
@@ -32,7 +32,13 @@ public class AssetService {
     private final CorporationRepository corporationRepository;
     private final UserService userService;
 
+    public void save(AssetRes assetRes) throws IOException {
+        // Asset 엔티티 생성
+        Asset asset = Asset.toSaveEntity(assetRes);
 
+        // 저장
+        assetRepository.save(asset);
+    }
     public String createPK(String corp){
 
 

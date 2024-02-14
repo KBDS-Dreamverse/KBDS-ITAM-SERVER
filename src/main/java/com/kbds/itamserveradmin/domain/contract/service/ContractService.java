@@ -49,7 +49,6 @@ public class ContractService {
     private final AssetRepository assetRepository;
     private final CorporationRepository corporationRepository;
     private final ContractRepository contractRepository;
-    private final AssetRepository assetRepository;
     private final SupplyTypeRepository supplyTypeRepository;
     private final PeriodTypeRepository periodTypeRepository;
     private final NumOfUsersTypeRepository numOfUsersTypeRepository;
@@ -303,7 +302,7 @@ public class ContractService {
     public Contract registerContract(String userId, RegisterContractReq registerContractReq) {
         User user = userRepository.findById(userId).orElseThrow(() -> new BaseException(ErrorCode.USER_NOT_FOUND));
         Asset asset = assetRepository.findById(registerContractReq.getAssetId()).orElseThrow(() -> new BaseException(ErrorCode.ASSET_NOT_FOUND));
-        Corporation corporation = corporationRepository.findById(registerContractReq.getCorporationId()).orElseThrow(() -> new BaseException(CORPORATION_NOT_FOUND));
+        Corporation corporation = (Corporation) corporationRepository.findById(registerContractReq.getCorporationId()).orElseThrow(() -> new BaseException(CORPORATION_NOT_FOUND));
         return contractRepository.save(Contract.toEntity(registerContractReq, asset, corporation, user));
     }
 

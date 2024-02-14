@@ -6,7 +6,10 @@ import com.kbds.itamserveradmin.domain.asset.entity.ManualLog;
 import com.kbds.itamserveradmin.domain.asset.service.AssetService;
 import com.kbds.itamserveradmin.domain.asset.service.ManualLogService;
 import com.kbds.itamserveradmin.domain.contract.service.ContractService;
+import com.kbds.itamserveradmin.domain.corporation.entity.Corporation;
+import com.kbds.itamserveradmin.domain.corporation.service.CorporationService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -33,6 +36,14 @@ public class AssetController {
     private final AssetService assetService;
     private final ManualLogService manualLogService;
     private final ContractService contractService;
+    private final CorporationService corporationService;
+
+    @PostMapping("/asset-save")
+    public ResponseEntity<AssetRes> save(@RequestBody AssetRes assetRes) throws IOException {
+        assetService.save(assetRes);
+
+        return ResponseEntity.ok(assetRes);
+    }
 
     @GetMapping("/{dept}/{cont-id}/info")
     public ResponseEntity<AssetRes> info(@PathVariable("cont-id") String contId, @PathVariable String dept){
