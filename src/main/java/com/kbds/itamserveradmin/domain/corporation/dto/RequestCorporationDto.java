@@ -1,6 +1,5 @@
 package com.kbds.itamserveradmin.domain.corporation.dto;
 
-import com.kbds.itamserveradmin.domain.corporation.entity.Corporation;
 import lombok.*;
 
 @Getter
