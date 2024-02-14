@@ -22,7 +22,7 @@ public class SwaggerConfig {
 
     private static final String API_NAME = "KB ITAM API";
     private static final String API_VERSION = "0.0.1";
-    private static final String API_DESCRIPTION = "KB 금융그룹 ITAM API 명세서";
+    private static final String API_DESCRIPTION = "KB API Docs";
 
     @Bean
     public Docket api(){
@@ -30,7 +30,8 @@ public class SwaggerConfig {
                 .useDefaultResponseMessages(true)
                 .apiInfo(apiInfo())
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.kbitam.api"))
+//                .apis(RequestHandlerSelectors.basePackage("com.kbds.api"))
+                .apis(RequestHandlerSelectors.basePackage("com.kbds.itamserveradmin"))
                 .paths(PathSelectors.any())
                 .build();
     }

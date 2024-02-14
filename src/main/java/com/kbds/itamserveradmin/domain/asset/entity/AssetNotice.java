@@ -1,11 +1,11 @@
 package com.kbds.itamserveradmin.domain.asset.entity;
 
+import com.kbds.itamserveradmin.domain.contract.entity.Contract;
 import com.kbds.itamserveradmin.domain.user.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.apache.tomcat.util.http.parser.ContentRange;
 
 import javax.persistence.*;
 
@@ -24,11 +24,11 @@ public class AssetNotice {
 
 
     //==연관관계==//
-//    @ManyToOne
-//    @JoinColumn(name = "contract_id")
-//    private Contract contract;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "contract_id")
+    private Contract contract;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "writer_id")
     private User writer;
 

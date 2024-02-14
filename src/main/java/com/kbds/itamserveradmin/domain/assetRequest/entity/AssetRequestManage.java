@@ -33,18 +33,13 @@ public class AssetRequestManage {
 
 
     //==연관관계==//
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ast_admin_id")
     private AssetAdmin assetAdmin;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ast_req_id")
     private AssetRequest assetRequest;
-
-
-    @OneToMany(mappedBy = "assetRequestManage",fetch = FetchType.LAZY)
-    @Builder.Default
-    private List<AssetRequestManageLog> assetRequestManageLogs = new ArrayList<>();
 
     @PrePersist
     public void prePersist() {

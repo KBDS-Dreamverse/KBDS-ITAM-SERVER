@@ -1,11 +1,14 @@
 package com.kbds.itamserveradmin.domain.contract.entity;
-import com.kbds.itamserveradmin.domain.contract.entity.Contract;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 
 @Entity
 @Data
@@ -22,10 +25,10 @@ public class NumOfUsersType {
     private Contract cont;
 
     private Integer maxUsersLimit;
-    private Integer maxCpuLimit;
+    private Integer maxCoreLimit;
     private String ipRange;
     private Integer currUsers;
-    private Integer currCpu;
+    private Integer currCore;
     private Integer totalNumPur;
     private Integer totalServer;
     private Integer totalCal;
