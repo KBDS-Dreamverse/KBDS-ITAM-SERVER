@@ -28,6 +28,8 @@ public class AssetRes {
     private String astDpd;
     private RequestStatus requestStatus;
     private List<String> mnLogVersList;
+    private String astImgUrl;
+
 
     public static AssetRes assetInfo (Asset asset, AssetRequest ar, List<String> mnLogVersList){
         return AssetRes.builder()
@@ -38,6 +40,7 @@ public class AssetRes {
                 .astSpd(asset.getAstSpd())
                 .astVer(asset.getAstVer())
                 .astPrice(asset.getAstPrice())
+                .astImgUrl(asset.getAstImgUrl())
                 .corpName(asset.getCorp().getCorpName())
                 .requestStatus(ar.getAstReqStatus())
                 .mnLogVersList(mnLogVersList)
