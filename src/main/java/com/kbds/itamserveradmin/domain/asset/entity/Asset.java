@@ -39,4 +39,8 @@ public class Asset {
     private String astDpd;
     private String astImgUrl;
 
+
+
+
+
 }

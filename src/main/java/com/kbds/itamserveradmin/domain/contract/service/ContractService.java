@@ -1,44 +1,56 @@
 package com.kbds.itamserveradmin.domain.contract.service;
 
 import com.kbds.itamserveradmin.domain.asset.entity.Asset;
+import com.kbds.itamserveradmin.domain.asset.repository.AssetRepository;
 import com.kbds.itamserveradmin.domain.assetRequest.entity.AssetRequest;
+import com.kbds.itamserveradmin.domain.assetRequest.entity.RequestStatus;
 import com.kbds.itamserveradmin.domain.assetRequest.entity.UserAssetRequestInfo;
-import com.kbds.itamserveradmin.domain.assetRequest.repository.AssetRequestRepository;
 import com.kbds.itamserveradmin.domain.assetRequest.repository.UserAssetRequestInfoRepository;
 import com.kbds.itamserveradmin.domain.assetRequest.service.AssetRequestService;
 import com.kbds.itamserveradmin.domain.contract.dto.CalKeyRes;
+import com.kbds.itamserveradmin.domain.contract.dto.ContExpireRes;
 import com.kbds.itamserveradmin.domain.contract.dto.DashBoardRes;
 import com.kbds.itamserveradmin.domain.contract.entity.*;
 import com.kbds.itamserveradmin.domain.contract.repository.ContractRepository;
 import com.kbds.itamserveradmin.domain.contract.repository.NumOfUsersTypeRepository;
 import com.kbds.itamserveradmin.domain.contract.repository.PeriodTypeRepository;
 import com.kbds.itamserveradmin.domain.contract.repository.SupplyTypeRepository;
-import com.kbds.itamserveradmin.domain.purchaseRequest.entity.NewAssetRequest;
+import com.kbds.itamserveradmin.global.exception.BaseException;
+import com.kbds.itamserveradmin.global.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.*;
 
-import static com.kbds.itamserveradmin.global.exception.ErrorCode.CONTRACT_NOT_FOUND;
+import static com.kbds.itamserveradmin.global.exception.ErrorCode.*;
 
 @Slf4j
 @Service
 @Transactional
 @RequiredArgsConstructor
+
 public class ContractService {
 
     private final ContractRepository contractRepository;
+    private final AssetRepository assetRepository;
     private final SupplyTypeRepository supplyTypeRepository;
     private final PeriodTypeRepository periodTypeRepository;
     private final NumOfUsersTypeRepository numOfUsersTypeRepository;
-    private final AssetRequestRepository assetRequestRepository;
     private final UserAssetRequestInfoRepository userAssetRequestInfoRepository;
 
     private final AssetRequestService assetRequestService;
+
+
+    public Contract getContract(String contId){
+        return  contractRepository.findById(contId).orElseThrow(
+                () -> new BaseException(ErrorCode.NOT_FIND_CONTRACT) );
+    }
+
 
 
     public static List<String> parseContLicTag(String contLicTag) {
@@ -79,13 +91,28 @@ public class ContractService {
         return licenseTypes;
     }
     //Ast id 찾는 메서드
-    public Asset getAstIdByContId(String contId){
-        Contract contract = contractRepository.findByContId(contId);
+
+
+//    public Asset getAstIdByContId(String contId){
+//        Contract contract =  contractRepository.findById(contId)
+//                .orElseThrow(() -> new IllegalArgumentException(String.valueOf(CONTRACT_NOT_FOUND)));
+//        if (contract == null){
+//            return null;
+//        }
+//        return contract.getAst();
+//    }
+
+    //Ast id 찾는 메서드
+
+    public Asset findAstIdByContId(String contId){
+        Contract contract =  contractRepository.findById(contId)
+                .orElseThrow(() -> new IllegalArgumentException(String.valueOf(CONTRACT_NOT_FOUND)));
         if (contract == null){
             return null;
         }
         return contract.getAst();
     }
+
     /**
      * DashBoard에 보여줄 데이터 가져오는 메서드
      * @param contId
@@ -97,6 +124,9 @@ public class ContractService {
         Contract findContract =  contractRepository.findById(contId)
                 .orElseThrow(() -> new IllegalArgumentException(String.valueOf(CONTRACT_NOT_FOUND)));
 
+        String astName = findContract.getAst().getAstName();
+        log.info("astName" + astName);
+        System.out.println("[asset name] " + astName);
         // 2. Contract.contLicTag 값 파싱
         List<String> licNames = parseContLicTag(findContract.getContLicTag());
 
@@ -119,12 +149,10 @@ public class ContractService {
 
         // 3.2 기간 (1. yml에서 write-dates-as-timestamps: false 로 설정해도 날짜 리스트로 출력)
         // (2. PeriodType에서 @JsonFormat으로 설정해도 수정 안된다)
-        PeriodType periodType = periodTypeRepository.findByCont_ContId(contId);
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        String formattedStartDate = periodType.getContStartDate().format(formatter);
-        String formattedEndDate = periodType.getContEndDate().format(formatter);
-        licValues.put("contStartDate", formattedStartDate);
-        licValues.put("contEndDate", formattedEndDate);
+        List<LocalDateTime> dateTimeList = getPeriod(contId);
+        List<String> formattedDate = getFormattedDate(dateTimeList);
+        licValues.put("contStartDate", formattedDate.get(0));
+        licValues.put("contEndDate", formattedDate.get(1));
 
 
         // 3.3 사용자
@@ -139,7 +167,7 @@ public class ContractService {
         }
 
         String astReqId = assetRequestService.getAstReqIdByUserIdAndContId(userId, contId);
-        System.out.println("[asset_request_id]" + astReqId);
+//        System.out.println("[asset_request_id]" + astReqId);
         UserAssetRequestInfo userAstReqInfo = userAssetRequestInfoRepository.findByAssetRequest_AstReqId(astReqId);
         if (licTag.charAt(2) == '2') {   // 사이트
             licValues.put("ipRange", numOfUsersType.getIpRange());
@@ -166,7 +194,7 @@ public class ContractService {
         // 4. 찾은 값들을 DashBoardRes에 담아 전달하기
 
         return DashBoardRes.builder()
-                .contName(findContract.getContName())
+                .astName(astName)
                 .licNames(licNames)
                 .licValues(licValues)
                 .build();
@@ -174,6 +202,13 @@ public class ContractService {
     }
 
     public CalKeyRes getCalKey(String userId, String contId) {
+        Contract findContract =  contractRepository.findById(contId)
+                .orElseThrow(() -> new IllegalArgumentException(String.valueOf(CONTRACT_NOT_FOUND)));
+
+        // 해당 계약의 라이선스 조합이 서버접속이 아닌 경우 -> Exception 던지기
+        if (findContract.getContLicTag().charAt(2) != '5') {
+            return null;
+        }
         String astReqId = assetRequestService.getAstReqIdByUserIdAndContId(userId, contId);
         UserAssetRequestInfo userAstReqInfo = userAssetRequestInfoRepository.findByAssetRequest_AstReqId(astReqId);
 
@@ -188,6 +223,66 @@ public class ContractService {
                 .calKey(userAstReqInfo.getCalKey().getCalId())
                 .calKeyStatus(status)
                 .build();
+    }
+
+    public List<LocalDateTime> getPeriod(String contId) {
+        List<LocalDateTime> period = new ArrayList<>(2);
+        PeriodType periodType = periodTypeRepository.findByCont_ContId(contId);
+        period.add(periodType.getContStartDate());
+        period.add(periodType.getContEndDate());
+        return period;
+    }
+
+    public List<LocalDateTime> getAstReqPeriod(String contId, String userId) {
+        List<LocalDateTime> period = new ArrayList<>(2);
+        AssetRequest assetRequest = assetRequestService.findAssetRequestByUserIdAndContId(userId, contId);
+        period.add(assetRequest.getAstReqStartDate());
+        period.add(assetRequest.getAstReqEndDate());
+        return period;
+    }
+
+    public List<String> getFormattedDate(List<LocalDateTime> dateTimeList) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        String formattedStartDate = dateTimeList.get(0).format(formatter);
+        String formattedEndDate = dateTimeList.get(1).format(formatter);
+
+        List<String> formatted = new ArrayList<>();
+        formatted.add(formattedStartDate);
+        formatted.add(formattedEndDate);
+        return formatted;
+    }
+
+    public ContExpireRes getExpireInfo(String contId, String userId) {
+        AssetRequest assetRequest = assetRequestService.findAssetRequestByUserIdAndContId(userId, contId);
+        if (assetRequest.getAstReqStatus() != RequestStatus.IN_USE) {
+            if (assetRequest.getAstReqStatus() == RequestStatus.EXPIRED) {
+                throw new IllegalStateException(String.valueOf(ASSET_IS_EXPIRE));
+            }
+            throw new IllegalStateException(String.valueOf(ASSET_IS_NOT_INUSE));
+        }
+
+
+
+        List<LocalDateTime> period = getAstReqPeriod(contId, userId);
+        List<String> formattedDate = getFormattedDate(period);
+
+        Long between =  ChronoUnit.DAYS.between(LocalDateTime.now(), period.get(1));
+
+        return ContExpireRes.builder()
+                .contStartDate(formattedDate.get(0))
+                .contEndDate(formattedDate.get(1))
+                .remainingDays(between)
+                .build();
+    }
+
+    public void stopContract(String contId, String userId) {
+        AssetRequest assetRequest = assetRequestService.findAssetRequestByUserIdAndContId(userId, contId);
+
+        if (assetRequest.getAstReqStatus() == RequestStatus.IN_USE) {
+            assetRequest.setAstReqStatus(RequestStatus.EXPIRED);
+        } else {
+            throw new IllegalStateException(String.valueOf(ASSET_IS_NOT_INUSE));
+        }
     }
 
 }
