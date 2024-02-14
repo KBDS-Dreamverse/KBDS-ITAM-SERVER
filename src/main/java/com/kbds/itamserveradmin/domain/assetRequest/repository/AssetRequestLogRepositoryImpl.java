@@ -7,7 +7,6 @@ import com.kbds.itamserveradmin.domain.assetRequest.entity.QAssetRequestLog;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
-
 @Repository
 @RequiredArgsConstructor
 public class AssetRequestLogRepositoryImpl implements AssetRequestLogRepositoryCustom {
