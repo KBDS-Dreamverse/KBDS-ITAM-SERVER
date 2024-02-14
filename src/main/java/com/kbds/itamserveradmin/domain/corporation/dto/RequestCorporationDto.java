@@ -4,6 +4,7 @@ import com.kbds.itamserveradmin.domain.corporation.entity.Corporation;
 import lombok.*;
 
 @Getter
+@Setter
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor

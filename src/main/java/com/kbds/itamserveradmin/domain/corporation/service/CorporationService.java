@@ -11,4 +11,5 @@ public interface CorporationService {
 
     List<RequestCorporationDto> findAllCorp();
 
+    RequestCorporationDto findOneCorp(int id);
 }

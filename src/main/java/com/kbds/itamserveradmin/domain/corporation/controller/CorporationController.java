@@ -12,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.List;
+
 import static org.springframework.util.StringUtils.isEmpty;
 
 @RestController
@@ -51,7 +52,9 @@ public class CorporationController {
     public ResponseEntity<?> findAllCorporation() {
         List<RequestCorporationDto> corporationDtoList = corporationService.findAllCorp();
         try {
-            validateResponseCorporationDto(corporationDtoList);
+            for (RequestCorporationDto dto : corporationDtoList) {
+                validateResponseCorporationDto(dto);
+            }
             return ResponseEntity.ok(corporationDtoList);
         } catch (
                 IllegalArgumentException e) {
@@ -59,6 +62,22 @@ public class CorporationController {
         } catch (
                 Exception e) {
             String errorMessage = "500 ERROR";
+            logger.error(errorMessage, e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorMessage);
+        }
+    }
+
+    @GetMapping(value = "/corporation-list/{id}")
+    public ResponseEntity<?> findOneCorporation(@PathVariable int id) {
+        logger.info("id = " +id);
+        RequestCorporationDto requestCorporationDto = corporationService.findOneCorp(id);
+        try {
+            validateResponseCorporationDto(requestCorporationDto);
+            return ResponseEntity.ok(requestCorporationDto);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        } catch (Exception e) {
+            String errorMessage = "500 Error";
             logger.error(errorMessage, e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorMessage);
         }
@@ -78,20 +97,19 @@ public class CorporationController {
         }
     }
 
-    private void validateResponseCorporationDto(List<RequestCorporationDto> cooperationDtoList) {
-        for (RequestCorporationDto dto : cooperationDtoList) {
-            if (isEmpty(dto.getCorpId())
-                    || isEmpty(dto.getCorpName())
-                    || isEmpty(dto.getCrn())
-                    || isEmpty(dto.getCorpContact())
-                    || isEmpty(dto.getCorpAddr())
-                    || isEmpty(dto.getCorpUrl())
-                    || isEmpty(dto.getCorpOwner())
-                    || isEmpty(dto.getCorpRemarks())
-                    || isEmpty(dto.isSubCorp())) {
-                throw new IllegalArgumentException("400 ERROR");
-            }
+    private void validateResponseCorporationDto(RequestCorporationDto dto) {
+        if (isEmpty(dto.getCorpId())
+                || isEmpty(dto.getCorpName())
+                || isEmpty(dto.getCrn())
+                || isEmpty(dto.getCorpContact())
+                || isEmpty(dto.getCorpAddr())
+                || isEmpty(dto.getCorpUrl())
+                || isEmpty(dto.getCorpOwner())
+                || isEmpty(dto.getCorpRemarks())
+                || isEmpty(dto.isSubCorp())) {
+            throw new IllegalArgumentException("400 ERROR");
         }
+
 
     }
 

@@ -35,12 +35,35 @@ public class CorporationServiceImpl implements CorporationService {
     public List<RequestCorporationDto> findAllCorp() {
         List<Corporation> corporationList = corporationRepository.findAll();
         return corporationList.stream()
-                .map(corporation -> {
-                    RequestCorporationDto dto = new RequestCorporationDto(
-                            corporation.getCorpId(), corporation.getCorpName(), corporation.getCrn(), corporation.getCorpContact(),
-                            corporation.getCorpAddr(), corporation.getCorpUrl(), corporation.getCorpOwner(),
-                            corporation.getCorpRemarks(), corporation.isSubCorp());
-                    return dto;
-                }).collect(Collectors.toList());
+                .map(this::convertDto).collect(Collectors.toList());
     }
+
+    @Override
+    public RequestCorporationDto findOneCorp(int id) {
+        Corporation corporation = corporationRepository.findById(id).orElse(null);
+        if (corporation != null) {
+            return convertDto(corporation);
+        }
+        return null;
+    }
+
+
+    private RequestCorporationDto convertDto(Corporation entity) {
+        RequestCorporationDto dto = new RequestCorporationDto();
+        dto.setCorpId(entity.getCorpId());
+        dto.setCrn(entity.getCrn());
+        dto.setCorpAddr(entity.getCorpAddr());
+        dto.setCorpName(entity.getCorpName());
+        dto.setCorpOwner(entity.getCorpOwner());
+        dto.setCorpContact(entity.getCorpContact());
+        dto.setCorpUrl(entity.getCorpUrl());
+        dto.setCorpRemarks(entity.getCorpRemarks());
+        dto.setSubCorp(entity.isSubCorp());
+        return dto;
+    }
+
+
+
+
+
 }
